@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:orientation="vertical">
+
+        <!-- FIRST TABLE - HEADER
+        Only the header matters -->
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- HEADER -->
+            <TableRow style="@style/HeaderRow">
+                <TextView
+                    style="@style/HeaderText"
+                    android:layout_weight="0.14"
+                    android:text="Sensor"></TextView>
+                <TextView
+                    style="@style/HeaderText"
+                    android:layout_weight="1"
+                    android:text="Descrição"></TextView>
+                <TextView
+                    style="@style/HeaderText"
+                    android:text="Valor"></TextView>
+                <TextView
+                    style="@style/HeaderText"
+                    android:layout_weight="0.15"
+                    android:text="Quando"></TextView>
+            </TableRow>
+
+            <!-- ROW 1 -->
+            <TableRow style="@style/BodyRow">
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:text="Cell 1,1"></TextView>
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="Cell 1,2"></TextView>
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:text="Cell 1,3"></TextView>
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:text="Cell 1,4"></TextView>
+            </TableRow>
+
+            <!-- ROW 2 -->
+            <TableRow style="@style/BodyRow">
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:text="Cell 2,1"></TextView>
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="Cell 2,2"></TextView>
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:text="Cell 2,3"></TextView>
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:text="Cell 2,4"></TextView>
+            </TableRow>
+
+            <!-- ROW 3 -->
+            <TableRow style="@style/BodyRow">
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:text="Cell 3,1"></TextView>
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="Cell 3,2"></TextView>
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:text="Cell 3,3"></TextView>
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:text="Cell 3,4"></TextView>
+            </TableRow>
+
+            <!-- ROW 4 -->
+            <TableRow style="@style/BodyRow">
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:text="Cell 4,1"></TextView>
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="Cell 4,2"></TextView>
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:text="Cell 4,3"></TextView>
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:text="Cell 4,4"></TextView>
+            </TableRow>
+
+            <!-- ROW 5 -->
+            <TableRow style="@style/BodyRow">
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:text="Cell 5,1"></TextView>
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="Cell 5,2"></TextView>
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:text="Cell 5,3"></TextView>
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:text="Cell 5,4"></TextView>
+            </TableRow>
+
+            <!-- ROW 6 -->
+            <TableRow style="@style/BodyRow">
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:text="Cell 6,1"></TextView>
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="Cell 6,2"></TextView>
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:text="Cell 6,3"></TextView>
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:text="Cell 6,4"></TextView>
+            </TableRow>
+
+            <!-- ROW 7 -->
+            <TableRow style="@style/BodyRow">
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:text="Cell 7,1"></TextView>
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="Cell 7,2"></TextView>
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:text="Cell 7,3"></TextView>
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:text="Cell 7,4"></TextView>
+            </TableRow>
+
+            <!-- ROW 8 -->
+            <TableRow style="@style/BodyRow">
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:text="Cell 8,1"></TextView>
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="Cell 8,2"></TextView>
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:text="Cell 8,3"></TextView>
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_height="0dp"
+                    android:text="Cell 8,4"></TextView>
+            </TableRow>
+        </TableLayout>
+
+        <!-- SECOND TABLE - BODY (Scrollable) -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- HEADER -->
+                <TableRow style="@style/HeaderRow">
+                    <TextView
+                        style="@style/HeaderText"
+                        android:layout_height="0dp"
+                        android:text="Col 1" />
+                    <TextView
+                        style="@style/HeaderText"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="Col 2" />
+                    <TextView
+                        style="@style/HeaderText"
+                        android:layout_height="0dp"
+                        android:text="Col 3" />
+                    <TextView
+                        style="@style/HeaderText"
+                        android:layout_height="0dp"
+                        android:text="Col 4" />
+                </TableRow>
+
+                <!-- ROW 1 -->
+                <TableRow style="@style/BodyRow">
+                    <TextView
+                        style="@style/BodyText"
+                        android:text="Humidade" />
+                    <TextView
+                        style="@style/BodyText"
+                        android:layout_weight="1"
+                        android:text="Ultrapassou valor máximo pretendido." />
+                    <TextView
+                        style="@style/BodyText"
+                        android:text="~ 70 %" />
+
+                    <TextView
+                        style="@style/BodyText"
+                        android:text="04:42 - 12/08" />
+                </TableRow>
+
+                <!-- ROW 2 -->
+                <TableRow style="@style/BodyRow">
+                    <TextView
+                        style="@style/BodyText"
+                        android:text="Temperatura" />
+                    <TextView
+                        style="@style/BodyText"
+                        android:layout_weight="1"
+                        android:text="Ultrapassou valor mínimo pretendido." />
+                    <TextView
+                        style="@style/BodyText"
+                        android:text="~ 13 ºC" />
+                    <TextView
+                        style="@style/BodyText"
+                        android:text="12:50 - 26/07" />
+                </TableRow>
+
+                <!-- ROW 3 -->
+                <TableRow style="@style/BodyRow">
+                    <TextView
+                        style="@style/BodyText"
+                        android:text="Pluviosidade" />
+                    <TextView
+                        style="@style/BodyText"
+                        android:layout_weight="1"
+                        android:text="Ultrapassou valor máximo pretendido." />
+                    <TextView
+                        style="@style/BodyText"
+                        android:text="~ 58 %" />
+                    <TextView
+                        style="@style/BodyText"
+                        android:text="07:18 - 24/07" />
+                </TableRow>
+
+                <!-- ROW 4 -->
+                <TableRow style="@style/BodyRow">
+                    <TextView
+                        style="@style/BodyText"
+                        android:text="GPS" />
+                    <TextView
+                        style="@style/BodyText"
+                        android:layout_weight="1"
+                        android:text="Sensor foi movido da posição original." />
+                    <TextView
+                        style="@style/BodyText"
+                        android:text="~ 5 m" />
+                    <TextView
+                        style="@style/BodyText"
+                        android:text="10:05 - 14/07" />
+                </TableRow>
+
+                <!-- ROW 5 -->
+                <TableRow style="@style/BodyRow">
+                    <TextView
+                        style="@style/BodyText"
+                        android:text="Sol" />
+                    <TextView
+                        style="@style/BodyText"
+                        android:layout_weight="1"
+                        android:text="Ultrapassou valor máximo pretendido." />
+                    <TextView
+                        style="@style/BodyText"
+                        android:text="~ 80 %" />
+                    <TextView
+                        style="@style/BodyText"
+                        android:text="13:05 - 03/07" />
+                </TableRow>
+
+                <!-- ROW 6 -->
+                <TableRow style="@style/BodyRow">
+                    <TextView
+                        style="@style/BodyText"
+                        android:text="Temperatura" />
+                    <TextView
+                        style="@style/BodyText"
+                        android:layout_weight="1"
+                        android:text="Ultrapassou valor máximo pretendido." />
+                    <TextView
+                        style="@style/BodyText"
+                        android:text="~ 38 ºC" />
+                    <TextView
+                        style="@style/BodyText"
+                        android:text="12:21 - 29/06" />
+                </TableRow>
+
+                <!-- ROW 7 -->
+                <TableRow style="@style/BodyRow">
+                    <TextView
+                        style="@style/BodyText"
+                        android:text="Humidade" />
+                    <TextView
+                        style="@style/BodyText"
+                        android:layout_weight="1"
+                        android:text="Ultrapassou valor mínimo pretendido." />
+                    <TextView
+                        style="@style/BodyText"
+                        android:text="~ 42 %" />
+                    <TextView
+                        style="@style/BodyText"
+                        android:text="07:15 - 20/06" />
+                </TableRow>
+
+                <!-- ROW 8 -->
+                <TableRow style="@style/BodyRow">
+                    <TextView
+                        style="@style/BodyText"
+                        android:text="Sol" />
+                    <TextView
+                        style="@style/BodyText"
+                        android:layout_weight="1"
+                        android:text="Ultrapassou valor máximo pretendido" />
+                    <TextView
+                        style="@style/BodyText"
+                        android:text="~ 85 %" />
+                    <TextView
+                        style="@style/BodyText"
+                        android:text="14:14 - 13/06" />
+                </TableRow>
+            </TableLayout>
+        </ScrollView>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Universal Vine Aid System</string>
+
+    <string name="action_settings">Definições</string>
+    <string name="action_help">Ajuda</string>
+    <string name="action_logout">Terminar Sessão</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="lbl_btnZona1">Zona 1</string>
+    <string name="lbl_btnZona2">Zona 2</string>
+    <string name="lbl_btnZona3">Zona 3</string>
+    <string name="lbl_zonaEscolhida">Zona escolhida:  </string>
+    <string name="title_activity_settings">Definições</string>
+    <string name="lbl_ativarAlertas">> Activar/desactivar a recepção de Alertas</string>
+    <string name="lbl_parametrosAlertas">> Seleccione o intervalo de valores que considera ideais:</string>
+    <string name="lbl_settingsTemperatura">1. Temperatura</string>
+    <string name="lbl_settingsHumidade">2. Humidade do Ar</string>
+    <string name="lbl_settingsSol">3. Exposição Solar</string>
+    <string name="title_activity_start">StartActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="lbl_loginButton">Iniciar Sessão</string>
+    <string name="lbl_RegistarButton">Registar na Rede</string>
+</resources>
