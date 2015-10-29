@@ -20,30 +20,25 @@ import android.widget.TextView;
 
 public class tabHistorico extends Fragment {
 
-    private Button btnZona1, btnZona2, btnZona3;
-    private TextView txtZonaAtual;
-
-    String zona1 = "   ZONA 1 - Norte";
-    String zona2 = "   ZONA 2 - Este";
-    String zona3 = "   ZONA 3 - Oeste";
-
+    private Button btnHum, btnTemp, btnSol, btnChuva, btnGPS;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab_historico, container, false);
 
+        btnHum = (Button) view.findViewById(R.id.btnHum);
 
-        btnZona1 = (Button) view.findViewById(R.id.btnZona1);
-        btnZona1.getBackground().setColorFilter(new LightingColorFilter(0x43A047, 0x00111111));
+        btnTemp = (Button) view.findViewById(R.id.btnTemp);
 
-        btnZona2 = (Button) view.findViewById(R.id.btnZona2);
-        btnZona2.getBackground().setColorFilter(new LightingColorFilter(0x43A047, 0x00111111));
+        btnSol = (Button) view.findViewById(R.id.btnSol);
 
-        btnZona3 = (Button) view.findViewById(R.id.btnZona3);
-        btnZona3.getBackground().setColorFilter(new LightingColorFilter(0x43A047, 0x00111111));
+        btnChuva = (Button) view.findViewById(R.id.btnChuva);
 
-        txtZonaAtual = (TextView) view.findViewById(R.id.txtZonaAtual);
+        btnGPS = (Button) view.findViewById(R.id.btnGPS);
 
+
+
+/*
         // Button "Zona 1"
         btnZona1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +65,7 @@ public class tabHistorico extends Fragment {
                 txtZonaAtual.setText(zona3);
             }
         });
-
+*/
 
         return view;
     }

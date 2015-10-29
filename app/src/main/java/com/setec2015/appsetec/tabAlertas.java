@@ -33,13 +33,13 @@ public class tabAlertas extends Fragment {
         View view = inflater.inflate(R.layout.tab_alertas, container, false);
 
         btnZona1 = (Button) view.findViewById(R.id.btnZona1);
-        btnZona1.getBackground().setColorFilter(new LightingColorFilter(0x43A047, 0x00111111));
+        //btnZona1.getBackground().setColorFilter(new LightingColorFilter(0x43A047, 0x00111111));
 
         btnZona2 = (Button) view.findViewById(R.id.btnZona2);
-        btnZona2.getBackground().setColorFilter(new LightingColorFilter(0x43A047, 0x00111111));
+        //btnZona2.getBackground().setColorFilter(new LightingColorFilter(0x43A047, 0x00111111));
 
         btnZona3 = (Button) view.findViewById(R.id.btnZona3);
-        btnZona3.getBackground().setColorFilter(new LightingColorFilter(0x43A047, 0x00111111));
+        //btnZona3.getBackground().setColorFilter(new LightingColorFilter(0x43A047, 0x00111111));
 
         txtZonaAtual = (TextView) view.findViewById(R.id.txtZonaAtual);
 
@@ -74,15 +74,6 @@ public class tabAlertas extends Fragment {
 
         return view;
     }
-
-    /*@Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        txtZonaAtual = (TextView) getActivity().findViewById(R.id.txtZonaAtual);
-    }
-    public void changeText(String data) {
-        txtZonaAtual.setText(data);
-    }*/
 
 
     @Override

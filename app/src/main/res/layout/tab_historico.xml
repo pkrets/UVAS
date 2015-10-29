@@ -2,72 +2,86 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="5dp"
     android:background="@color/tabBackgroundColor"
-    android:orientation="vertical"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginLeft="10dp">
+    android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.85">
+        android:layout_weight="0.85"
+        android:orientation="horizontal">
 
-
-        <include
-            layout="@layout/simple_xy_plot_example"/>
 
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="5dp"
         android:layout_weight="0.2"
-        android:gravity="bottom">
+        android:gravity="bottom"
+        android:orientation="horizontal">
 
         <Button
+            android:id="@+id/btnHum"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/lbl_btnZona1"
-            android:id="@+id/btnZona1"
-            android:layout_weight="0.18" />
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="0.18"
+            android:background="@drawable/bg_zonabutton"
+            android:text="@string/lbl_btnHum" />
 
         <Button
+            android:id="@+id/btnTemp"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/lbl_btnZona2"
-            android:id="@+id/btnZona2"
-            android:layout_weight="0.18" />
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="0.18"
+            android:background="@drawable/bg_zonabutton"
+            android:text="@string/lbl_btnTemp" />
 
         <Button
+            android:id="@+id/btnSol"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/lbl_btnZona3"
-            android:id="@+id/btnZona3"
-            android:layout_weight="0.18" />
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="0.18"
+            android:background="@drawable/bg_zonabutton"
+            android:text="@string/lbl_btnSol" />
 
-        <TextView
+        <Button
+            android:id="@+id/btnChuva"
+            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/lbl_zonaEscolhida"
-            android:id="@+id/txtZonaEscolhida"
-            android:layout_weight="0.16"
-            android:gravity="right" />
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="0.18"
+            android:background="@drawable/bg_zonabutton"
+            android:text="@string/lbl_btnChuva" />
 
-        <TextView
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:id="@+id/txtZonaAtual"
-            android:gravity="left"
-            android:textColor="@color/colorPrimaryText" />
+        <Button
+            android:id="@+id/btnGPS"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="0.18"
+            android:background="@drawable/bg_zonabutton"
+            android:text="@string/lbl_btnGPS" />
+
+
     </LinearLayout>
 
 </LinearLayout>

@@ -8,6 +8,11 @@
     <string name="lbl_btnZona1">Zona 1</string>
     <string name="lbl_btnZona2">Zona 2</string>
     <string name="lbl_btnZona3">Zona 3</string>
+    <string name="lbl_btnHum">Humidade</string>
+    <string name="lbl_btnTemp">Temperatura</string>
+    <string name="lbl_btnSol">Luminosidade</string>
+    <string name="lbl_btnChuva">Pluviosidade</string>
+    <string name="lbl_btnGPS">GPS</string>
     <string name="lbl_zonaEscolhida">Zona escolhida:  </string>
     <string name="title_activity_settings">Definições</string>
     <string name="lbl_ativarAlertas">> Activar/desactivar a recepção de Alertas</string>

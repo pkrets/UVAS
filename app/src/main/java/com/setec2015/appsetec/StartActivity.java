@@ -104,4 +104,3 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     }
 }
 
-// Arroz

@@ -49,12 +49,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onSaveInstanceState (Bundle outState) {
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
     }
 
     @Override
-    public void onRestoreInstanceState (Bundle savedInstanceState) {
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
     }
 
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         new AlertDialog.Builder(this)
                 .setMessage("Deseja terminar a sessão?")
                 .setCancelable(false)
@@ -112,64 +112,59 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
-    /*@Override
-    public void respond(String data) {
-        FragmentManager manager = getFragmentManager();
-        tabAlertas f2 = (tabAlertas) manager.findFragmentById(R.id.fragment2);
-        f2.changeText(data);
-    }*/
-}
 
 
-class MyPagerAdapter extends FragmentStatePagerAdapter {
+    class MyPagerAdapter extends FragmentStatePagerAdapter {
 
-    public MyPagerAdapter(FragmentManager fm) {
-        super(fm);
+        public MyPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        // Returns the Fragment at a given position
+        @Override
+        public Fragment getItem(int i) {
+            Fragment fragment = null;
+            if (i == 0) {
+                fragment = new tabSensores();
+            }
+            if (i == 1) {
+                fragment = new tabAlertas();
+            }
+            if (i == 2) {
+                fragment = new tabHistorico();
+            }
+            /*if (i == 3) {
+                fragment = new tabAvaliacao();
+            }*/
+            return fragment;
+        }
+
+        // Returns the total number of pages or Fragments
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+        // Show the name of each Tab in the Toolbar
+        @Override
+        public CharSequence getPageTitle(int position) {
+            if (position == 0) {
+                return "Sensores";
+            }
+            if (position == 1) {
+                return "Alertas";
+            }
+            if (position == 2) {
+                return "Histórico";
+            }
+            /*if (position == 3) {
+                return "Avaliação";
+            }*/
+            return null;
+        }
+
+
     }
-
-    // Returns the Fragment at a given position
-    @Override
-    public Fragment getItem(int i) {
-        Fragment fragment = null;
-        if (i == 0) {
-            fragment = new tabSensores();
-        }
-        if (i == 1) {
-            fragment = new tabAlertas();
-        }
-        if (i == 2) {
-            fragment = new tabHistorico();
-        }
-        if (i == 3) {
-            fragment = new tabAvaliacao();
-        }
-        return fragment;
-    }
-
-    // Returns the total number of pages or Fragments
-    @Override
-    public int getCount() {
-        return 4;
-    }
-
-    // Show the name of each Tab in the Toolbar
-    @Override
-    public CharSequence getPageTitle(int position) {
-        if (position == 0) {
-            return "Sensores";
-        }
-        if (position == 1) {
-            return "Alertas";
-        }
-        if (position == 2) {
-            return "Histórico";
-        }
-        if (position == 3) {
-            return "Avaliação";
-        }
-        return null;
-    }
-
 
 }
 

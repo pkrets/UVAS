@@ -42,23 +42,21 @@ public class tabSensores extends Fragment {
 
     float zoomLevel = 14;
 
-    /*int counter = 0;
-    Communicator comm;*/
-
     private SupportMapFragment fragment;
     private GoogleMap map;
 
-   /*@Override
+   @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
+        /* Detect if GPS location is enabled in the device
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
             Toast.makeText(this, "GPS is Enabled in your devide", Toast.LENGTH_SHORT).show();
         }else{
             showGPSDisabledAlertToUser();
-        }
-    }*/
+        }*/
+    }
 
 
     @Override
@@ -79,14 +77,11 @@ public class tabSensores extends Fragment {
         btnZoomOut = (Button) view.findViewById(R.id.btnZoomOut);
         txtZonaAtual = (TextView) view.findViewById(R.id.txtZonaAtual);
 
+
         // Button "Zona 1"
         btnZona1.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                txtZonaAtual.setText(zona1);
-                /*counter++;
-                comm.respond("The button was clicked "+counter+" times");*/
 
                 LatLng zona1Location = new LatLng(13.687140112679154, 100.53925868803263);
                 map.addMarker(new MarkerOptions().position(zona1Location).title("Zona 1"));
@@ -166,9 +161,6 @@ public class tabSensores extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        /*comm= (Communicator) getActivity();
-        btnZona1 = (Button) getActivity().findViewById(R.id.btnZona1);*/
-
         FragmentManager fm = getChildFragmentManager();
         fragment = (SupportMapFragment) fm.findFragmentById(R.id.map);
         if (fragment == null) {
@@ -177,12 +169,6 @@ public class tabSensores extends Fragment {
         }
 
     }
-
-   /* @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt("counter", counter);
-    }*/
 
     @Override
     public void onResume() {
