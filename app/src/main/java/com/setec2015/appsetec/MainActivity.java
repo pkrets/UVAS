@@ -113,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     class MyPagerAdapter extends FragmentStatePagerAdapter {
 
         public MyPagerAdapter(FragmentManager fm) {
@@ -138,6 +137,8 @@ public class MainActivity extends AppCompatActivity {
             }*/
             return fragment;
         }
+
+
 
         // Returns the total number of pages or Fragments
         @Override
@@ -167,5 +168,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
-
 

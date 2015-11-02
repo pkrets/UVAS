@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 public class tabHistorico extends Fragment {
 
-    private Button btnHum, btnTemp, btnSol, btnChuva, btnGPS;
+    private Button btnHum, btnTemp, btnSol, btnChuva;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,38 +34,10 @@ public class tabHistorico extends Fragment {
 
         btnChuva = (Button) view.findViewById(R.id.btnChuva);
 
-        btnGPS = (Button) view.findViewById(R.id.btnGPS);
 
 
 
-/*
-        // Button "Zona 1"
-        btnZona1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                txtZonaAtual.setText(zona1);
-            }
-        });
-
-        // Button "Zona 2"
-        btnZona2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                txtZonaAtual.setText(zona2);
-            }
-        });
-
-        // Button "Zona 3"
-        btnZona3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                txtZonaAtual.setText(zona3);
-            }
-        });
-*/
 
         return view;
     }

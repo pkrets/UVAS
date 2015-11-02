@@ -5,7 +5,10 @@ package com.setec2015.appsetec;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.LightingColorFilter;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -34,7 +37,7 @@ public class tabSensores extends Fragment {
     private ImageButton btnSatellite;
     private Button btnZoomIn;
     private Button btnZoomOut;
-    private TextView txtZonaAtual;
+    TextView txtZonaAtual, txtTemperaturaMin;
 
     String zona1 = "   ZONA 1 - Norte";
     String zona2 = "   ZONA 2 - Este";
@@ -75,7 +78,12 @@ public class tabSensores extends Fragment {
         btnSatellite = (ImageButton) view.findViewById(R.id.btnSatellite);
         btnZoomIn = (Button) view.findViewById(R.id.btnZoomIn);
         btnZoomOut = (Button) view.findViewById(R.id.btnZoomOut);
+
         txtZonaAtual = (TextView) view.findViewById(R.id.txtZonaAtual);
+
+        txtTemperaturaMin = (TextView) view.findViewById(R.id.txtTemperaturaMin);
+        String strtext = getArguments().getString("edttext");
+
 
 
         // Button "Zona 1"
@@ -83,11 +91,16 @@ public class tabSensores extends Fragment {
             @Override
             public void onClick(View v) {
 
+                txtZonaAtual.setText(zona1);
+
+                /*String textZona1 = zona1;
+                tabAlertas.b_updateText(textZona1);*/
+
                 LatLng zona1Location = new LatLng(13.687140112679154, 100.53925868803263);
                 map.addMarker(new MarkerOptions().position(zona1Location).title("Zona 1"));
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(zona1Location, zoomLevel));
             }
-        });
+      });
 
         // Button "Zona 2"
         btnZona2.setOnClickListener(new OnClickListener() {
@@ -95,6 +108,9 @@ public class tabSensores extends Fragment {
             public void onClick(View v) {
 
                 txtZonaAtual.setText(zona2);
+
+                /*String textZona2 = zona2;
+                tabAlertas.b_updateText(textZona2);*/
 
                 LatLng zona2Location = new LatLng(13.682140112679154, 100.53525868803263);
                 map.addMarker(new MarkerOptions().position(zona2Location).title("Zona 2"));
@@ -109,22 +125,15 @@ public class tabSensores extends Fragment {
 
                 txtZonaAtual.setText(zona3);
 
+                /*String textZona3 = zona3;
+                tabAlertas.b_updateText(textZona3);*/
+
                 LatLng zona3Location = new LatLng(13.685140112679154, 100.53125868803263);
                 map.addMarker(new MarkerOptions().position(zona3Location).title("Zona 3"));
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(zona3Location, zoomLevel));
             }
         });
 
-        // Highlight buttons when pressed
-        /*btnZona1.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_BUTTON_PRESS) {
-
-                }
-                return true;
-            }
-        });*/
 
         // Change Map Type: normal view <-> satellite view
         btnSatellite.setOnClickListener(new OnClickListener() {
@@ -157,6 +166,16 @@ public class tabSensores extends Fragment {
         return view;
     }
 
+    private void btnPressed() {
+        btnZona1.setPressed(true);
+    }
+
+    /*public void a_updateText(String t) {
+        txtZonaAtual.setText(t);
+    }*/
+
+
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -180,8 +199,6 @@ public class tabSensores extends Fragment {
         map.setMyLocationEnabled(true);
 
     }
-
-
 }
 
 

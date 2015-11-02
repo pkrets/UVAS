@@ -29,57 +29,46 @@
         <Button
             android:id="@+id/btnHum"
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_weight="0.18"
-            android:background="@drawable/bg_zonabutton"
+            android:layout_weight="0.2"
+            android:background="@drawable/bg_sensorbutton"
             android:text="@string/lbl_btnHum" />
 
         <Button
             android:id="@+id/btnTemp"
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_weight="0.18"
-            android:background="@drawable/bg_zonabutton"
+            android:layout_weight="0.2"
+            android:background="@drawable/bg_sensorbutton"
             android:text="@string/lbl_btnTemp" />
 
         <Button
             android:id="@+id/btnSol"
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_weight="0.18"
-            android:background="@drawable/bg_zonabutton"
+            android:layout_weight="0.2"
+            android:background="@drawable/bg_sensorbutton"
             android:text="@string/lbl_btnSol" />
 
         <Button
             android:id="@+id/btnChuva"
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_weight="0.18"
-            android:background="@drawable/bg_zonabutton"
+            android:layout_weight="0.2"
+            android:background="@drawable/bg_sensorbutton"
             android:text="@string/lbl_btnChuva" />
-
-        <Button
-            android:id="@+id/btnGPS"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="0.18"
-            android:background="@drawable/bg_zonabutton"
-            android:text="@string/lbl_btnGPS" />
 
 
     </LinearLayout>

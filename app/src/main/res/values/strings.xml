@@ -25,4 +25,5 @@
     <string name="hello_world">Hello world!</string>
     <string name="lbl_loginButton">Iniciar Sessão</string>
     <string name="lbl_RegistarButton">Registar na Rede</string>
+    <string name="lbl_btnaplicarsettings">Aplicar</string>
 </resources>

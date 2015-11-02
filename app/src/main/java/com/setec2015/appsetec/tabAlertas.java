@@ -13,20 +13,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import android.widget.Toast;
 
 
 public class tabAlertas extends Fragment {
 
     private Button btnZona1, btnZona2, btnZona3;
-    private TextView txtZonaAtual;
+    TextView txtZonaAtual;
 
     String zona1 = "   ZONA 1 - Norte";
     String zona2 = "   ZONA 2 - Este";
     String zona3 = "   ZONA 3 - Oeste";
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,6 +41,7 @@ public class tabAlertas extends Fragment {
 
         txtZonaAtual = (TextView) view.findViewById(R.id.txtZonaAtual);
 
+
         // Button "Zona 1"
         btnZona1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +49,8 @@ public class tabAlertas extends Fragment {
 
                 txtZonaAtual.setText(zona1);
 
+                /*String textZona1 = zona1;
+                tabSensores.a_updateText(textZona1);*/
             }
         });
 
@@ -59,6 +60,9 @@ public class tabAlertas extends Fragment {
             public void onClick(View v) {
 
                 txtZonaAtual.setText(zona2);
+
+                /*String textZona2 = zona2;
+                tabSensores.a_updateText(textZona2);*/
             }
         });
 
@@ -68,11 +72,23 @@ public class tabAlertas extends Fragment {
             public void onClick(View v) {
 
                 txtZonaAtual.setText(zona3);
+
+                /*String textZona3 = zona3;
+                tabSensores.a_updateText(textZona3);*/
             }
         });
 
 
         return view;
+    }
+
+    /*public static void b_updateText(String t){
+        txtZonaAtual.setText(t);
+    }*/
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
 
@@ -81,3 +97,5 @@ public class tabAlertas extends Fragment {
         super.onSaveInstanceState(outState);
     }
 }
+
+
