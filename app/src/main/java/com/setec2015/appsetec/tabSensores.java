@@ -2,6 +2,7 @@
 
 package com.setec2015.appsetec;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,6 +31,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.w3c.dom.Text;
+
 
 public class tabSensores extends Fragment {
 
@@ -37,7 +40,8 @@ public class tabSensores extends Fragment {
     private ImageButton btnSatellite;
     private Button btnZoomIn;
     private Button btnZoomOut;
-    TextView txtZonaAtual, txtTemperaturaMin;
+    TextView txtZonaAtual;
+    TextView txtTemperaturaMin;
 
     String zona1 = "   ZONA 1 - Norte";
     String zona2 = "   ZONA 2 - Este";
@@ -48,17 +52,17 @@ public class tabSensores extends Fragment {
     private SupportMapFragment fragment;
     private GoogleMap map;
 
-   @Override
+    public String zonaAtual, zonaEscolhida;
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /* Detect if GPS location is enabled in the device
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-            Toast.makeText(this, "GPS is Enabled in your devide", Toast.LENGTH_SHORT).show();
-        }else{
-            showGPSDisabledAlertToUser();
-        }*/
+        if (savedInstanceState != null) {
+            // Restore last state for checked position.
+            zonaAtual = savedInstanceState.getString("zona");
+        }
+
     }
 
 
@@ -67,23 +71,17 @@ public class tabSensores extends Fragment {
         View view = inflater.inflate(R.layout.tab_sensores, container, false);
 
         btnZona1 = (Button) view.findViewById(R.id.btnZona1);
-        //btnZona1.getBackground().setColorFilter(new LightingColorFilter(0x43A047, 0x00111111));
-
         btnZona2 = (Button) view.findViewById(R.id.btnZona2);
-        //btnZona2.getBackground().setColorFilter(new LightingColorFilter(0x43A047, 0x00111111));
-
         btnZona3 = (Button) view.findViewById(R.id.btnZona3);
-        //btnZona3.getBackground().setColorFilter(new LightingColorFilter(0x43A047, 0x00111111));
 
         btnSatellite = (ImageButton) view.findViewById(R.id.btnSatellite);
         btnZoomIn = (Button) view.findViewById(R.id.btnZoomIn);
         btnZoomOut = (Button) view.findViewById(R.id.btnZoomOut);
 
         txtZonaAtual = (TextView) view.findViewById(R.id.txtZonaAtual);
+        txtZonaAtual.setText(zonaAtual);
 
         txtTemperaturaMin = (TextView) view.findViewById(R.id.txtTemperaturaMin);
-        String strtext = getArguments().getString("edttext");
-
 
 
         // Button "Zona 1"
@@ -92,9 +90,7 @@ public class tabSensores extends Fragment {
             public void onClick(View v) {
 
                 txtZonaAtual.setText(zona1);
-
-                /*String textZona1 = zona1;
-                tabAlertas.b_updateText(textZona1);*/
+                zonaEscolhida = txtZonaAtual.getText().toString();
 
                 LatLng zona1Location = new LatLng(13.687140112679154, 100.53925868803263);
                 map.addMarker(new MarkerOptions().position(zona1Location).title("Zona 1"));
@@ -108,9 +104,7 @@ public class tabSensores extends Fragment {
             public void onClick(View v) {
 
                 txtZonaAtual.setText(zona2);
-
-                /*String textZona2 = zona2;
-                tabAlertas.b_updateText(textZona2);*/
+                zonaEscolhida = txtZonaAtual.getText().toString();
 
                 LatLng zona2Location = new LatLng(13.682140112679154, 100.53525868803263);
                 map.addMarker(new MarkerOptions().position(zona2Location).title("Zona 2"));
@@ -124,9 +118,7 @@ public class tabSensores extends Fragment {
             public void onClick(View v) {
 
                 txtZonaAtual.setText(zona3);
-
-                /*String textZona3 = zona3;
-                tabAlertas.b_updateText(textZona3);*/
+                zonaEscolhida = txtZonaAtual.getText().toString();
 
                 LatLng zona3Location = new LatLng(13.685140112679154, 100.53125868803263);
                 map.addMarker(new MarkerOptions().position(zona3Location).title("Zona 3"));
@@ -166,14 +158,6 @@ public class tabSensores extends Fragment {
         return view;
     }
 
-    private void btnPressed() {
-        btnZona1.setPressed(true);
-    }
-
-    /*public void a_updateText(String t) {
-        txtZonaAtual.setText(t);
-    }*/
-
 
 
     @Override
@@ -185,8 +169,15 @@ public class tabSensores extends Fragment {
         if (fragment == null) {
             fragment = SupportMapFragment.newInstance();
             fm.beginTransaction().replace(R.id.map, fragment).commit();
-        }
 
+        }
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString("zona", zonaEscolhida);
     }
 
     @Override

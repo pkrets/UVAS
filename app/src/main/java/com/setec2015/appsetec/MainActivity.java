@@ -17,7 +17,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Communicator{
 
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
@@ -110,6 +110,11 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .setNegativeButton("Não", null)
                 .show();
+    }
+
+    @Override
+    public void respond(String data) {
+
     }
 
 

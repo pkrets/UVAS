@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 public class tabAlertas extends Fragment {
 
+
     private Button btnZona1, btnZona2, btnZona3;
     TextView txtZonaAtual;
 
@@ -25,21 +26,35 @@ public class tabAlertas extends Fragment {
     String zona2 = "   ZONA 2 - Este";
     String zona3 = "   ZONA 3 - Oeste";
 
+    public String zonaAtual, zonaEscolhida;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            // Restore last state for checked position.
+            zonaAtual = savedInstanceState.getString("zona");
+        }
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab_alertas, container, false);
 
         btnZona1 = (Button) view.findViewById(R.id.btnZona1);
-        //btnZona1.getBackground().setColorFilter(new LightingColorFilter(0x43A047, 0x00111111));
-
         btnZona2 = (Button) view.findViewById(R.id.btnZona2);
-        //btnZona2.getBackground().setColorFilter(new LightingColorFilter(0x43A047, 0x00111111));
-
         btnZona3 = (Button) view.findViewById(R.id.btnZona3);
-        //btnZona3.getBackground().setColorFilter(new LightingColorFilter(0x43A047, 0x00111111));
 
         txtZonaAtual = (TextView) view.findViewById(R.id.txtZonaAtual);
+        txtZonaAtual.setText(zonaAtual);
+
+        /*
+            String myTag = getTag();
+
+            ((MainActivity)getActivity()).setTabFragmentB(myTag);
+        */
 
 
         // Button "Zona 1"
@@ -48,9 +63,7 @@ public class tabAlertas extends Fragment {
             public void onClick(View v) {
 
                 txtZonaAtual.setText(zona1);
-
-                /*String textZona1 = zona1;
-                tabSensores.a_updateText(textZona1);*/
+                zonaEscolhida = txtZonaAtual.getText().toString();
             }
         });
 
@@ -60,9 +73,7 @@ public class tabAlertas extends Fragment {
             public void onClick(View v) {
 
                 txtZonaAtual.setText(zona2);
-
-                /*String textZona2 = zona2;
-                tabSensores.a_updateText(textZona2);*/
+                zonaEscolhida = txtZonaAtual.getText().toString();
             }
         });
 
@@ -72,9 +83,7 @@ public class tabAlertas extends Fragment {
             public void onClick(View v) {
 
                 txtZonaAtual.setText(zona3);
-
-                /*String textZona3 = zona3;
-                tabSensores.a_updateText(textZona3);*/
+                zonaEscolhida = txtZonaAtual.getText().toString();
             }
         });
 
@@ -82,20 +91,19 @@ public class tabAlertas extends Fragment {
         return view;
     }
 
-    /*public static void b_updateText(String t){
-        txtZonaAtual.setText(t);
-    }*/
+    /*
+        public void b_updateText(String t) {
+            txtZonaAtual.setText(t);
+        }
+    */
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString("zona", zonaEscolhida);
     }
 
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
 }
 
 
