@@ -11,17 +11,24 @@ import android.graphics.LightingColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +39,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class tabSensores extends Fragment {
@@ -54,6 +64,10 @@ public class tabSensores extends Fragment {
 
     public String zonaAtual, zonaEscolhida;
 
+    private List<listaSensoresZona1> mySensoresZona1 = new ArrayList<>();
+    Bundle savedInstanceState;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,12 +76,11 @@ public class tabSensores extends Fragment {
             // Restore last state for checked position.
             zonaAtual = savedInstanceState.getString("zona");
         }
-
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        this.savedInstanceState =savedInstanceState;
         View view = inflater.inflate(R.layout.tab_sensores, container, false);
 
         btnZona1 = (Button) view.findViewById(R.id.btnZona1);
@@ -81,7 +94,7 @@ public class tabSensores extends Fragment {
         txtZonaAtual = (TextView) view.findViewById(R.id.txtZonaAtual);
         txtZonaAtual.setText(zonaAtual);
 
-        txtTemperaturaMin = (TextView) view.findViewById(R.id.txtTemperaturaMin);
+
 
 
         // Button "Zona 1"
@@ -159,7 +172,6 @@ public class tabSensores extends Fragment {
     }
 
 
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -169,8 +181,81 @@ public class tabSensores extends Fragment {
         if (fragment == null) {
             fragment = SupportMapFragment.newInstance();
             fm.beginTransaction().replace(R.id.map, fragment).commit();
-
         }
+        populateSensoresList1();
+        populateListView1();
+        registerClickCallBack1();
+    }
+
+    //Populates the list of (last received) sensors' values from "Zona 1"
+    private void populateSensoresList1() {
+        // Temperatura
+        mySensoresZona1.add(new listaSensoresZona1("Temperatura", "   ºC", R.mipmap.ic_temperatura, 23));
+        // Luminosidade
+        mySensoresZona1.add(new listaSensoresZona1("Luminosidade", "   lm/m", R.mipmap.ic_luminosidade, 66));
+        // Humidade
+        mySensoresZona1.add(new listaSensoresZona1("Humidade", "   %", R.mipmap.ic_humidade, 45));
+        // Pluviosidade
+        mySensoresZona1.add(new listaSensoresZona1("Pluviosidade", "   mm/h", R.mipmap.ic_pluviosidade, 5));
+    }
+
+    // Populate ListView
+    private void populateListView1() {
+        ArrayAdapter<listaSensoresZona1> adapter = new MyListAdapter();
+        if (getView() != null) {
+            getView().findViewById(R.id.zona1ListView);
+        }
+        ListView list = (ListView) getView().findViewById(R.id.zona1ListView);
+        list.setAdapter(adapter);
+    }
+
+    private class MyListAdapter extends ArrayAdapter<listaSensoresZona1> {
+        public MyListAdapter() {
+            super(getActivity(), R.layout.sensor_list_item, mySensoresZona1);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            // Make sure we have a view to work with (may have been given null)
+            View itemView = convertView;
+            if(itemView == null) {
+                itemView = getLayoutInflater(savedInstanceState).inflate(R.layout.sensor_list_item, parent, false);
+            }
+
+            // Find the sensor to work with
+            listaSensoresZona1 currentSensor = mySensoresZona1.get(position);
+
+            // Fill the sensor's name
+            TextView item_txtSensor = (TextView) itemView.findViewById(R.id.item_txtSensor);
+            item_txtSensor.setText(currentSensor.getSensor());
+
+            // Fill the sensor's icon (imageView)
+            ImageView item_icon = (ImageView) itemView.findViewById(R.id.item_icon);
+            item_icon.setImageResource(currentSensor.getIconID());
+
+            // Fill the sensor's value
+            TextView item_txtValue = (TextView) itemView.findViewById(R.id.item_txtValue);
+            item_txtValue.setText("" + currentSensor.getValue());
+
+            // Fill the sensor's value
+            TextView item_txtValueType = (TextView) itemView.findViewById(R.id.item_txtValueType);
+            item_txtValueType.setText(currentSensor.getValueType());
+
+            return itemView;
+        }
+    }
+
+    // Registers onClick events inside the ListView
+    private void registerClickCallBack1() {
+        ListView list = (ListView) getView().findViewById(R.id.zona1ListView);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
+                listaSensoresZona1 clickedSensor = mySensoresZona1.get(position);
+                String listMessage = "Item " + position + "  :: Sensor de " + clickedSensor.getSensor();
+                Toast.makeText(getActivity(), listMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
@@ -188,8 +273,9 @@ public class tabSensores extends Fragment {
         }
         // Enables the location of my current position via GPS
         map.setMyLocationEnabled(true);
-
     }
+
+
 }
 
 
