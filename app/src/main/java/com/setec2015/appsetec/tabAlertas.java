@@ -104,8 +104,10 @@ public class tabAlertas extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        // Show ListView and its componentes
         populateAlertasList();
         populateAlertasListView();
+        // Action performed when a row in the list is clicked
         registerAlertasClickCallBack();
     }
 
@@ -121,7 +123,7 @@ public class tabAlertas extends Fragment {
         // Alerta 4
         myAlertas.add(new listaAlertas(4, "Temperatura", "Ultrapassou valor mínimo pretendido", R.mipmap.ic_temperatura, 19, "03 Jul '15"));
         // Alerta 5
-        myAlertas.add(new listaAlertas(15,"Luminosidade", "Ultrapassou valor máximo pretendido", R.mipmap.ic_luminosidade, 78, "14 Jul '15"));
+        myAlertas.add(new listaAlertas(15, "Luminosidade", "Ultrapassou valor máximo pretendido", R.mipmap.ic_luminosidade, 78, "14 Jul '15"));
         // Alerta 6
         myAlertas.add(new listaAlertas(263, "Humidade", "Ultrapassou valor máximo pretendido", R.mipmap.ic_humidade, 65, "24 Jul '15"));
         // Alerta 7

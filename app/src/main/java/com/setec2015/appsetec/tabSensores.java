@@ -192,13 +192,13 @@ public class tabSensores extends Fragment {
     //Populates the list of (last received) sensors' values from "Zona 1"
     private void populateSensoresList() {
         // Temperatura
-        mySensores.add(new listaSensoresZona1(" Temperatura", "  ºC", R.mipmap.ic_temperatura, 0));
+        mySensores.add(new listaSensoresZona1(" Temperatura", "  ºC", R.mipmap.ic_temperatura, 23));
         // Luminosidade
-        mySensores.add(new listaSensoresZona1(" Luminosidade", "  lm/m", R.mipmap.ic_luminosidade, 0));
+        mySensores.add(new listaSensoresZona1(" Luminosidade", "  lm/m", R.mipmap.ic_luminosidade, 66));
         // Humidade
-        mySensores.add(new listaSensoresZona1(" Humidade", "  %", R.mipmap.ic_humidade, 0));
+        mySensores.add(new listaSensoresZona1(" Humidade", "  %", R.mipmap.ic_humidade, 45));
         // Pluviosidade
-        mySensores.add(new listaSensoresZona1(" Pluviosidade", "  mm/h", R.mipmap.ic_pluviosidade, 0));
+        mySensores.add(new listaSensoresZona1(" Pluviosidade", "  mm/h", R.mipmap.ic_pluviosidade, 5));
     }
 
     // Populate ListView
