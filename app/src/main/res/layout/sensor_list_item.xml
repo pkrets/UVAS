@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/listSensorColor">
+    android:background="@color/listSensorColor"
+    android:id="@+id/sensor_list_item">
 
     <ImageView
         android:layout_width="38dp"
@@ -22,8 +23,8 @@
         android:id="@+id/item_txtSensor"
         android:textSize="16dp"
         android:layout_toEndOf="@+id/item_icon"
-        android:layout_alignBottom="@+id/item_icon"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:layout_alignBottom="@+id/item_icon" />
 
 
     <TextView
@@ -33,9 +34,11 @@
         android:text="Medium Text"
         android:id="@+id/item_txtValue"
         android:textSize="17dp"
-        android:layout_alignBottom="@+id/item_txtSensor"
+        android:layout_marginRight="8dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="8dp"/>
+        android:layout_alignBottom="@+id/item_txtSensor"
+        android:layout_alignParentTop="true"
+        android:gravity="center_vertical" />
 
     <TextView
         android:layout_width="wrap_content"

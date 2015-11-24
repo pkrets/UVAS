@@ -82,15 +82,15 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/lbl_valoresSensores"
                 android:id="@+id/txtValoresSensores"
-                android:layout_alignParentTop="true"
-                android:layout_alignEnd="@+id/zona1ListView"
                 android:textSize="13dp"
-                android:foregroundGravity="top" />
+                android:foregroundGravity="top"
+                android:layout_alignParentTop="true"
+                android:layout_alignEnd="@+id/sensorListView" />
 
             <ListView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/zona1ListView"
+                android:id="@+id/sensorListView"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"

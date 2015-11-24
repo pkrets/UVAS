@@ -51,7 +51,6 @@ public class tabSensores extends Fragment {
     private Button btnZoomIn;
     private Button btnZoomOut;
     TextView txtZonaAtual;
-    TextView txtTemperaturaMin;
 
     String zona1 = "   ZONA 1 - Norte";
     String zona2 = "   ZONA 2 - Este";
@@ -64,7 +63,7 @@ public class tabSensores extends Fragment {
 
     public String zonaAtual, zonaEscolhida;
 
-    private List<listaSensoresZona1> mySensoresZona1 = new ArrayList<>();
+    private List<listaSensoresZona1> mySensores = new ArrayList<>();
     Bundle savedInstanceState;
 
 
@@ -182,36 +181,39 @@ public class tabSensores extends Fragment {
             fragment = SupportMapFragment.newInstance();
             fm.beginTransaction().replace(R.id.map, fragment).commit();
         }
-        populateSensoresList1();
-        populateListView1();
-        registerClickCallBack1();
+
+        // By default the values from "Zona 1" are displayed when the App is first running (keep this way ??)
+        populateSensoresList();
+        populateSensoresListView();
+        registerSensoresClickCallBack();
+
     }
 
     //Populates the list of (last received) sensors' values from "Zona 1"
-    private void populateSensoresList1() {
+    private void populateSensoresList() {
         // Temperatura
-        mySensoresZona1.add(new listaSensoresZona1("Temperatura", "   ºC", R.mipmap.ic_temperatura, 23));
+        mySensores.add(new listaSensoresZona1(" Temperatura", "  ºC", R.mipmap.ic_temperatura, 0));
         // Luminosidade
-        mySensoresZona1.add(new listaSensoresZona1("Luminosidade", "   lm/m", R.mipmap.ic_luminosidade, 66));
+        mySensores.add(new listaSensoresZona1(" Luminosidade", "  lm/m", R.mipmap.ic_luminosidade, 0));
         // Humidade
-        mySensoresZona1.add(new listaSensoresZona1("Humidade", "   %", R.mipmap.ic_humidade, 45));
+        mySensores.add(new listaSensoresZona1(" Humidade", "  %", R.mipmap.ic_humidade, 0));
         // Pluviosidade
-        mySensoresZona1.add(new listaSensoresZona1("Pluviosidade", "   mm/h", R.mipmap.ic_pluviosidade, 5));
+        mySensores.add(new listaSensoresZona1(" Pluviosidade", "  mm/h", R.mipmap.ic_pluviosidade, 0));
     }
 
     // Populate ListView
-    private void populateListView1() {
+    private void populateSensoresListView() {
         ArrayAdapter<listaSensoresZona1> adapter = new MyListAdapter();
         if (getView() != null) {
-            getView().findViewById(R.id.zona1ListView);
+            getView().findViewById(R.id.sensorListView);
         }
-        ListView list = (ListView) getView().findViewById(R.id.zona1ListView);
+        ListView list = (ListView) getView().findViewById(R.id.sensorListView);
         list.setAdapter(adapter);
     }
 
     private class MyListAdapter extends ArrayAdapter<listaSensoresZona1> {
         public MyListAdapter() {
-            super(getActivity(), R.layout.sensor_list_item, mySensoresZona1);
+            super(getActivity(), R.layout.sensor_list_item, mySensores);
         }
 
         @Override
@@ -223,7 +225,7 @@ public class tabSensores extends Fragment {
             }
 
             // Find the sensor to work with
-            listaSensoresZona1 currentSensor = mySensoresZona1.get(position);
+            listaSensoresZona1 currentSensor = mySensores.get(position);
 
             // Fill the sensor's name
             TextView item_txtSensor = (TextView) itemView.findViewById(R.id.item_txtSensor);
@@ -246,13 +248,13 @@ public class tabSensores extends Fragment {
     }
 
     // Registers onClick events inside the ListView
-    private void registerClickCallBack1() {
-        ListView list = (ListView) getView().findViewById(R.id.zona1ListView);
+    private void registerSensoresClickCallBack() {
+        ListView list = (ListView) getView().findViewById(R.id.sensorListView);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                listaSensoresZona1 clickedSensor = mySensoresZona1.get(position);
-                String listMessage = "Item " + position + "  :: Sensor de " + clickedSensor.getSensor();
+                listaSensoresZona1 clickedSensor = mySensores.get(position);
+                String listMessage = "Item " + position + " :: Sensor de " + clickedSensor.getSensor();
                 Toast.makeText(getActivity(), listMessage, Toast.LENGTH_SHORT).show();
             }
         });
