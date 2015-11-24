@@ -17,8 +17,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
     private Switch switch1;
-    private EditText edtTemperaturaMin, edtTemperaturaMax, edtHumidadeMin, edtHumidadeMax, edtSolMin, edtSolMax;
-    private Button btnAplicar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +32,7 @@ public class SettingsActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Enable switch button from "Definições"
-        switch1 = (Switch) findViewById(R.id.switch1);
+        /*switch1 = (Switch) findViewById(R.id.switch1);
 
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -47,29 +44,8 @@ public class SettingsActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Recepção de Alertas foi desactivado!", Toast.LENGTH_SHORT).show();
                 }
             }
-        });
-
-        edtTemperaturaMin = (EditText) findViewById(R.id.edtTemperaturaMin);
-        edtTemperaturaMax = (EditText) findViewById(R.id.edtTemperaturaMax);
-
-        edtHumidadeMin = (EditText) findViewById(R.id.edtHumidadeMin);
-        edtHumidadeMax = (EditText) findViewById(R.id.edtHumidadeMax);
-
-        edtSolMin = (EditText) findViewById(R.id.edtSolMin);
-        edtSolMax = (EditText) findViewById(R.id.edtSolMax);
-
-        btnAplicar = (Button) findViewById(R.id.btnAplicar);
-
-        /*btnAplicar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("edtTemperaturaMin", "From Activity");
-                // set Fragmentclass Arguments
-                tabSensores fragobj = new tabSensores();
-                fragobj.setArguments(bundle);
-            }
         });*/
+
     }
 
 

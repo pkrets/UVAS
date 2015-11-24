@@ -254,7 +254,7 @@ public class tabSensores extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
                 listaSensoresZona1 clickedSensor = mySensores.get(position);
-                String listMessage = "Item " + position + " :: Sensor de " + clickedSensor.getSensor();
+                String listMessage = "Item " + position + 1 + " :: Sensor de " + clickedSensor.getSensor();
                 Toast.makeText(getActivity(), listMessage, Toast.LENGTH_SHORT).show();
             }
         });
