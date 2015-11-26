@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/listSensorColor"
     android:id="@+id/sensor_list_item">
 
@@ -21,7 +21,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
         android:id="@+id/item_txtSensor"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:layout_toEndOf="@+id/item_icon"
         android:layout_alignParentTop="true"
         android:layout_alignBottom="@+id/item_icon" />
@@ -33,12 +33,13 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/item_txtValue"
-        android:textSize="17dp"
+        android:textSize="17sp"
         android:layout_marginRight="8dp"
         android:layout_alignParentEnd="true"
         android:layout_alignBottom="@+id/item_txtSensor"
         android:layout_alignParentTop="true"
-        android:gravity="center_vertical" />
+        android:gravity="bottom"
+        android:textColor="#388E3C" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -46,7 +47,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/item_txtValueType"
-        android:textSize="12dp"
+        android:textSize="12sp"
         android:layout_alignBottom="@+id/item_icon"
         android:layout_toEndOf="@+id/item_icon" />
 

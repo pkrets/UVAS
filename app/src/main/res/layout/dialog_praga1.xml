@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/tabBackgroundColor">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_weight="1"
+        android:background="#C5E1A5">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/txtPragaNome"
+            android:text="NOME"
+            android:textSize="15sp"
+            android:gravity="center_vertical"
+            android:textColor="#33691E"
+            android:layout_weight="2"
+            android:paddingLeft="10dp"/>
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:text="OK"
+            android:id="@+id/btnConfigPraga1_ok"
+            android:background="@color/tabBackgroundColor"
+            android:textColor="#37474F"
+            android:textSize="13sp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical|center_horizontal" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#37474F"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/txtPragaDescricao"
+        android:text="DESCRIÇÃO"
+        android:textSize="13sp"
+        android:gravity="center_vertical|fill"
+        android:layout_weight="7"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textColor="#424242" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#37474F"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Temperatura (ºC)"
+            android:textSize="14sp"
+            android:textColor="#37474F"
+            android:layout_weight="6"
+            android:gravity="center_vertical" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/edt_minTempPraga1"
+            android:hint="mín"
+            android:layout_weight="1.5"
+            android:textSize="14sp"
+            android:gravity="bottom|center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="a"
+            android:textSize="14sp"
+            android:textColor="#37474F"
+            android:gravity="center_vertical" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/edt_maxTempPraga1"
+            android:hint="máx"
+            android:layout_weight="1.5"
+            android:textSize="14sp"
+            android:gravity="bottom|center_horizontal"
+            android:focusable="false" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#BDBDBD"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Humidade (%)"
+            android:textSize="14sp"
+            android:textColor="#37474F"
+            android:layout_weight="6"
+            android:gravity="center_vertical" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/edt_minHumPraga1"
+            android:hint="mín"
+            android:layout_weight="1.5"
+            android:textSize="14sp"
+            android:gravity="bottom|center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="a"
+            android:textSize="14sp"
+            android:textColor="#37474F"
+            android:gravity="center_vertical" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/edt_maxHumPraga1"
+            android:hint="máx"
+            android:layout_weight="1.5"
+            android:textSize="14sp"
+            android:gravity="bottom|center_horizontal"
+            android:focusable="false" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#BDBDBD"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Pluviosidade (mm/h)"
+            android:textSize="14sp"
+            android:textColor="#37474F"
+            android:layout_weight="6"
+            android:gravity="center_vertical" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/edt_minPluvPraga1"
+            android:hint="mín"
+            android:layout_weight="1.5"
+            android:textSize="14sp"
+            android:gravity="bottom|center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="a"
+            android:textSize="14sp"
+            android:textColor="#37474F"
+            android:gravity="center_vertical" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/edt_maxPluvPraga1"
+            android:hint="máx"
+            android:layout_weight="1.5"
+            android:textSize="14sp"
+            android:gravity="bottom|center_horizontal"
+            android:focusable="false" />
+    </LinearLayout>
+
+
+</LinearLayout>
