@@ -44,8 +44,8 @@ public class SettingsActivity extends AppCompatActivity implements dialogPraga1.
         private Button btnConfigTemp, btnConfigLum, btnConfigHum, btnConfigPluv;
 
     // Declare UI objects from "Doenças" alerts
-        private CheckBox checkBoxPraga1, checkBoxPraga2, checkBoxPraga3, checkBoxPraga4, checkBoxPraga5;
-        private Button btnConfigPraga1, btnConfigPraga2, btnConfigPraga3, btnConfigPraga4, btnConfigPraga5;
+        private CheckBox checkBoxPraga1, checkBoxPraga2, checkBoxPraga3, checkBoxPraga4;
+        private Button btnConfigPraga1, btnConfigPraga2, btnConfigPraga3, btnConfigPraga4;
 
         String boxPraga1, boxPraga1_saved;
 
@@ -111,11 +111,6 @@ public class SettingsActivity extends AppCompatActivity implements dialogPraga1.
             btnConfigPraga4.setVisibility(View.INVISIBLE);
             //btnConfigPraga4.setOnClickListener(this);
 
-        checkBoxPraga5 = (CheckBox) findViewById(R.id.checkBoxPraga5);
-        btnConfigPraga5 = (Button) findViewById(R.id.btnConfigPraga5);
-            btnConfigPraga5.setVisibility(View.INVISIBLE);
-            //btnConfigPraga5.setOnClickListener(this);
-
 
 
 
@@ -161,7 +156,6 @@ public class SettingsActivity extends AppCompatActivity implements dialogPraga1.
                             checkBoxPraga2.setChecked(false);
                             checkBoxPraga3.setChecked(false);
                             checkBoxPraga4.setChecked(false);
-                            checkBoxPraga5.setChecked(false);
                         }
                 }
             });
@@ -290,17 +284,6 @@ public class SettingsActivity extends AppCompatActivity implements dialogPraga1.
                 }
             });
 
-        // Checkbox 10 - "Praga 5"
-            checkBoxPraga5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        btnConfigPraga5.setVisibility(View.VISIBLE);
-                    } else {
-                        btnConfigPraga5.setVisibility(View.INVISIBLE);
-                    }
-                }
-            });
 
 
 ////////////////////// Configuration buttons to inflate the Dialogs (DialogFragment)
@@ -372,8 +355,44 @@ public class SettingsActivity extends AppCompatActivity implements dialogPraga1.
                 }
             });
 
+        // Praga 2 - button to show dialog with info/values
+            btnConfigPraga2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
+                    FragmentManager manager = getFragmentManager();
+                    dialogPraga2 myDialog = new dialogPraga2();
+                    myDialog.show(manager, "DataPraga2");
+                    myDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
 
+                }
+            });
+
+        // Praga 3 - button to show dialog with info/values
+            btnConfigPraga3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    FragmentManager manager = getFragmentManager();
+                    dialogPraga3 myDialog = new dialogPraga3();
+                    myDialog.show(manager, "DataPraga3");
+                    myDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+
+                }
+            });
+
+        // Praga 4 - button to show dialog with info/values
+            btnConfigPraga4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    FragmentManager manager = getFragmentManager();
+                    dialogPraga4 myDialog = new dialogPraga4();
+                    myDialog.show(manager, "DataPraga4");
+                    myDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+
+                }
+            });
 
     }
 

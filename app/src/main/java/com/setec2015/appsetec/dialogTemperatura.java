@@ -50,11 +50,11 @@ public class dialogTemperatura extends DialogFragment implements View.OnClickLis
         maxTemperatura_saved = prefs.getString("maxTemperatura", "0");
 
             edt_minTemperatura = (EditText) view.findViewById(R.id.edt_minTemperatura);
-            edt_minTemperatura.setText(minTemperatura_saved);
+                edt_minTemperatura.setText(minTemperatura_saved);
 
             edt_maxTemperatura = (EditText) view.findViewById(R.id.edt_maxTemperatura);
-            edt_maxTemperatura.setText(maxTemperatura_saved);
-            Toast.makeText(getActivity(), "Value retrieved = " + maxTemperatura_saved, Toast.LENGTH_SHORT).show();
+                edt_maxTemperatura.setText(maxTemperatura_saved);
+                Toast.makeText(getActivity(), "Value retrieved = " + maxTemperatura_saved, Toast.LENGTH_SHORT).show();
 
 
 

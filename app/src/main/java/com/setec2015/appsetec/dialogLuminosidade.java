@@ -50,10 +50,10 @@ public class dialogLuminosidade extends DialogFragment implements View.OnClickLi
         maxLuminosidade_saved = prefs.getString("maxLuminosidade", "0");
 
             edt_minLuminosidade = (EditText) view.findViewById(R.id.edt_minLuminosidade);
-            edt_minLuminosidade.setText(minLuminosidade_saved);
+                edt_minLuminosidade.setText(minLuminosidade_saved);
 
             edt_maxLuminosidade = (EditText) view.findViewById(R.id.edt_maxLuminosidade);
-            edt_maxLuminosidade.setText(maxLuminosidade_saved);
+                edt_maxLuminosidade.setText(maxLuminosidade_saved);
 
 
 

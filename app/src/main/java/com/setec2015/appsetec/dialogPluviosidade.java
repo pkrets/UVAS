@@ -49,11 +49,11 @@ public class dialogPluviosidade extends DialogFragment implements View.OnClickLi
         minPluviosidade_saved = prefs.getString("minPluviosidade", "0");
         maxPluviosidade_saved = prefs.getString("maxPluviosidade", "0");
 
-        edt_minPluviosidade = (EditText) view.findViewById(R.id.edt_minPluviosidade);
-        edt_minPluviosidade.setText(minPluviosidade_saved);
+            edt_minPluviosidade = (EditText) view.findViewById(R.id.edt_minPluviosidade);
+                edt_minPluviosidade.setText(minPluviosidade_saved);
 
-        edt_maxPluviosidade = (EditText) view.findViewById(R.id.edt_maxPluviosidade);
-        edt_maxPluviosidade.setText(maxPluviosidade_saved);
+            edt_maxPluviosidade = (EditText) view.findViewById(R.id.edt_maxPluviosidade);
+                edt_maxPluviosidade.setText(maxPluviosidade_saved);
 
 
 

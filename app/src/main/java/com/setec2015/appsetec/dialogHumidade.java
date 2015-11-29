@@ -50,10 +50,10 @@ public class dialogHumidade extends DialogFragment implements View.OnClickListen
         maxHumidade_saved = prefs.getString("maxHumidade", "0");
 
             edt_minHumidade = (EditText) view.findViewById(R.id.edt_minHumidade);
-            edt_minHumidade.setText(minHumidade_saved);
+                edt_minHumidade.setText(minHumidade_saved);
 
             edt_maxHumidade = (EditText) view.findViewById(R.id.edt_maxHumidade);
-            edt_maxHumidade.setText(maxHumidade_saved);
+                edt_maxHumidade.setText(maxHumidade_saved);
 
 
 
