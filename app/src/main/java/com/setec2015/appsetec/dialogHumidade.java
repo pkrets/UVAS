@@ -49,12 +49,11 @@ public class dialogHumidade extends DialogFragment implements View.OnClickListen
         minHumidade_saved = prefs.getString("minHumidade", "0");
         maxHumidade_saved = prefs.getString("maxHumidade", "0");
 
-        edt_minHumidade = (EditText) view.findViewById(R.id.edt_minHumidade);
-        edt_minHumidade.setText(minHumidade_saved);
+            edt_minHumidade = (EditText) view.findViewById(R.id.edt_minHumidade);
+            edt_minHumidade.setText(minHumidade_saved);
 
-        edt_maxHumidade = (EditText) view.findViewById(R.id.edt_maxHumidade);
-        edt_maxHumidade.setText(maxHumidade_saved);
-        Toast.makeText(getActivity(), "Value retrieved = " + maxHumidade_saved, Toast.LENGTH_SHORT).show();
+            edt_maxHumidade = (EditText) view.findViewById(R.id.edt_maxHumidade);
+            edt_maxHumidade.setText(maxHumidade_saved);
 
 
 
@@ -92,8 +91,6 @@ public class dialogHumidade extends DialogFragment implements View.OnClickListen
             editor.putString("maxHumidade", maxHumidade);
             editor.commit();
 
-
-            Toast.makeText(getActivity(), "OK was clicked with value = " + maxHumidade, Toast.LENGTH_SHORT).show();
             dismiss();
         }
         else

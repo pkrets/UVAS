@@ -123,8 +123,7 @@
             android:hint="máx"
             android:layout_weight="1.5"
             android:textSize="14sp"
-            android:gravity="bottom|center_horizontal"
-            android:focusable="false" />
+            android:gravity="bottom|center_horizontal" />
     </LinearLayout>
 
     <View
@@ -180,8 +179,7 @@
             android:hint="máx"
             android:layout_weight="1.5"
             android:textSize="14sp"
-            android:gravity="bottom|center_horizontal"
-            android:focusable="false" />
+            android:gravity="bottom|center_horizontal"/>
     </LinearLayout>
 
     <View
@@ -237,8 +235,7 @@
             android:hint="máx"
             android:layout_weight="1.5"
             android:textSize="14sp"
-            android:gravity="bottom|center_horizontal"
-            android:focusable="false" />
+            android:gravity="bottom|center_horizontal"/>
     </LinearLayout>
 
 

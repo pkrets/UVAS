@@ -22,8 +22,14 @@ public class dialogPraga1 extends DialogFragment implements View.OnClickListener
     Button btnConfigPraga1_ok, btnConfigPraga1_cancel;
     TextView txtPragaNome1, txtPragaDescricao1;
 
-    EditText edt_minTempPraga1;
-    String minTempPraga1, minTempPraga1_saved;
+    EditText edt_minTempPraga1, edt_maxTempPraga1;
+    String minTempPraga1, minTempPraga1_saved, maxTempPraga1, maxTempPraga1_saved;
+
+    EditText edt_minHumPraga1, edt_maxHumPraga1;
+    String minHumPraga1, minHumPraga1_saved, maxHumPraga1, maxHumPraga1_saved;
+
+    EditText edt_minPluvPraga1, edt_maxPluvPraga1;
+    String minPluvPraga1, minPluvPraga1_saved, maxPluvPraga1, maxPluvPraga1_saved;
 
     DataSettings dataSettings;
 
@@ -57,10 +63,27 @@ public class dialogPraga1 extends DialogFragment implements View.OnClickListener
 
         SharedPreferences prefs = getActivity().getSharedPreferences("DataPraga1", Context.MODE_PRIVATE);
         minTempPraga1_saved = prefs.getString("minTempPraga1", "0");
+        maxTempPraga1_saved = prefs.getString("maxTempPraga1", "0");
+        minHumPraga1_saved = prefs.getString("minHumPraga1", "0");
+        maxHumPraga1_saved = prefs.getString("maxHumPraga1", "0");
+        minPluvPraga1_saved = prefs.getString("minPluvPraga1", "0");
+        maxPluvPraga1_saved = prefs.getString("maxPluvPraga1", "0");
 
-        edt_minTempPraga1 = (EditText) view.findViewById(R.id.edt_minTempPraga1);
-            edt_minTempPraga1.setText(minTempPraga1_saved);
-            Toast.makeText(getActivity(), "Value retrieved = " + minTempPraga1_saved, Toast.LENGTH_SHORT).show();
+            edt_minTempPraga1 = (EditText) view.findViewById(R.id.edt_minTempPraga1);
+                edt_minTempPraga1.setText(minTempPraga1_saved);
+            edt_maxTempPraga1 = (EditText) view.findViewById(R.id.edt_maxTempPraga1);
+                edt_maxTempPraga1.setText(maxTempPraga1_saved);
+
+            edt_minHumPraga1 = (EditText) view.findViewById(R.id.edt_minHumPraga1);
+                edt_minHumPraga1.setText(minHumPraga1_saved);
+            edt_maxHumPraga1 = (EditText) view.findViewById(R.id.edt_maxHumPraga1);
+                edt_maxHumPraga1.setText(maxHumPraga1_saved);
+
+            edt_minPluvPraga1 = (EditText) view.findViewById(R.id.edt_minPluvPraga1);
+                edt_minPluvPraga1.setText(minPluvPraga1_saved);
+            edt_maxPluvPraga1 = (EditText) view.findViewById(R.id.edt_maxPluvPraga1);
+                edt_maxPluvPraga1.setText(maxPluvPraga1_saved);
+
 
 
         runOnce();
@@ -76,6 +99,12 @@ public class dialogPraga1 extends DialogFragment implements View.OnClickListener
                 RUN_ONCE = false;
 
                 edt_minTempPraga1.setText(null);
+                edt_maxTempPraga1.setText(null);
+                edt_minHumPraga1.setText(null);
+                edt_maxHumPraga1.setText(null);
+                edt_minPluvPraga1.setText(null);
+                edt_maxPluvPraga1.setText(null);
+
                 Toast.makeText(getActivity(), "Dialog is running for the first time!", Toast.LENGTH_SHORT).show();
             }
         }
@@ -87,10 +116,20 @@ public class dialogPraga1 extends DialogFragment implements View.OnClickListener
         if(view.getId() == R.id.btnConfigPraga1_ok) {
 
             minTempPraga1 = edt_minTempPraga1.getText().toString();
+            maxTempPraga1 = edt_maxTempPraga1.getText().toString();
+            minHumPraga1 = edt_minHumPraga1.getText().toString();
+            maxHumPraga1 = edt_maxHumPraga1.getText().toString();
+            minPluvPraga1 = edt_minPluvPraga1.getText().toString();
+            maxPluvPraga1 = edt_maxPluvPraga1.getText().toString();
 
             SharedPreferences prefs = getActivity().getSharedPreferences("DataPraga1", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = prefs.edit();
             editor.putString("minTempPraga1", minTempPraga1);
+            editor.putString("maxTempPraga1", maxTempPraga1);
+            editor.putString("minHumPraga1", minHumPraga1);
+            editor.putString("maxHumPraga1", maxHumPraga1);
+            editor.putString("minPluvPraga1", minPluvPraga1);
+            editor.putString("maxPluvPraga1", maxPluvPraga1);
             editor.commit();
 
             dataSettings.onDialogMessage("OK was clicked with value = " + minTempPraga1);
