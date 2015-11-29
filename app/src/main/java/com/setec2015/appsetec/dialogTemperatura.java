@@ -46,7 +46,7 @@ public class dialogTemperatura extends DialogFragment implements View.OnClickLis
         //
 
         SharedPreferences prefs = getActivity().getSharedPreferences("DataTemperatura", Context.MODE_PRIVATE);
-        minTemperatura_saved = prefs.getString("minTemperatura", "0");
+        String read = prefs.getString("minTemperatura", "0");
         maxTemperatura_saved = prefs.getString("maxTemperatura", "0");
 
             edt_minTemperatura = (EditText) view.findViewById(R.id.edt_minTemperatura);
@@ -76,7 +76,6 @@ public class dialogTemperatura extends DialogFragment implements View.OnClickLis
                 Toast.makeText(getActivity(), "Dialog is running for the first time!", Toast.LENGTH_SHORT).show();
             }
         }
-
 
 
     @Override

@@ -35,7 +35,6 @@ public class SettingsActivity extends AppCompatActivity implements dialogPraga1.
     private Switch switchAlertas;
 
 
-
     View view;
     LayoutInflater inflater;
 
