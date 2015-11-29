@@ -1,8 +1,10 @@
 package com.setec2015.appsetec;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -77,10 +79,12 @@ public class MainActivity extends AppCompatActivity implements Communicator{
         if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
         }
+
         // Button -- Ajuda
         if (id == R.id.action_help) {
             Toast.makeText(getApplicationContext(), "Botão > Ajuda < clicado!", Toast.LENGTH_SHORT).show();
         }
+
         // Button -- Terminar Sessão
         if (id == R.id.action_logout) {
             new AlertDialog.Builder(this)

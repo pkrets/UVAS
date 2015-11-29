@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="@color/tabBackgroundColor">
 
     <LinearLayout
@@ -14,27 +14,40 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/txtPragaNome"
+            android:id="@+id/txtPragaNome1"
             android:text="NOME"
-            android:textSize="15sp"
-            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:gravity="center"
             android:textColor="#33691E"
-            android:layout_weight="2"
-            android:paddingLeft="10dp"/>
+            android:paddingLeft="10dp"
+            android:layout_weight="8" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="45dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="Cancelar"
+            android:id="@+id/btnConfigPraga1_cancel"
+            android:layout_weight="2"
+            android:textSize="12sp"
+            android:background="#9CCC65"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:text="OK"
             android:id="@+id/btnConfigPraga1_ok"
-            android:background="@color/tabBackgroundColor"
-            android:textColor="#37474F"
+            android:layout_weight="2"
             android:textSize="13sp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="5dp"
+            android:background="#9CCC65"
+            android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
-            android:gravity="center_vertical|center_horizontal" />
+            android:layout_marginBottom="5dp"/>
+
 
     </LinearLayout>
 
@@ -46,13 +59,13 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:id="@+id/txtPragaDescricao"
+        android:id="@+id/txtPragaDescricao1"
         android:text="DESCRIÇÃO"
         android:textSize="13sp"
         android:gravity="center_vertical|fill"
         android:layout_weight="7"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:textColor="#424242" />

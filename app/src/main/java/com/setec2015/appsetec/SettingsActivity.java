@@ -1,11 +1,19 @@
 package com.setec2015.appsetec;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.app.FragmentManager;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.internal.VersionUtils;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,54 +28,26 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
-public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
+public class SettingsActivity extends AppCompatActivity implements dialogPraga1.DataSettings {
 
     private Toolbar mToolbar;
 
     private Switch switchAlertas;
 
+
+
     View view;
     LayoutInflater inflater;
 
-    // UI objects from sensors' alerts
-        private CheckBox checkBoxTemperatura;
-        private EditText edt_minTemperatura, edt_maxTemperatura;
-        private TextView textTil1;
+    // Declare UI objects from "Sensores" alerts
+        private CheckBox checkBoxTemperatura, checkBoxLuminosidade, checkBoxHumidade, checkBoxPluviosidade, checkBoxOutros;
+        private Button btnConfigTemp, btnConfigLum, btnConfigHum, btnConfigPluv;
 
-        private CheckBox checkBoxLuminosidade;
-        private EditText edt_minLuminosidade, edt_maxLuminosidade;
-        private TextView textTil2;
+    // Declare UI objects from "Doenças" alerts
+        private CheckBox checkBoxPraga1, checkBoxPraga2, checkBoxPraga3, checkBoxPraga4, checkBoxPraga5;
+        private Button btnConfigPraga1, btnConfigPraga2, btnConfigPraga3, btnConfigPraga4, btnConfigPraga5;
 
-        private CheckBox checkBoxHumidade;
-        private EditText edt_minHumidade, edt_maxHumidade;
-        private TextView textTil3;
-
-        private CheckBox checkBoxPluviosidade;
-        private EditText edt_minPluviosidade, edt_maxPluviosidade;
-        private TextView textTil4;
-
-        private CheckBox checkBoxOutros;
-
-    // UI objects from diseases' alerts
-        private CheckBox checkBoxPraga1;
-        private Button btnConfigPraga1;
-        private TextView txtPragaNome, txtPragaDescricao;
-        private Button btnConfigPraga1_ok;
-        private EditText edt_minTempPraga1, edt_maxTempPraga1;
-        private EditText edt_minHumPraga1, edt_maxHumPraga1;
-        private EditText edt_minPluvPraga1, edt_maxPluvPraga1;
-
-        private CheckBox checkBoxPraga2;
-        private Button btnConfigPraga2;
-
-        private CheckBox checkBoxPraga3;
-        private Button btnConfigPraga3;
-
-        private CheckBox checkBoxPraga4;
-        private Button btnConfigPraga4;
-
-        private CheckBox checkBoxPraga5;
-        private Button btnConfigPraga5;
+        String boxPraga1, boxPraga1_saved;
 
 
 
@@ -89,37 +69,36 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
         switchAlertas = (Switch) findViewById(R.id.switchAlertas);
 
+    // Fetch UI objects from "Sensores" alerts
         checkBoxTemperatura = (CheckBox) findViewById(R.id.checkBoxTemperatura);
-        edt_minTemperatura = (EditText) findViewById(R.id.edt_minTemperatura);
-        edt_maxTemperatura = (EditText) findViewById(R.id.edt_maxTemperatura);
-        textTil1 = (TextView) findViewById(R.id.textTil1);
+        btnConfigTemp = (Button) findViewById(R.id.btnConfigTemp);
+            //btnConfigTemp.setOnClickListener(this);
 
         checkBoxLuminosidade = (CheckBox) findViewById(R.id.checkBoxLuminosidade);
-        edt_minLuminosidade = (EditText) findViewById(R.id.edt_minLuminosidade);
-        edt_maxLuminosidade = (EditText) findViewById(R.id.edt_maxLuminosidade);
-        textTil2 = (TextView) findViewById(R.id.textTil2);
+        btnConfigLum = (Button) findViewById(R.id.btnConfigLum);
+            //btnConfigLum.setOnClickListener(this);
 
         checkBoxHumidade = (CheckBox) findViewById(R.id.checkBoxHumidade);
-        edt_minHumidade = (EditText) findViewById(R.id.edt_minHumidade);
-        edt_maxHumidade = (EditText) findViewById(R.id.edt_maxHumidade);
-        textTil3 = (TextView) findViewById(R.id.textTil3);
+        btnConfigHum = (Button) findViewById(R.id.btnConfigHum);
+            //btnConfigTemp.setOnClickListener(this);
 
         checkBoxPluviosidade = (CheckBox) findViewById(R.id.checkBoxPluviosidade);
-        edt_minPluviosidade = (EditText) findViewById(R.id.edt_minPluviosidade);
-        edt_maxPluviosidade = (EditText) findViewById(R.id.edt_maxPluviosidade);
-        textTil4 = (TextView) findViewById(R.id.textTil4);
+        btnConfigPluv = (Button) findViewById(R.id.btnConfigPLuv);
+            //btnConfigPluv.setOnClickListener(this);
 
         checkBoxOutros = (CheckBox) findViewById(R.id.checkBoxOutros);
 
+
+    // Fetch UI objects from "Sensores" alerts
         checkBoxPraga1 = (CheckBox) findViewById(R.id.checkBoxPraga1);
         btnConfigPraga1 = (Button) findViewById(R.id.btnConfigPraga1);
             btnConfigPraga1.setVisibility(View.INVISIBLE);
-            btnConfigPraga1.setOnClickListener(this);
+            //btnConfigPraga1.setOnClickListener(this);
 
         checkBoxPraga2 = (CheckBox) findViewById(R.id.checkBoxPraga2);
         btnConfigPraga2 = (Button) findViewById(R.id.btnConfigPraga2);
             btnConfigPraga2.setVisibility(View.INVISIBLE);
-            btnConfigPraga2.setOnClickListener(this);
+            //btnConfigPraga2.setOnClickListener(this);
 
 
         checkBoxPraga3 = (CheckBox) findViewById(R.id.checkBoxPraga3);
@@ -139,6 +118,22 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
 
 
+
+    // Retrieve data from the SharedPreferences (which alerts where selected)
+        SharedPreferences prefs = getSharedPreferences("DataSettingsState", Context.MODE_PRIVATE);
+        boxPraga1_saved = prefs.getString("boxTemp", "false");
+        if(boxPraga1_saved == "true") {
+            checkBoxPraga1.setChecked(true);
+        }
+        else {
+            checkBoxPraga1.setChecked(false);
+        }
+
+
+
+
+//////////////////// Switch and toggles
+
         // Switch activate/deactivate "Alertas"
             switchAlertas.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -157,10 +152,16 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                         Toast.makeText(getApplicationContext(), "A receção de Alertas foi desativada!", Toast.LENGTH_SHORT).show();
 
                         // When the switch "Alertas" is OFF, all the alerts are deactivated
-                            checkBoxTemperatura.setChecked(false); checkBoxLuminosidade.setChecked(false); checkBoxHumidade.setChecked(false);
-                            checkBoxPluviosidade.setChecked(false); checkBoxOutros.setChecked(false);
-                            checkBoxPraga1.setChecked(false); checkBoxPraga2.setChecked(false); checkBoxPraga3.setChecked(false);
-                            checkBoxPraga4.setChecked(false); checkBoxPraga5.setChecked(false);
+                            checkBoxTemperatura.setChecked(false);
+                            checkBoxLuminosidade.setChecked(false);
+                            checkBoxHumidade.setChecked(false);
+                            checkBoxPluviosidade.setChecked(false);
+                            checkBoxOutros.setChecked(false);
+                            checkBoxPraga1.setChecked(false);
+                            checkBoxPraga2.setChecked(false);
+                            checkBoxPraga3.setChecked(false);
+                            checkBoxPraga4.setChecked(false);
+                            checkBoxPraga5.setChecked(false);
                         }
                 }
             });
@@ -171,230 +172,220 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) {
-                        // Show "min" and "max" entry fields
-                        edt_minTemperatura.setVisibility(View.VISIBLE);
-                        textTil1.setVisibility(View.VISIBLE);
-                        edt_maxTemperatura.setVisibility(View.VISIBLE);
+                        btnConfigTemp.setVisibility(View.VISIBLE);
                     }
                     else {
-                        // Hide "min" and "max" entry fields
-                        edt_minTemperatura.setVisibility(View.INVISIBLE);
-                        textTil1.setVisibility(View.INVISIBLE);
-                        edt_maxTemperatura.setVisibility(View.INVISIBLE);
-                    }
+                        btnConfigTemp.setVisibility(View.INVISIBLE); }
                 }
             });
 
         // Checkbox 2 - "Luminosidade"
-        checkBoxLuminosidade.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
-                    // Show "min" and "max" entry fields
-                    edt_minLuminosidade.setVisibility(View.VISIBLE);
-                    textTil2.setVisibility(View.VISIBLE);
-                    edt_maxLuminosidade.setVisibility(View.VISIBLE);
+            checkBoxLuminosidade.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked) {
+                        btnConfigLum.setVisibility(View.VISIBLE); }
+                    else {
+                        btnConfigLum.setVisibility(View.INVISIBLE); }
                 }
-                else {
-                    // Hide "min" and "max" entry fields
-                    edt_minLuminosidade.setVisibility(View.INVISIBLE);
-                    textTil2.setVisibility(View.INVISIBLE);
-                    edt_maxLuminosidade.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
+            });
 
         // Checkbox 3 - "Humidade"
-        checkBoxHumidade.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
-                    // Show "min" and "max" entry fields
-                    edt_minHumidade.setVisibility(View.VISIBLE);
-                    textTil3.setVisibility(View.VISIBLE);
-                    edt_maxHumidade.setVisibility(View.VISIBLE);
+            checkBoxHumidade.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked) {
+                        btnConfigHum.setVisibility(View.VISIBLE); }
+                    else {
+                        btnConfigHum.setVisibility(View.INVISIBLE); }
                 }
-                else {
-                    // Hide "min" and "max" entry fields
-                    edt_minHumidade.setVisibility(View.INVISIBLE);
-                    textTil3.setVisibility(View.INVISIBLE);
-                    edt_maxHumidade.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
+            });
 
         // Checkbox 4 - "Pluviosidade"
-        checkBoxPluviosidade.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
-                    // Show "min" and "max" entry fields
-                    edt_minPluviosidade.setVisibility(View.VISIBLE);
-                    textTil4.setVisibility(View.VISIBLE);
-                    edt_maxPluviosidade.setVisibility(View.VISIBLE);
+            checkBoxPluviosidade.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked) {
+                        btnConfigPluv.setVisibility(View.VISIBLE); }
+                    else {
+                        btnConfigPluv.setVisibility(View.INVISIBLE); }
                 }
-                else {
-                    // Hide "min" and "max" entry fields
-                    edt_minPluviosidade.setVisibility(View.INVISIBLE);
-                    textTil4.setVisibility(View.INVISIBLE);
-                    edt_maxPluviosidade.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
+            });
 
         // Checkbox 5 - "Outros"
-        checkBoxOutros.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
-                    // Show "min" and "max" entry fields
+            checkBoxOutros.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked) {
+
+                    }
+                    else {
+
+                    }
                 }
-                else {
-                    // Hide "min" and "max" entry fields
-                }
-            }
-        });
+            });
+
 
         // Checkbox 6 - "Praga 1"
-        checkBoxPraga1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
-                    // Show button that enables to change Praga1's parameters
-                    btnConfigPraga1.setVisibility(View.VISIBLE);
+            checkBoxPraga1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked) {
+                        btnConfigPraga1.setVisibility(View.VISIBLE);
+                        boxPraga1 = "true";
+
+                        SharedPreferences prefs = getSharedPreferences("DataSettingsState", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putString("boxPraga1", boxPraga1);
+                        editor.commit();
+                    }
+                    else {
+                        btnConfigPraga1.setVisibility(View.INVISIBLE);
+                        boxPraga1 = "false";
+
+                        SharedPreferences prefs = getSharedPreferences("DataSettingsState", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putString("boxPraga1", boxPraga1);
+                        editor.commit();
+                    }
                 }
-                else {
-                    // Hide button that enables to change Praga1's parameters
-                    btnConfigPraga1.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
+            });
 
         // Checkbox 7 - "Praga 2"
-        checkBoxPraga2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
-                    // Show button that enables to change Praga1's parameters
-                    btnConfigPraga2.setVisibility(View.VISIBLE);
+            checkBoxPraga2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked) {
+                        btnConfigPraga2.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        btnConfigPraga2.setVisibility(View.INVISIBLE);
+                    }
                 }
-                else {
-                    // Hide button that enables to change Praga1's parameters
-                    btnConfigPraga2.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
+            });
 
         // Checkbox 8 - "Praga 3"
-        checkBoxPraga3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
-                    // Show button that enables to change Praga1's parameters
-                    btnConfigPraga3.setVisibility(View.VISIBLE);
+            checkBoxPraga3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked) {
+                        btnConfigPraga3.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        btnConfigPraga3.setVisibility(View.INVISIBLE);
+                    }
                 }
-                else {
-                    // Hide button that enables to change Praga1's parameters
-                    btnConfigPraga3.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
+            });
 
         // Checkbox 9 - "Praga 4"
-        checkBoxPraga4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
-                    // Show button that enables to change Praga1's parameters
-                    btnConfigPraga4.setVisibility(View.VISIBLE);
+            checkBoxPraga4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked) {
+                        btnConfigPraga4.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        btnConfigPraga4.setVisibility(View.INVISIBLE);
+                    }
                 }
-                else {
-                    // Hide button that enables to change Praga1's parameters
-                    btnConfigPraga4.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
+            });
 
         // Checkbox 10 - "Praga 5"
-        checkBoxPraga5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
-                    // Show button that enables to change Praga1's parameters
-                    btnConfigPraga5.setVisibility(View.VISIBLE);
+            checkBoxPraga5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        btnConfigPraga5.setVisibility(View.VISIBLE);
+                    } else {
+                        btnConfigPraga5.setVisibility(View.INVISIBLE);
+                    }
                 }
-                else {
-                    // Hide button that enables to change Praga1's parameters
-                    btnConfigPraga5.setVisibility(View.INVISIBLE);
+            });
+
+
+////////////////////// Configuration buttons to inflate the Dialogs (DialogFragment)
+
+        // Temperatura - button to show dialog with info/values
+            btnConfigTemp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    FragmentManager manager = getFragmentManager();
+                    dialogTemperatura myDialog = new dialogTemperatura();
+                    myDialog.show(manager, "DataTemperatura"); // What for ??????
+                    myDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+
                 }
-            }
-        });
+            });
+
+        // Luminosidade - button to show dialog with info/values
+            btnConfigLum.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    FragmentManager manager = getFragmentManager();
+                    dialogLuminosidade myDialog = new dialogLuminosidade();
+                    myDialog.show(manager, "DataLuminosidade");
+                    myDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+
+                }
+            });
+
+        // Humidade - button to show dialog with info/values
+            btnConfigHum.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    FragmentManager manager = getFragmentManager();
+                    dialogHumidade myDialog = new dialogHumidade();
+                    myDialog.show(manager, "DataHumidade");
+                    myDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+
+                }
+            });
+
+        // Pluviosidade - button to show dialog with info/values
+            btnConfigPluv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    FragmentManager manager = getFragmentManager();
+                    dialogPluviosidade myDialog = new dialogPluviosidade();
+                    myDialog.show(manager, "DataPluviosidade");
+                    myDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+
+                }
+            });
+
+
+        ////
+        // Praga 1 - button to show dialog with info/values
+            btnConfigPraga1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    FragmentManager manager = getFragmentManager();
+                    dialogPraga1 myDialog = new dialogPraga1();
+                    myDialog.show(manager, "DataPraga1");
+                    myDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+
+                }
+            });
+
 
 
 
     }
 
 
+
+
+    // Function from Interface defined in dialogPraga1.java
     @Override
-    public void onClick(View view) {
-        this.view = view;
-        switch (view.getId()) {
-
-        // Button to show dialog with info/values regarding "Praga 1"
-            case R.id.btnConfigPraga1:
-                view = inflater.inflate(R.layout.dialog_praga1, null);
-                AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
-
-                btnConfigPraga1_ok = (Button) view.findViewById(R.id.btnConfigPraga1_ok);
-
-                txtPragaNome = (TextView) view.findViewById(R.id.txtPragaNome);
-                txtPragaNome.setText("1. Míldio (Plasmopora Viticola)");
-
-                txtPragaDescricao = (TextView) view.findViewById(R.id.txtPragaDescricao);
-                txtPragaDescricao.setText("A temperatura ideal para o desenvolvimento de Míldio fica entre 18 °C e 25 °C. O fungo necessita de água livre nos tecidos por um  período mínimo de 2 horas para haver infecção. A presença de água livre, seja proveniente de chuva, de orvalho, ou de gutação, é indispensável para haver a infecção, sendo a umidade relativa do ar acima de 98% necessária para haver a esporulação.");
-
-                edt_minTemperatura = (EditText) view.findViewById(R.id.edt_minTemperatura);
-                edt_maxTemperatura = (EditText) view.findViewById(R.id.edt_maxTemperatura);
-
-                edt_minHumidade = (EditText) view.findViewById(R.id.edt_minHumidade);
-                edt_maxHumidade = (EditText) view.findViewById(R.id.edt_maxHumidade);
-
-                edt_minPluviosidade = (EditText) view.findViewById(R.id.edt_minPluviosidade);
-                edt_maxPluviosidade = (EditText) view.findViewById(R.id.edt_maxPluviosidade);
-
-
-                builder.setView(view);
-                builder.show();
-                break;
-
-            // Button to show dialog with info/values regarding "Praga 2"
-            case R.id.btnConfigPraga2:
-                view = inflater.inflate(R.layout.dialog_praga1, null);
-                AlertDialog.Builder builder2 = new AlertDialog.Builder(SettingsActivity.this);
-
-                btnConfigPraga1_ok = (Button) view.findViewById(R.id.btnConfigPraga1_ok);
-
-                txtPragaNome = (TextView) view.findViewById(R.id.txtPragaNome);
-                txtPragaNome.setText("1. Míldio (Plasmopora Viticola)");
-
-                txtPragaDescricao = (TextView) view.findViewById(R.id.txtPragaDescricao);
-                txtPragaDescricao.setText("A temperatura ideal para o desenvolvimento de Míldio fica entre 18 °C e 25 °C. O fungo necessita de água livre nos tecidos por um  período mínimo de 2 horas para haver infecção. A presença de água livre, seja proveniente de chuva, de orvalho, ou de gutação, é indispensável para haver a infecção, sendo a umidade relativa do ar acima de 98% necessária para haver a esporulação.");
-
-                edt_minTemperatura = (EditText) view.findViewById(R.id.edt_minTemperatura);
-                edt_maxTemperatura = (EditText) view.findViewById(R.id.edt_maxTemperatura);
-
-                edt_minHumidade = (EditText) view.findViewById(R.id.edt_minHumidade);
-                edt_maxHumidade = (EditText) view.findViewById(R.id.edt_maxHumidade);
-
-                edt_minPluviosidade = (EditText) view.findViewById(R.id.edt_minPluviosidade);
-                edt_maxPluviosidade = (EditText) view.findViewById(R.id.edt_maxPluviosidade);
-
-
-                builder2.setView(view);
-                builder2.show();
-                break;
-        }
+    public void onDialogMessage(String message) {
+        Toast.makeText(this, message,Toast.LENGTH_SHORT).show();
     }
+
 
 
     @Override
@@ -421,6 +412,5 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
         return super.onOptionsItemSelected(item);
     }
-
 
 }

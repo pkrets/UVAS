@@ -103,7 +103,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginRight="5dp"
                         android:layout_weight="2">
 
                         <CheckBox
@@ -123,37 +123,18 @@
                             android:layout_weight="5"
                             android:gravity="center_vertical" />
 
-                        <EditText
-                            android:layout_width="0dp"
+                        <Button
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="40dp"
                             android:layout_height="match_parent"
-                            android:inputType="number"
-                            android:ems="10"
-                            android:id="@+id/edt_minTemperatura"
-                            android:hint="mín"
-                            android:layout_weight="1.5"
-                            android:textSize="14sp"
-                            android:gravity="bottom|center_horizontal"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="~"
-                            android:id="@+id/textTil1"
-                            android:textSize="14sp"
+                            android:text=">>"
+                            android:id="@+id/btnConfigTemp"
                             android:textColor="#37474F"
-                            android:gravity="center_vertical"/>
+                            android:background="#C5E1A5"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginRight="10dp" />
 
-                        <EditText
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:inputType="number"
-                            android:ems="10"
-                            android:id="@+id/edt_maxTemperatura"
-                            android:hint="máx"
-                            android:layout_weight="1.5"
-                            android:textSize="14sp"
-                            android:gravity="bottom|center_horizontal" />
                     </LinearLayout>
 
                     <View
@@ -168,7 +149,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginRight="5dp"
                         android:layout_weight="2">
 
                         <CheckBox
@@ -182,43 +163,24 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="Luminosidade (lm/m)"
+                            android:text="Luminosidade (lm/m^3)"
                             android:textSize="14sp"
                             android:textColor="#37474F"
                             android:layout_weight="5"
                             android:gravity="center_vertical" />
 
-                        <EditText
-                            android:layout_width="0dp"
+                        <Button
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="40dp"
                             android:layout_height="match_parent"
-                            android:inputType="number"
-                            android:ems="10"
-                            android:id="@+id/edt_minLuminosidade"
-                            android:hint="mín"
-                            android:layout_weight="1.5"
-                            android:textSize="14sp"
-                            android:gravity="bottom|center_horizontal" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="~"
-                            android:id="@+id/textTil2"
-                            android:textSize="14sp"
+                            android:text=">>"
+                            android:id="@+id/btnConfigLum"
                             android:textColor="#37474F"
-                            android:gravity="center_vertical" />
+                            android:background="#C5E1A5"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginRight="10dp" />
 
-                        <EditText
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:inputType="number"
-                            android:ems="10"
-                            android:id="@+id/edt_maxLuminosidade"
-                            android:hint="máx"
-                            android:layout_weight="1.5"
-                            android:textSize="14sp"
-                            android:gravity="bottom|center_horizontal" />
                     </LinearLayout>
 
                     <View
@@ -233,7 +195,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginRight="5dp"
                         android:layout_weight="2">
 
                         <CheckBox
@@ -253,37 +215,18 @@
                             android:layout_weight="5"
                             android:gravity="center_vertical" />
 
-                        <EditText
-                            android:layout_width="0dp"
+                        <Button
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="40dp"
                             android:layout_height="match_parent"
-                            android:inputType="number"
-                            android:ems="10"
-                            android:id="@+id/edt_minHumidade"
-                            android:hint="mín"
-                            android:layout_weight="1.5"
-                            android:textSize="14sp"
-                            android:gravity="bottom|center_horizontal" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="~"
-                            android:id="@+id/textTil3"
-                            android:textSize="14sp"
+                            android:text=">>"
+                            android:id="@+id/btnConfigHum"
                             android:textColor="#37474F"
-                            android:gravity="center_vertical" />
+                            android:background="#C5E1A5"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginRight="10dp" />
 
-                        <EditText
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:inputType="number"
-                            android:ems="10"
-                            android:id="@+id/edt_maxHumidade"
-                            android:hint="máx"
-                            android:layout_weight="1.5"
-                            android:textSize="14sp"
-                            android:gravity="bottom|center_horizontal" />
                     </LinearLayout>
 
                     <View
@@ -298,7 +241,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginRight="5dp"
                         android:layout_weight="2">
 
                         <CheckBox
@@ -312,43 +255,24 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="Pluviosidade (mm/h)"
+                            android:text="Pluviosidade (mm^3/h)"
                             android:textSize="14sp"
                             android:textColor="#37474F"
                             android:layout_weight="5"
                             android:gravity="center_vertical" />
 
-                        <EditText
-                            android:layout_width="0dp"
+                        <Button
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="40dp"
                             android:layout_height="match_parent"
-                            android:inputType="number"
-                            android:ems="10"
-                            android:id="@+id/edt_minPluviosidade"
-                            android:hint="mín"
-                            android:layout_weight="1.5"
-                            android:textSize="14sp"
-                            android:gravity="bottom|center_horizontal" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="~"
-                            android:id="@+id/textTil4"
-                            android:textSize="14sp"
+                            android:text=">>"
+                            android:id="@+id/btnConfigPLuv"
                             android:textColor="#37474F"
-                            android:gravity="center_vertical" />
+                            android:background="#C5E1A5"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginRight="10dp" />
 
-                        <EditText
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:inputType="number"
-                            android:ems="10"
-                            android:id="@+id/edt_maxPluviosidade"
-                            android:hint="máx"
-                            android:layout_weight="1.5"
-                            android:textSize="14sp"
-                            android:gravity="bottom|center_horizontal" />
                     </LinearLayout>
 
                     <View
@@ -363,7 +287,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginRight="5dp"
                         android:layout_weight="2">
 
                         <CheckBox
@@ -377,21 +301,22 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="Outros"
+                            android:text=" Outros"
                             android:textSize="14sp"
                             android:textColor="#37474F"
                             android:gravity="center_vertical"
-                            android:layout_weight="2" />
+                            android:layout_weight="1" />
 
                         <TextView
-                            android:layout_width="0dp"
+                            android:layout_width="120dp"
                             android:layout_height="match_parent"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="(falhas no GPS, nos sensores e avisos meteorológicos)"
                             android:textSize="10sp"
                             android:textColor="#37474F"
                             android:gravity="center_vertical|center_horizontal|right"
-                            android:layout_weight="5" />
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1" />
 
                     </LinearLayout>
 
@@ -446,7 +371,7 @@
                             android:text="Míldio"
                             android:textSize="14sp"
                             android:textColor="#37474F"
-                            android:layout_weight="6"
+                            android:layout_weight="5"
                             android:gravity="center_vertical" />
 
                         <Button
@@ -489,10 +414,10 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="Oídio"
+                            android:text="Oídio da Videira"
                             android:textSize="14sp"
                             android:textColor="#37474F"
-                            android:layout_weight="6"
+                            android:layout_weight="5"
                             android:gravity="center_vertical" />
 
                         <Button
@@ -535,10 +460,10 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="Antracnose"
+                            android:text="Podridão Cinzenta"
                             android:textSize="14sp"
                             android:textColor="#37474F"
-                            android:layout_weight="6"
+                            android:layout_weight="5"
                             android:gravity="center_vertical" />
 
                         <Button
@@ -581,10 +506,10 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="Botrytis Cinerea"
+                            android:text="Escoriose da Videira"
                             android:textSize="14sp"
                             android:textColor="#37474F"
-                            android:layout_weight="6"
+                            android:layout_weight="5"
                             android:gravity="center_vertical" />
 
                         <Button
@@ -630,7 +555,7 @@
                             android:text="Phosmosis Viticola"
                             android:textSize="14sp"
                             android:textColor="#37474F"
-                            android:layout_weight="6"
+                            android:layout_weight="5"
                             android:gravity="center_vertical"/>
 
                         <Button

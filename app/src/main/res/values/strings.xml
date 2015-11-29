@@ -27,4 +27,7 @@
     <string name="lbl_RegistarButton">Registar na Rede</string>
     <string name="lbl_btnaplicarsettings">Aplicar</string>
     <string name="lbl_valoresSensores">Últimos dados recebidos:</string>
+
+    <string name="alertDialogOk">OK</string>
+    <string name="alertDialogCancel">Cancelar</string>
 </resources>
