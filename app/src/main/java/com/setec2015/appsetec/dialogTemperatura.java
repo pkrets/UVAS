@@ -35,7 +35,7 @@ public class dialogTemperatura extends DialogFragment implements View.OnClickLis
         txtNomeTemp.setText("Temperatura");
 
         txtDescricaoTemp = (TextView) view.findViewById(R.id.txtDescricaoTemp);
-        txtDescricaoTemp.setText("Preencha os seguintes campos com o intervalo de valores de Temperatura (em ºC) que considera ideais. Se alguns dos sensores registar uma leitura de temperatura com valores inferiores ao 'mínimo' ou superiores ao 'máximo' estipulado, será emitido um Alerta.");
+        txtDescricaoTemp.setText("Preencha os seguintes campos com o intervalo de valores de Temperatura do (em ºC) que considera ideais. Se alguns dos sensores registar uma leitura de temperatura com valores inferiores ao 'mínimo' ou superiores ao 'máximo' estipulado, será emitido um Alerta.");
 
         btnConfigTemp_ok = (Button) view.findViewById(R.id.btnConfigTemp_ok);
         btnConfigTemp_ok.setOnClickListener(this);
@@ -46,7 +46,7 @@ public class dialogTemperatura extends DialogFragment implements View.OnClickLis
         //
 
         SharedPreferences prefs = getActivity().getSharedPreferences("DataTemperatura", Context.MODE_PRIVATE);
-        String read = prefs.getString("minTemperatura", "0");
+        minTemperatura_saved = prefs.getString("minTemperatura", "0");
         maxTemperatura_saved = prefs.getString("maxTemperatura", "0");
 
             edt_minTemperatura = (EditText) view.findViewById(R.id.edt_minTemperatura);

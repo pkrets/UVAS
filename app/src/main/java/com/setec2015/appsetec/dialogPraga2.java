@@ -24,8 +24,11 @@ public class dialogPraga2 extends DialogFragment implements View.OnClickListener
     EditText edt_minTempPraga2, edt_maxTempPraga2;
     String minTempPraga2, minTempPraga2_saved, maxTempPraga2, maxTempPraga2_saved;
 
-    EditText edt_minHumPraga2, edt_maxHumPraga2;
-    String minHumPraga2, minHumPraga2_saved, maxHumPraga2, maxHumPraga2_saved;
+    EditText edt_minHumArPraga2, edt_maxHumArPraga2;
+    String minHumArPraga2, minHumArPraga2_saved, maxHumArPraga2, maxHumArPraga2_saved;
+
+    EditText edt_minHumSoloPraga2, edt_maxHumSoloPraga2;
+    String minHumSoloPraga2, minHumSoloPraga2_saved, maxHumSoloPraga2, maxHumSoloPraga2_saved;
 
     EditText edt_minPluvPraga2, edt_maxPluvPraga2;
     String minPluvPraga2, minPluvPraga2_saved, maxPluvPraga2, maxPluvPraga2_saved;
@@ -56,8 +59,10 @@ public class dialogPraga2 extends DialogFragment implements View.OnClickListener
         SharedPreferences prefs = getActivity().getSharedPreferences("DataPraga2", Context.MODE_PRIVATE);
         minTempPraga2_saved = prefs.getString("minTempPraga2", "0");
         maxTempPraga2_saved = prefs.getString("maxTempPraga2", "0");
-        minHumPraga2_saved = prefs.getString("minHumPraga2", "0");
-        maxHumPraga2_saved = prefs.getString("maxHumPraga2", "0");
+        minHumArPraga2_saved = prefs.getString("minHumArPraga2", "0");
+        maxHumArPraga2_saved = prefs.getString("maxHumArPraga2", "0");
+        minHumSoloPraga2_saved = prefs.getString("minHumSoloPraga2", "0");
+        maxHumSoloPraga2_saved = prefs.getString("maxHumSoloPraga2", "0");
         minPluvPraga2_saved = prefs.getString("minPluvPraga2", "0");
         maxPluvPraga2_saved = prefs.getString("maxPluvPraga2", "0");
 
@@ -66,10 +71,15 @@ public class dialogPraga2 extends DialogFragment implements View.OnClickListener
             edt_maxTempPraga2 = (EditText) view.findViewById(R.id.edt_maxTempPraga2);
                 edt_maxTempPraga2.setText(maxTempPraga2_saved);
 
-            edt_minHumPraga2 = (EditText) view.findViewById(R.id.edt_minHumPraga2);
-                edt_minHumPraga2.setText(minHumPraga2_saved);
-            edt_maxHumPraga2 = (EditText) view.findViewById(R.id.edt_maxHumPraga2);
-                edt_maxHumPraga2.setText(maxHumPraga2_saved);
+            edt_minHumArPraga2 = (EditText) view.findViewById(R.id.edt_minHumArPraga2);
+                edt_minHumArPraga2.setText(minHumArPraga2_saved);
+            edt_maxHumArPraga2 = (EditText) view.findViewById(R.id.edt_maxHumArPraga2);
+                edt_maxHumArPraga2.setText(maxHumArPraga2_saved);
+
+            edt_minHumSoloPraga2 = (EditText) view.findViewById(R.id.edt_minHumSoloPraga2);
+                edt_minHumSoloPraga2.setText(minHumSoloPraga2_saved);
+            edt_maxHumSoloPraga2 = (EditText) view.findViewById(R.id.edt_maxHumSoloPraga2);
+                edt_maxHumSoloPraga2.setText(maxHumSoloPraga2_saved);
 
             edt_minPluvPraga2 = (EditText) view.findViewById(R.id.edt_minPluvPraga2);
                 edt_minPluvPraga2.setText(minPluvPraga2_saved);
@@ -92,8 +102,10 @@ public class dialogPraga2 extends DialogFragment implements View.OnClickListener
 
             edt_minTempPraga2.setText(null);
             edt_maxTempPraga2.setText(null);
-            edt_minHumPraga2.setText(null);
-            edt_maxHumPraga2.setText(null);
+            edt_minHumArPraga2.setText(null);
+            edt_maxHumArPraga2.setText(null);
+            edt_minHumSoloPraga2.setText(null);
+            edt_maxHumSoloPraga2.setText(null);
             edt_minPluvPraga2.setText(null);
             edt_maxPluvPraga2.setText(null);
 
@@ -109,8 +121,10 @@ public class dialogPraga2 extends DialogFragment implements View.OnClickListener
 
             minTempPraga2 = edt_minTempPraga2.getText().toString();
             maxTempPraga2 = edt_maxTempPraga2.getText().toString();
-            minHumPraga2 = edt_minHumPraga2.getText().toString();
-            maxHumPraga2 = edt_maxHumPraga2.getText().toString();
+            minHumArPraga2 = edt_minHumArPraga2.getText().toString();
+            maxHumArPraga2 = edt_maxHumArPraga2.getText().toString();
+            minHumSoloPraga2 = edt_minHumSoloPraga2.getText().toString();
+            maxHumSoloPraga2 = edt_maxHumSoloPraga2.getText().toString();
             minPluvPraga2 = edt_minPluvPraga2.getText().toString();
             maxPluvPraga2 = edt_maxPluvPraga2.getText().toString();
 
@@ -118,8 +132,10 @@ public class dialogPraga2 extends DialogFragment implements View.OnClickListener
             SharedPreferences.Editor editor = prefs.edit();
             editor.putString("minTempPraga2", minTempPraga2);
             editor.putString("maxTempPraga2", maxTempPraga2);
-            editor.putString("minHumPraga2", minHumPraga2);
-            editor.putString("maxHumPraga2", maxHumPraga2);
+            editor.putString("minHumArPraga2", minHumArPraga2);
+            editor.putString("maxHumArPraga2", maxHumArPraga2);
+            editor.putString("minHumSoloPraga2", minHumSoloPraga2);
+            editor.putString("maxHumSoloPraga2", maxHumSoloPraga2);
             editor.putString("minPluvPraga2", minPluvPraga2);
             editor.putString("maxPluvPraga2", maxPluvPraga2);
             editor.commit();

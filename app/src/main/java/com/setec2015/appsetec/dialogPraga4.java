@@ -23,8 +23,11 @@ public class dialogPraga4 extends DialogFragment implements View.OnClickListener
     EditText edt_minTempPraga4, edt_maxTempPraga4;
     String minTempPraga4, minTempPraga4_saved, maxTempPraga4, maxTempPraga4_saved;
 
-    EditText edt_minHumPraga4, edt_maxHumPraga4;
-    String minHumPraga4, minHumPraga4_saved, maxHumPraga4, maxHumPraga4_saved;
+    EditText edt_minHumArPraga4, edt_maxHumArPraga4;
+    String minHumArPraga4, minHumArPraga4_saved, maxHumArPraga4, maxHumArPraga4_saved;
+
+    EditText edt_minHumSoloPraga4, edt_maxHumSoloPraga4;
+    String minHumSoloPraga4, minHumSoloPraga4_saved, maxHumSoloPraga4, maxHumSoloPraga4_saved;
 
     EditText edt_minPluvPraga4, edt_maxPluvPraga4;
     String minPluvPraga4, minPluvPraga4_saved, maxPluvPraga4, maxPluvPraga4_saved;
@@ -55,25 +58,32 @@ public class dialogPraga4 extends DialogFragment implements View.OnClickListener
         SharedPreferences prefs = getActivity().getSharedPreferences("DataPraga4", Context.MODE_PRIVATE);
         minTempPraga4_saved = prefs.getString("minTempPraga4", "0");
         maxTempPraga4_saved = prefs.getString("maxTempPraga4", "0");
-        minHumPraga4_saved = prefs.getString("minHumPraga4", "0");
-        maxHumPraga4_saved = prefs.getString("maxHumPraga4", "0");
+        minHumArPraga4_saved = prefs.getString("minHumArPraga4", "0");
+        maxHumArPraga4_saved = prefs.getString("maxHumArPraga4", "0");
+        minHumSoloPraga4_saved = prefs.getString("minHumSoloPraga4", "0");
+        maxHumSoloPraga4_saved = prefs.getString("maxHumSoloPraga4", "0");
         minPluvPraga4_saved = prefs.getString("minPluvPraga4", "0");
         maxPluvPraga4_saved = prefs.getString("maxPluvPraga4", "0");
 
-        edt_minTempPraga4 = (EditText) view.findViewById(R.id.edt_minTempPraga4);
-        edt_minTempPraga4.setText(minTempPraga4_saved);
-        edt_maxTempPraga4 = (EditText) view.findViewById(R.id.edt_maxTempPraga4);
-        edt_maxTempPraga4.setText(maxTempPraga4_saved);
+            edt_minTempPraga4 = (EditText) view.findViewById(R.id.edt_minTempPraga4);
+                edt_minTempPraga4.setText(minTempPraga4_saved);
+            edt_maxTempPraga4 = (EditText) view.findViewById(R.id.edt_maxTempPraga4);
+                edt_maxTempPraga4.setText(maxTempPraga4_saved);
 
-        edt_minHumPraga4 = (EditText) view.findViewById(R.id.edt_minHumPraga4);
-        edt_minHumPraga4.setText(minHumPraga4_saved);
-        edt_maxHumPraga4 = (EditText) view.findViewById(R.id.edt_maxHumPraga4);
-        edt_maxHumPraga4.setText(maxHumPraga4_saved);
+            edt_minHumArPraga4 = (EditText) view.findViewById(R.id.edt_minHumArPraga4);
+                edt_minHumArPraga4.setText(minHumArPraga4_saved);
+            edt_maxHumArPraga4 = (EditText) view.findViewById(R.id.edt_maxHumArPraga4);
+                edt_maxHumArPraga4.setText(maxHumArPraga4_saved);
 
-        edt_minPluvPraga4 = (EditText) view.findViewById(R.id.edt_minPluvPraga4);
-        edt_minPluvPraga4.setText(minPluvPraga4_saved);
-        edt_maxPluvPraga4 = (EditText) view.findViewById(R.id.edt_maxPluvPraga4);
-        edt_maxPluvPraga4.setText(maxPluvPraga4_saved);
+            edt_minHumSoloPraga4 = (EditText) view.findViewById(R.id.edt_minHumSoloPraga4);
+                edt_minHumSoloPraga4.setText(minHumSoloPraga4_saved);
+            edt_maxHumSoloPraga4 = (EditText) view.findViewById(R.id.edt_maxHumSoloPraga4);
+                edt_maxHumSoloPraga4.setText(maxHumSoloPraga4_saved);
+
+            edt_minPluvPraga4 = (EditText) view.findViewById(R.id.edt_minPluvPraga4);
+                edt_minPluvPraga4.setText(minPluvPraga4_saved);
+            edt_maxPluvPraga4 = (EditText) view.findViewById(R.id.edt_maxPluvPraga4);
+                edt_maxPluvPraga4.setText(maxPluvPraga4_saved);
 
 
 
@@ -91,8 +101,10 @@ public class dialogPraga4 extends DialogFragment implements View.OnClickListener
 
             edt_minTempPraga4.setText(null);
             edt_maxTempPraga4.setText(null);
-            edt_minHumPraga4.setText(null);
-            edt_maxHumPraga4.setText(null);
+            edt_minHumArPraga4.setText(null);
+            edt_maxHumArPraga4.setText(null);
+            edt_minHumSoloPraga4.setText(null);
+            edt_maxHumSoloPraga4.setText(null);
             edt_minPluvPraga4.setText(null);
             edt_maxPluvPraga4.setText(null);
 
@@ -108,8 +120,10 @@ public class dialogPraga4 extends DialogFragment implements View.OnClickListener
 
             minTempPraga4 = edt_minTempPraga4.getText().toString();
             maxTempPraga4 = edt_maxTempPraga4.getText().toString();
-            minHumPraga4 = edt_minHumPraga4.getText().toString();
-            maxHumPraga4 = edt_maxHumPraga4.getText().toString();
+            minHumArPraga4 = edt_minHumArPraga4.getText().toString();
+            maxHumArPraga4 = edt_maxHumArPraga4.getText().toString();
+            minHumSoloPraga4 = edt_minHumSoloPraga4.getText().toString();
+            maxHumSoloPraga4 = edt_maxHumSoloPraga4.getText().toString();
             minPluvPraga4 = edt_minPluvPraga4.getText().toString();
             maxPluvPraga4 = edt_maxPluvPraga4.getText().toString();
 
@@ -117,8 +131,10 @@ public class dialogPraga4 extends DialogFragment implements View.OnClickListener
             SharedPreferences.Editor editor = prefs.edit();
             editor.putString("minTempPraga4", minTempPraga4);
             editor.putString("maxTempPraga4", maxTempPraga4);
-            editor.putString("minHumPraga4", minHumPraga4);
-            editor.putString("maxHumPraga4", maxHumPraga4);
+            editor.putString("minHumArPraga4", minHumArPraga4);
+            editor.putString("maxHumArPraga4", maxHumArPraga4);
+            editor.putString("minHumSoloPraga4", minHumSoloPraga4);
+            editor.putString("maxHumSoloPraga4", maxHumSoloPraga4);
             editor.putString("minPluvPraga4", minPluvPraga4);
             editor.putString("maxPluvPraga4", maxPluvPraga4);
             editor.commit();

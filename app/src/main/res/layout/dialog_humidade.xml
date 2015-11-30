@@ -88,7 +88,7 @@
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Humidade (%)"
+            android:text="Humidade do ar"
             android:textSize="14sp"
             android:textColor="#37474F"
             android:layout_weight="6"
@@ -99,7 +99,7 @@
             android:layout_height="match_parent"
             android:inputType="number"
             android:ems="10"
-            android:id="@+id/edt_minHumidade"
+            android:id="@+id/edt_minHumidadeAr"
             android:hint="mín"
             android:layout_weight="1.5"
             android:textSize="14sp"
@@ -119,11 +119,88 @@
             android:layout_height="match_parent"
             android:inputType="number"
             android:ems="10"
-            android:id="@+id/edt_maxHumidade"
+            android:id="@+id/edt_maxHumidadeAr"
             android:hint="máx"
             android:layout_weight="1.5"
             android:textSize="14sp"
             android:gravity="bottom|center_horizontal"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="(%)"
+            android:textSize="14sp"
+            android:textColor="#37474F"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_weight="1.5" />
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#BDBDBD"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Humidade do solo"
+            android:textSize="14sp"
+            android:textColor="#37474F"
+            android:layout_weight="6"
+            android:gravity="center_vertical"/>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/edt_minHumidadeSolo"
+            android:hint="mín"
+            android:layout_weight="1.5"
+            android:textSize="14sp"
+            android:gravity="bottom|center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="a"
+            android:textSize="14sp"
+            android:textColor="#37474F"
+            android:gravity="center_vertical" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/edt_maxHumidadeSolo"
+            android:hint="máx"
+            android:layout_weight="1.5"
+            android:textSize="14sp"
+            android:gravity="bottom|center_horizontal"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="(%)"
+            android:textSize="14sp"
+            android:textColor="#37474F"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_weight="1.5" />
     </LinearLayout>
 
 

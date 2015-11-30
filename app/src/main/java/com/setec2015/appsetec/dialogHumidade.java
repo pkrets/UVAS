@@ -20,8 +20,11 @@ public class dialogHumidade extends DialogFragment implements View.OnClickListen
     Button btnConfigHum_ok, btnConfigHum_cancel;
     TextView txtNomeHum, txtDescricaoHum;
 
-    EditText edt_minHumidade, edt_maxHumidade;
-    String minHumidade, minHumidade_saved, maxHumidade, maxHumidade_saved;
+    EditText edt_minHumidadeAr, edt_maxHumidadeAr;
+    String minHumidadeAr, minHumidadeAr_saved, maxHumidadeAr, maxHumidadeAr_saved;
+
+    EditText edt_minHumidadeSolo, edt_maxHumidadeSolo;
+    String minHumidadeSolo, minHumidadeSolo_saved, maxHumidadeSolo, maxHumidadeSolo_saved;
 
 
     private static boolean RUN_ONCE = true;
@@ -32,10 +35,10 @@ public class dialogHumidade extends DialogFragment implements View.OnClickListen
         setCancelable(false);
 
         txtNomeHum = (TextView) view.findViewById(R.id.txtNomeHum);
-        txtNomeHum.setText("Huminosidade");
+        txtNomeHum.setText("Humidade");
 
         txtDescricaoHum = (TextView) view.findViewById(R.id.txtDescricaoHum);
-        txtDescricaoHum.setText("Preencha os seguintes campos com o intervalo de valores de Huminosidade (%) que considera ideais. Se alguns dos sensores registar uma leitura de Humidade com valores inferiores ao 'mínimo' ou superiores ao 'máximo' estipulado, será emitido um Alerta.");
+        txtDescricaoHum.setText("Preencha os seguintes campos com o intervalo de valores de Humidade do ar e do solo (em %) que considera ideais. Se alguns dos sensores registar uma leitura de Humidade com valores inferiores ao 'mínimo' ou superiores ao 'máximo' estipulado, será emitido um Alerta.");
 
         btnConfigHum_ok = (Button) view.findViewById(R.id.btnConfigHum_ok);
         btnConfigHum_ok.setOnClickListener(this);
@@ -46,14 +49,22 @@ public class dialogHumidade extends DialogFragment implements View.OnClickListen
         //
 
         SharedPreferences prefs = getActivity().getSharedPreferences("DataHumidade", Context.MODE_PRIVATE);
-        minHumidade_saved = prefs.getString("minHumidade", "0");
-        maxHumidade_saved = prefs.getString("maxHumidade", "0");
+        minHumidadeAr_saved = prefs.getString("minHumidadeAr", "0");
+        maxHumidadeAr_saved = prefs.getString("maxHumidadeAr", "0");
+        minHumidadeSolo_saved = prefs.getString("minHumidadeSolo", "0");
+        maxHumidadeSolo_saved = prefs.getString("maxHumidadeSolo", "0");
 
-            edt_minHumidade = (EditText) view.findViewById(R.id.edt_minHumidade);
-                edt_minHumidade.setText(minHumidade_saved);
+            edt_minHumidadeAr = (EditText) view.findViewById(R.id.edt_minHumidadeAr);
+                edt_minHumidadeAr.setText(minHumidadeAr_saved);
 
-            edt_maxHumidade = (EditText) view.findViewById(R.id.edt_maxHumidade);
-                edt_maxHumidade.setText(maxHumidade_saved);
+            edt_maxHumidadeAr = (EditText) view.findViewById(R.id.edt_maxHumidadeAr);
+                edt_maxHumidadeAr.setText(maxHumidadeAr_saved);
+
+            edt_minHumidadeSolo = (EditText) view.findViewById(R.id.edt_minHumidadeSolo);
+                edt_minHumidadeSolo.setText(minHumidadeSolo_saved);
+
+            edt_maxHumidadeSolo = (EditText) view.findViewById(R.id.edt_maxHumidadeSolo);
+                edt_maxHumidadeSolo.setText(maxHumidadeSolo_saved);
 
 
 
@@ -70,8 +81,10 @@ public class dialogHumidade extends DialogFragment implements View.OnClickListen
         if(RUN_ONCE) {
             RUN_ONCE = false;
 
-            edt_minHumidade.setText(null);
-            edt_maxHumidade.setText(null);
+            edt_minHumidadeAr.setText(null);
+            edt_maxHumidadeAr.setText(null);
+            edt_minHumidadeSolo.setText(null);
+            edt_maxHumidadeSolo.setText(null);
             Toast.makeText(getActivity(), "Dialog is running for the first time!", Toast.LENGTH_SHORT).show();
         }
     }
@@ -82,13 +95,17 @@ public class dialogHumidade extends DialogFragment implements View.OnClickListen
     public void onClick(View view) {
         if(view.getId() == R.id.btnConfigHum_ok) {
 
-            minHumidade = edt_minHumidade.getText().toString();
-            maxHumidade = edt_maxHumidade.getText().toString();
+            minHumidadeAr = edt_minHumidadeAr.getText().toString();
+            maxHumidadeAr = edt_maxHumidadeAr.getText().toString();
+            minHumidadeSolo = edt_minHumidadeSolo.getText().toString();
+            maxHumidadeSolo = edt_maxHumidadeSolo.getText().toString();
 
             SharedPreferences prefs = getActivity().getSharedPreferences("DataHumidade", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putString("minHumidade", minHumidade);
-            editor.putString("maxHumidade", maxHumidade);
+            editor.putString("minHumidadeAr", minHumidadeAr);
+            editor.putString("maxHumidadeAr", maxHumidadeAr);
+            editor.putString("minHumidadeSolo", minHumidadeSolo);
+            editor.putString("maxHumidadeSolo", maxHumidadeSolo);
             editor.commit();
 
             dismiss();

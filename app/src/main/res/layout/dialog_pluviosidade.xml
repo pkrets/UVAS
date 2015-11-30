@@ -88,7 +88,7 @@
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Pluviosidade (mm^3/h)"
+            android:text="Pluviosidade"
             android:textSize="14sp"
             android:textColor="#37474F"
             android:layout_weight="6"
@@ -124,6 +124,16 @@
             android:layout_weight="1.5"
             android:textSize="14sp"
             android:gravity="bottom|center_horizontal"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="(mm^3/h))"
+            android:textSize="14sp"
+            android:textColor="#37474F"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_weight="1.5" />
     </LinearLayout>
 
 
