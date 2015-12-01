@@ -115,7 +115,7 @@ public class tabAlertas extends Fragment {
     //Populates the list of alerts received
     private void populateAlertasList() {
         // Alerta 1
-        myAlertas.add(new listaAlertas(1, "Humidade", "Ultrapassou valor máximo pretendido", R.mipmap.ic_humidade, 70, "13 Jun '15"));
+        myAlertas.add(new listaAlertas(1, "Humidade (solo)", "Ultrapassou valor máximo pretendido", R.mipmap.ic_humidade, 70, "13 Jun '15"));
         // Alerta 2
         myAlertas.add(new listaAlertas(2, "Temperatura", "Ultrapassou valor mínimo pretendido", R.mipmap.ic_temperatura, 18, "20 Jun '15"));
         // Alerta 3
@@ -125,7 +125,7 @@ public class tabAlertas extends Fragment {
         // Alerta 5
         myAlertas.add(new listaAlertas(15, "Luminosidade", "Ultrapassou valor máximo pretendido", R.mipmap.ic_luminosidade, 78, "14 Jul '15"));
         // Alerta 6
-        myAlertas.add(new listaAlertas(263, "Humidade", "Ultrapassou valor máximo pretendido", R.mipmap.ic_humidade, 65, "24 Jul '15"));
+        myAlertas.add(new listaAlertas(263, "Humidade (ar)", "Ultrapassou valor máximo pretendido", R.mipmap.ic_humidade, 65, "24 Jul '15"));
         // Alerta 7
         myAlertas.add(new listaAlertas(7, "Pluviosidade", "Ultrapassou valor mínimo pretendido", R.mipmap.ic_pluviosidade, 72, "26 Jul '15"));
         // Alerta 8

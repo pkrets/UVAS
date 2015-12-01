@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/listSensorHeaderColor">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="ID"
+            android:textSize="14sp"
+            android:layout_weight="1"
+            android:background="@drawable/list_border"
+            android:layout_marginBottom="1dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:textColor="#37474F" />
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:background="@drawable/list_border">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:id="@+id/item_icon1"
+            android:adjustViewBounds="false"
+            android:maxHeight="35dp"
+            android:maxWidth="35dp"
+            android:layout_marginBottom="1dp"
+            android:src="@mipmap/ic_temperatura"
+            android:textColor="#37474F"  />
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Temp."
+            android:id="@+id/item_txtSensor1"
+            android:textSize="14sp"
+            android:layout_weight="3"
+            android:layout_marginBottom="1dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:textColor="#37474F" />
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:background="@drawable/list_border">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:id="@+id/item_icon2"
+                android:adjustViewBounds="true"
+                android:maxHeight="35dp"
+                android:maxWidth="35dp"
+                android:layout_marginBottom="1dp"
+                android:src="@mipmap/ic_luminosidade" />
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Lumi."
+                android:id="@+id/item_txtSensor2"
+                android:textSize="14sp"
+                android:layout_weight="3"
+                android:layout_marginBottom="1dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:textColor="#37474F" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:background="@drawable/list_border">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:id="@+id/item_icon3"
+                android:adjustViewBounds="true"
+                android:maxHeight="35dp"
+                android:maxWidth="35dp"
+                android:layout_marginBottom="1dp"
+                android:src="@mipmap/ic_humidade" />
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Hum. (ar)"
+                android:id="@+id/item_txtSensor3"
+                android:textSize="14sp"
+                android:layout_weight="3"
+                android:layout_marginBottom="1dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:textColor="#37474F" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:background="@drawable/list_border">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:id="@+id/item_icon4"
+                android:adjustViewBounds="true"
+                android:maxHeight="35dp"
+                android:maxWidth="35dp"
+                android:layout_marginBottom="1dp"
+                android:src="@mipmap/ic_humidade" />
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Hum. (sol)"
+                android:id="@+id/item_txtSensor4"
+                android:textSize="14sp"
+                android:layout_weight="3"
+                android:layout_marginBottom="1dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:textColor="#37474F" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:background="@drawable/list_border">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:id="@+id/item_icon5"
+                android:adjustViewBounds="true"
+                android:maxHeight="35dp"
+                android:maxWidth="35dp"
+                android:layout_marginBottom="1dp"
+                android:src="@mipmap/ic_pluviosidade" />
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Pluvi."
+                android:id="@+id/item_txtSensor5"
+                android:textSize="14sp"
+                android:layout_weight="3"
+                android:layout_marginBottom="1dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:textColor="#37474F" />
+
+        </LinearLayout>
+
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Data"
+            android:id="@+id/item_txtDate"
+            android:textSize="14sp"
+            android:layout_weight="2.5"
+            android:background="@drawable/list_border"
+            android:layout_marginBottom="1dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:textColor="#37474F" />
+    </LinearLayout>
+
+
+</RelativeLayout>
