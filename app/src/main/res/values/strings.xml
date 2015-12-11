@@ -30,4 +30,5 @@
 
     <string name="alertDialogOk">OK</string>
     <string name="alertDialogCancel">Cancelar</string>
+    <string name="title_activity_db_save_info">dbSaveInfoActivity</string>
 </resources>

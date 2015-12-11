@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 public class StartActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button btnLogin, btnRegistarRede;
+    private Button btnLogin, btnRegistarRede, btnEscreverBD;
 
     protected  static  final int TIMER_RUNTIME = 5000;
     protected boolean mbActive;
@@ -29,6 +29,10 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
         btnRegistarRede = (Button) findViewById(R.id.btnRegistarRede);
         btnRegistarRede.setOnClickListener(this);
+
+        btnEscreverBD = (Button) findViewById(R.id.btnEscreverBD);
+        btnEscreverBD.setOnClickListener(this);
+
 
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
     }
@@ -90,7 +94,14 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
            startActivity(new Intent(this, SimpleXYPlotActivity.class));
 
         }
+
+
+        // Button "Escrever na BD"
+        if (view.getId() == R.id.btnEscreverBD) {
+            startActivity(new Intent(this, dbSaveInfoActivity.class));
+        }
     }
+
 
     public void updateProgress(final int TimePassed) {
         if(mProgressBar != null) {
