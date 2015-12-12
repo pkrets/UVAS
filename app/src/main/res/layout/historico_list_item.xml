@@ -7,16 +7,16 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="30dp">
+        android:layout_height="38dp">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="ID"
-            android:id="@+id/item_txtID"
+            android:id="@+id/item_id"
             android:textSize="13sp"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:background="@drawable/list_border"
             android:layout_marginBottom="1dp"
             android:gravity="center_vertical|center_horizontal" />
@@ -25,10 +25,10 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Valor 1"
-            android:id="@+id/item_txtSensor1"
+            android:text="Temp"
+            android:id="@+id/item_temp"
             android:textSize="13sp"
-            android:layout_weight="4"
+            android:layout_weight="3.5"
             android:background="@drawable/list_border"
             android:layout_marginBottom="1dp"
             android:gravity="center_vertical|center_horizontal" />
@@ -37,20 +37,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Sensor"
-            android:id="@+id/item_txtSensor2"
-            android:textSize="13sp"
-            android:layout_weight="4"
-            android:background="@drawable/list_border"
-            android:layout_marginBottom="1dp"
-            android:gravity="center_vertical|center_horizontal" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Sensor"
-            android:id="@+id/item_txtSensor3"
+            android:text="Lum"
+            android:id="@+id/item_lum"
             android:textSize="13sp"
             android:layout_weight="4"
             android:background="@drawable/list_border"
@@ -61,10 +49,10 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Sensor"
-            android:id="@+id/item_txtSensor4"
+            android:text="HumSolo"
+            android:id="@+id/item_humSolo"
             android:textSize="13sp"
-            android:layout_weight="4"
+            android:layout_weight="3"
             android:background="@drawable/list_border"
             android:layout_marginBottom="1dp"
             android:gravity="center_vertical|center_horizontal" />
@@ -73,8 +61,20 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Sensor"
-            android:id="@+id/item_txtSensor5"
+            android:text="HumAr"
+            android:id="@+id/item_humAr"
+            android:textSize="13sp"
+            android:layout_weight="3"
+            android:background="@drawable/list_border"
+            android:layout_marginBottom="1dp"
+            android:gravity="center_vertical|center_horizontal" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Pluv"
+            android:id="@+id/item_pluv"
             android:textSize="13sp"
             android:layout_weight="4"
             android:background="@drawable/list_border"
@@ -88,9 +88,9 @@
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Data"
-            android:id="@+id/item_txtDate"
+            android:id="@+id/item_data"
             android:textSize="13sp"
-            android:layout_weight="2.5"
+            android:layout_weight="3"
             android:background="@drawable/list_border"
             android:layout_marginBottom="1dp"
             android:gravity="center_vertical|center_horizontal" />

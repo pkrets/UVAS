@@ -2,8 +2,6 @@ package com.setec2015.appsetec;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
@@ -37,8 +35,8 @@ public class dbSaveInfoActivity extends AppCompatActivity {
             pluv = new_pluv.getText().toString();
             data = new_data.getText().toString();
 
-            BackgrondDbTask backgrondDbTask = new BackgrondDbTask(this);
-            backgrondDbTask.execute("add_info_1", temp, lum, humSolo, humAr, pluv, data);
+            BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
+            backgroundDbTask.execute("add_info_1", temp, lum, humSolo, humAr, pluv, data);
             finish();
         }
 
@@ -52,8 +50,8 @@ public class dbSaveInfoActivity extends AppCompatActivity {
             pluv = new_pluv.getText().toString();
             data = new_data.getText().toString();
 
-            BackgrondDbTask backgrondDbTask = new BackgrondDbTask(this);
-            backgrondDbTask.execute("add_info_2", temp, lum, humSolo, humAr, pluv, data);
+            BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
+            backgroundDbTask.execute("add_info_2", temp, lum, humSolo, humAr, pluv, data);
             finish();
         }
 
@@ -67,8 +65,8 @@ public class dbSaveInfoActivity extends AppCompatActivity {
             pluv = new_pluv.getText().toString();
             data = new_data.getText().toString();
 
-            BackgrondDbTask backgrondDbTask = new BackgrondDbTask(this);
-            backgrondDbTask.execute("add_info_3", temp, lum, humSolo, humAr, pluv, data);
+            BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
+            backgroundDbTask.execute("add_info_3", temp, lum, humSolo, humAr, pluv, data);
             finish();
         }
 

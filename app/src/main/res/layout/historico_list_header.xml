@@ -6,7 +6,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="38dp"
         android:background="@color/listSensorHeaderColor">
 
         <TextView
@@ -14,44 +14,45 @@
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="ID"
-            android:textSize="14sp"
-            android:layout_weight="1"
+            android:textSize="12sp"
+            android:layout_weight="1.5"
             android:background="@drawable/list_border"
             android:layout_marginBottom="1dp"
             android:gravity="center_vertical|center_horizontal"
-            android:textColor="#37474F" />
+            android:textColor="#37474F"
+            android:textStyle="bold"/>
 
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="4"
-        android:background="@drawable/list_border">
+        android:layout_weight="3.5"
+        android:background="@drawable/list_border"
+        android:layout_marginBottom="1dp">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:id="@+id/item_icon1"
-            android:adjustViewBounds="false"
-            android:maxHeight="35dp"
-            android:maxWidth="35dp"
-            android:layout_marginBottom="1dp"
+            android:adjustViewBounds="true"
+            android:maxHeight="18dp"
+            android:maxWidth="18dp"
             android:src="@mipmap/ic_temperatura"
-            android:textColor="#37474F"  />
+            android:layout_gravity="center_vertical" />
 
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Temp."
+            android:text="Temperatura"
             android:id="@+id/item_txtSensor1"
-            android:textSize="14sp"
+            android:textSize="11sp"
             android:layout_weight="3"
-            android:layout_marginBottom="1dp"
-            android:gravity="center_vertical|center_horizontal"
-            android:textColor="#37474F" />
+            android:gravity="center_vertical"
+            android:textColor="#37472F"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 
@@ -60,30 +61,31 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="4"
-            android:background="@drawable/list_border">
+            android:background="@drawable/list_border"
+            android:layout_marginBottom="1dp">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:id="@+id/item_icon2"
                 android:adjustViewBounds="true"
-                android:maxHeight="35dp"
-                android:maxWidth="35dp"
-                android:layout_marginBottom="1dp"
-                android:src="@mipmap/ic_luminosidade" />
+                android:maxHeight="18dp"
+                android:maxWidth="19dp"
+                android:src="@mipmap/ic_luminosidade"
+                android:layout_gravity="center_vertical" />
 
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Lumi."
+                android:text="Luminosidade"
                 android:id="@+id/item_txtSensor2"
-                android:textSize="14sp"
+                android:textSize="11sp"
                 android:layout_weight="3"
-                android:layout_marginBottom="1dp"
-                android:gravity="center_vertical|center_horizontal"
-                android:textColor="#37474F" />
+                android:gravity="center_horizontal|center_vertical"
+                android:textColor="#37472F"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 
@@ -91,31 +93,32 @@
             android:orientation="horizontal"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:background="@drawable/list_border">
+            android:layout_weight="3"
+            android:background="@drawable/list_border"
+            android:layout_marginBottom="1dp">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:id="@+id/item_icon3"
                 android:adjustViewBounds="true"
-                android:maxHeight="35dp"
-                android:maxWidth="35dp"
-                android:layout_marginBottom="1dp"
-                android:src="@mipmap/ic_humidade" />
+                android:maxHeight="18dp"
+                android:maxWidth="18dp"
+                android:src="@mipmap/ic_humidade"
+                android:layout_gravity="center_vertical" />
 
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Hum. (ar)"
+                android:text="Humidade (solo)"
                 android:id="@+id/item_txtSensor3"
-                android:textSize="14sp"
+                android:textSize="11sp"
                 android:layout_weight="3"
-                android:layout_marginBottom="1dp"
-                android:gravity="center_vertical|center_horizontal"
-                android:textColor="#37474F" />
+                android:gravity="center_horizontal|center_vertical"
+                android:textColor="#37472F"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 
@@ -123,31 +126,31 @@
             android:orientation="horizontal"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:background="@drawable/list_border">
+            android:layout_weight="3"
+            android:background="@drawable/list_border"
+            android:layout_marginBottom="1dp">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:id="@+id/item_icon4"
                 android:adjustViewBounds="true"
-                android:maxHeight="35dp"
-                android:maxWidth="35dp"
-                android:layout_marginBottom="1dp"
-                android:src="@mipmap/ic_humidade" />
-
+                android:maxHeight="18dp"
+                android:maxWidth="18dp"
+                android:src="@mipmap/ic_humidade"
+                android:layout_gravity="center_vertical" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Hum. (sol)"
+                android:text="Humidade (ar)"
                 android:id="@+id/item_txtSensor4"
-                android:textSize="14sp"
+                android:textSize="11sp"
                 android:layout_weight="3"
-                android:layout_marginBottom="1dp"
                 android:gravity="center_vertical|center_horizontal"
-                android:textColor="#37474F" />
+                android:textColor="#37472F"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 
@@ -156,30 +159,32 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="4"
-            android:background="@drawable/list_border">
+            android:background="@drawable/list_border"
+            android:layout_marginBottom="1dp">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:id="@+id/item_icon5"
                 android:adjustViewBounds="true"
-                android:maxHeight="35dp"
-                android:maxWidth="35dp"
-                android:layout_marginBottom="1dp"
-                android:src="@mipmap/ic_pluviosidade" />
+                android:maxHeight="18dp"
+                android:maxWidth="18dp"
+                android:src="@mipmap/ic_pluviosidade"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="2dp"/>
 
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Pluvi."
+                android:text="Pluviosidade"
                 android:id="@+id/item_txtSensor5"
-                android:textSize="14sp"
+                android:textSize="11sp"
                 android:layout_weight="3"
-                android:layout_marginBottom="1dp"
                 android:gravity="center_vertical|center_horizontal"
-                android:textColor="#37474F" />
+                android:textColor="#37472F"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 
@@ -189,14 +194,15 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Data"
+            android:text="DATA"
             android:id="@+id/item_txtDate"
-            android:textSize="14sp"
-            android:layout_weight="2.5"
+            android:textSize="12sp"
+            android:layout_weight="3"
             android:background="@drawable/list_border"
             android:layout_marginBottom="1dp"
             android:gravity="center_vertical|center_horizontal"
-            android:textColor="#37474F" />
+            android:textColor="#37472F"
+            android:textStyle="bold"/>
     </LinearLayout>
 
 
