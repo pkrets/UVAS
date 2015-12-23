@@ -5,21 +5,27 @@
     android:layout_alignParentLeft="true">
 
     <item
+        android:id="@+id/action_scan"
+        android:title="Scan"
+        app:showAsAction="always|withText"
+        android:icon="@mipmap/ic_ble"/>
+
+    <item
         android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:icon="@mipmap/ic_settings"
-        app:showAsAction="ifRoom" />
+        android:showAsAction="never|withText"/>
 
     <item
         android:id="@+id/action_help"
         android:title="@string/action_help"
         android:icon="@mipmap/ic_help"
-        app:showAsAction="ifRoom" />
+        android:showAsAction="never|withText"/>
 
     <item
         android:id="@+id/action_logout"
         android:title="@string/action_logout"
         android:icon="@mipmap/ic_logout"
-        app:showAsAction="ifRoom" />
+        android:showAsAction="never|withText"/>
 
 </menu>

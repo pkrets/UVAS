@@ -24,18 +24,11 @@
         <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/new_temp"
+            android:id="@+id/new_type"
             android:layout_gravity="center_horizontal"
-            android:hint="1. Temperatura"
+            android:hint="1. Tipo"
             android:layout_weight="1"/>
 
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/new_lum"
-            android:layout_gravity="center_horizontal"
-            android:hint="2. Luminosidade"
-            android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
@@ -47,18 +40,11 @@
         <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/new_humSolo"
+            android:id="@+id/new_alert"
             android:layout_gravity="center_horizontal"
-            android:hint="3. Humidade do solo"
+            android:hint="2. Alerta"
             android:layout_weight="1" />
 
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/new_humAr"
-            android:layout_gravity="center_horizontal"
-            android:hint="4. Humidade do ar"
-            android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
@@ -70,9 +56,9 @@
         <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/new_pluv"
+            android:id="@+id/new_value"
             android:layout_gravity="center_horizontal"
-            android:hint="5. Pluviosidade"
+            android:hint="3. Valor"
             android:layout_weight="1" />
 
         <EditText
@@ -80,7 +66,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/new_data"
             android:layout_gravity="center_horizontal"
-            android:hint="6. Data"
+            android:hint="4. Data"
             android:layout_weight="1" />
     </LinearLayout>
 
@@ -93,8 +79,8 @@
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="Save Pandlet 1"
-            android:onClick="saveData1"
+            android:text="Save Alerta 1"
+            android:onClick="saveAlerta1"
             android:textSize="16sp"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
@@ -103,8 +89,8 @@
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="Save Pandlet 2"
-            android:onClick="saveData2"
+            android:text="Save Alerta 2"
+            android:onClick="saveAlerta2"
             android:textSize="16sp"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
@@ -113,8 +99,8 @@
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="Save Pandlet 3"
-            android:onClick="saveData3"
+            android:text="Save Alerta 3"
+            android:onClick="saveAlerta3"
             android:textSize="16sp"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
@@ -130,7 +116,7 @@
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="Delete Pandlet 1"
+            android:text="Delete Alerta 1"
             android:onClick="deleteAllRows1"
             android:textSize="16sp"
             android:layout_gravity="center_horizontal"
@@ -140,7 +126,7 @@
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="Delete Pandlet 2"
+            android:text="Delete Alerta 2"
             android:onClick="deleteAllRows2"
             android:textSize="16sp"
             android:layout_gravity="center_horizontal"
@@ -150,7 +136,7 @@
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="Delete Pandlet 3"
+            android:text="Delete Alerta 3"
             android:onClick="deleteAllRows3"
             android:textSize="16sp"
             android:layout_gravity="center_horizontal"
@@ -159,3 +145,4 @@
     </LinearLayout>
 
 </LinearLayout>
+

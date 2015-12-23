@@ -25,7 +25,7 @@ public class dbSaveInfoActivity extends AppCompatActivity {
 
     }
 
-    // Add the manually inserted row to the table from Zona 1 - "pandlet1_data"
+    // Add the manually inserted row to the table from Zona 1 - "pandlet1_table"
         public void saveData1(View view)
         {
             temp = new_temp.getText().toString();
@@ -40,7 +40,7 @@ public class dbSaveInfoActivity extends AppCompatActivity {
             finish();
         }
 
-    // Add the manually inserted row to the table from Zona 2 - "pandlet2_data"
+    // Add the manually inserted row to the table from Zona 2 - "pandlet2_table"
         public void saveData2(View view)
         {
             temp = new_temp.getText().toString();
@@ -55,7 +55,7 @@ public class dbSaveInfoActivity extends AppCompatActivity {
             finish();
         }
 
-    // Add the manually inserted row to the table from Zona 3 - "pandlet3_data"
+    // Add the manually inserted row to the table from Zona 3 - "pandlet3_table"
         public void saveData3(View view)
         {
             temp = new_temp.getText().toString();
@@ -68,6 +68,29 @@ public class dbSaveInfoActivity extends AppCompatActivity {
             BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
             backgroundDbTask.execute("add_info_3", temp, lum, humSolo, humAr, pluv, data);
             finish();
+        }
+
+//////////////////////////////
+
+    // Delete ALL ROWS in the table from Zona 1 - "pandlet1_table"
+        public  void deleteAllRows1(View view)
+        {
+            BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
+            backgroundDbTask.execute("delete_info_1");
+        }
+
+    // Delete ALL ROWS in the table from Zona 1 - "pandlet1_table"
+        public  void deleteAllRows2(View view)
+        {
+            BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
+            backgroundDbTask.execute("delete_info_2");
+        }
+
+    // Delete ALL ROWS in the table from Zona 1 - "pandlet1_table"
+        public  void deleteAllRows3(View view)
+        {
+            BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
+            backgroundDbTask.execute("delete_info_3");
         }
 
 

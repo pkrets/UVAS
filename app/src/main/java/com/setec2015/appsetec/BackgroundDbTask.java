@@ -39,6 +39,7 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
 
         String method = params[0];
 
+/*  --------- HISTORICO 1 --------- */
         if(method.equals("add_info_1"))
         {
             String temp1 = params[1];
@@ -86,6 +87,15 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
         return "get_info_1";
         }
 
+        else if(method.equals("delete_info_1"))
+        {
+            SQLiteDatabase db = dbOperations.getWritableDatabase();
+            dbOperations.deleteInfo1(db);
+
+            return "All Rows Deleted (BackgroundTask) in table: " + DbDataContract.DataEntry_1.TABLE_NAME;
+        }
+
+/*  --------- HISTORICO 2 --------- */
         else if(method.equals("add_info_2"))
         {
             String temp2 = params[1];
@@ -133,6 +143,15 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
             return "get_info_2";
         }
 
+        else if(method.equals("delete_info_2"))
+        {
+            SQLiteDatabase db = dbOperations.getWritableDatabase();
+            dbOperations.deleteInfo2(db);
+
+            return "All Rows Deleted (BackgroundTask) in table: " + DbDataContract.DataEntry_2.TABLE_NAME;
+        }
+
+/*  --------- HISTORICO 3 --------- */
         else if (method.equals("add_info_3"))
         {
             String temp3 = params[1];
@@ -180,6 +199,15 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
             return "get_info_3";
         }
 
+        else if(method.equals("delete_info_3"))
+        {
+            SQLiteDatabase db = dbOperations.getWritableDatabase();
+            dbOperations.deleteInfo3(db);
+
+            return "All Rows Deleted (BackgroundTask) in table: " + DbDataContract.DataEntry_3.TABLE_NAME;
+        }
+
+
         return null;
     }
 
@@ -195,11 +223,10 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
         {
             historicoListView.setAdapter(listDataAdapter);
         }
-        else {
+        else
+        {
             Toast.makeText(ctx, result, Toast.LENGTH_LONG).show();
         }
-
-
 
     }
 }

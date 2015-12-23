@@ -50,4 +50,41 @@ public final class DbDataContract {
         public static final String PLUV = "pluv";
         public static final String DATA = "data";
     }
+
+    // Define TABLE 4
+    public static abstract class DataEntry_4
+    {
+        public static final String TABLE_NAME = "alertas1_table";
+
+        public static final String ID = "_id";
+        public static final String TYPE = "type";
+        public static final String ALERT = "alert";
+        public static final String VALUE = "value";
+        public static final String DATA = "data";
+    }
+
+    // Define TABLE 5
+    public static abstract class DataEntry_5
+    {
+        public static final String TABLE_NAME = "alertas2_table";
+
+        public static final String ID = "_id";
+        public static final String TYPE = "type";
+        public static final String ALERT = "alert";
+        public static final String VALUE = "value";
+        public static final String DATA = "data";
+    }
+
+    // Define TABLE 6
+    public static abstract class DataEntry_6
+    {
+        public static final String TABLE_NAME = "alertas3_table";
+
+        public static final String ID = "_id";
+        public static final String TYPE = "type";
+        public static final String ALERT = "alert";
+        public static final String VALUE = "value";
+        public static final String DATA = "data";
+    }
+
 }

@@ -14,7 +14,6 @@ import android.widget.TextView;
 public class tabHistorico extends Fragment {
 
 
-
     private Button btnZona1, btnZona2, btnZona3;
     TextView txtZonaAtual;
 
@@ -27,7 +26,6 @@ public class tabHistorico extends Fragment {
     Bundle savedInstanceState;
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,10 +34,6 @@ public class tabHistorico extends Fragment {
             // Restore last state for checked position.
             zonaAtual = savedInstanceState.getString("zona");
         }
-
-        /*BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
-        backgroundDbTask.execute("get_info_1");*/
-
 
     }
 
@@ -109,15 +103,6 @@ public class tabHistorico extends Fragment {
 
 
     }
-
-
-
-
-
-
-
-
-
 
 
     @Override

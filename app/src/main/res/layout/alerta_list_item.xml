@@ -7,36 +7,26 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="35dp">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="ID"
-            android:id="@+id/item_txtID"
+            android:id="@+id/item_id"
             android:textSize="13sp"
             android:layout_weight="1"
             android:background="@drawable/list_border"
             android:layout_marginBottom="1dp"
             android:gravity="center_vertical|center_horizontal" />
 
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:id="@+id/item_icon"
-            android:adjustViewBounds="true"
-            android:maxHeight="35dp"
-            android:maxWidth="35dp"
-            android:background="@drawable/list_border"
-            android:layout_marginBottom="1dp" />
-
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Sensor"
-            android:id="@+id/item_txtSensor"
+            android:text="Tipo"
+            android:id="@+id/item_type"
             android:textSize="13sp"
             android:layout_weight="3"
             android:background="@drawable/list_border"
@@ -47,8 +37,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Tipo"
-            android:id="@+id/item_txtAlertType"
+            android:text="Alerta"
+            android:id="@+id/item_alert"
             android:textSize="13sp"
             android:layout_weight="8"
             android:background="@drawable/list_border"
@@ -60,7 +50,7 @@
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Valor"
-            android:id="@+id/item_txtValue"
+            android:id="@+id/item_value"
             android:textSize="13sp"
             android:layout_weight="2"
             android:background="@drawable/list_border"
@@ -72,9 +62,9 @@
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Data"
-            android:id="@+id/item_txtDate"
+            android:id="@+id/item_data"
             android:textSize="13sp"
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:background="@drawable/list_border"
             android:layout_marginBottom="1dp"
             android:gravity="center_vertical|center_horizontal" />

@@ -68,12 +68,12 @@ public class ListDataAdapter extends ArrayAdapter {
             }
 
             ListData listData = (ListData) getItem(position);
-                listDataHolder.item_id.setText(listData.getId());
-                listDataHolder.item_temp.setText(listData.getTemp());
-                listDataHolder.item_lum.setText(listData.getLum());
-                listDataHolder.item_humSolo.setText(listData.getHumSolo());
-                listDataHolder.item_humAr.setText(listData.getHumAr());
-                listDataHolder.item_pluv.setText(listData.getPluv());
+                listDataHolder.item_id.setText(listData.getId() + ".");
+                listDataHolder.item_temp.setText(listData.getTemp() + " ºC");
+                listDataHolder.item_lum.setText(listData.getLum() + " lux");
+                listDataHolder.item_humSolo.setText(listData.getHumSolo() + " %");
+                listDataHolder.item_humAr.setText(listData.getHumAr() + " %");
+                listDataHolder.item_pluv.setText(listData.getPluv() + " mm^3/h");
                 listDataHolder.item_data.setText(listData.getData());
 
             return row;

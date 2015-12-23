@@ -14,8 +14,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.90"
-        android:orientation="horizontal">
+        android:layout_weight="0.85"
+        android:orientation="horizontal"
+        android:layout_marginLeft="5dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -28,9 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:baselineAlignBottom="false"
-                android:clickable="false"
                 android:src="@mipmap/ic_satellite"
-                android:layout_marginTop="5dp"
                 android:layout_marginRight="3dp"
                 android:background="@drawable/bg_mapbutton" />
 
@@ -41,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:text="+"
                 android:textColor="#737373"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="3dp"
                 android:background="@drawable/bg_mapbutton" />
@@ -53,28 +52,35 @@
                 android:layout_height="wrap_content"
                 android:text="-"
                 android:textColor="#737373"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 android:layout_marginTop="3dp"
                 android:layout_marginRight="3dp"
                 android:background="@drawable/bg_mapbutton" />
         </LinearLayout>
 
-        <RelativeLayout
-            android:id="@+id/map"
-            android:layout_width="270dp"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="265dp"
             android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/map_border">
-        </RelativeLayout>
+            android:background="@drawable/bg_mapbutton">
+
+            <RelativeLayout
+                android:id="@+id/map"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="1dp"
+                android:paddingBottom="1dp"
+                android:paddingLeft="1dp"
+                android:paddingRight="1dp">
+            </RelativeLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="bottom"
             android:layout_marginLeft="12.5dp"
-            android:layout_marginRight="7.5dp">
+            android:layout_marginRight="5dp">
 
             <TextView
                 android:layout_width="match_parent"
@@ -83,21 +89,269 @@
                 android:text="@string/lbl_valoresSensores"
                 android:id="@+id/txtValoresSensores"
                 android:textSize="12sp"
-                android:foregroundGravity="top"
-                android:layout_alignParentTop="true"
-                android:layout_alignEnd="@+id/sensorListView"
                 android:gravity="right"
                 android:layout_marginRight="5dp" />
 
-            <ListView
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/sensorListView"
-                android:layout_gravity="center_horizontal"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/txtValoresSensores"
-                android:foregroundGravity="center_vertical"/>
+                android:layout_height="1dp"
+                android:background="#A5D6A7"/>
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="33dp"
+                android:background="@color/listSensorColor"
+                android:id="@+id/linearLayout">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/list_border"
+                    android:src="@mipmap/ic_temperatura"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Temperatura"
+                    android:textSize="15sp"
+                    android:layout_weight="5"
+                    android:layout_marginLeft="5dp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="ºC"
+                    android:textSize="12sp"
+                    android:layout_weight="2"
+                    android:gravity="bottom|right"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="3dp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="- -"
+                    android:id="@+id/txt_newTemp"
+                    android:textSize="18sp"
+                    android:layout_marginRight="5dp"
+                    android:gravity="bottom|right"
+                    android:textColor="#388E3C"
+                    android:layout_weight="2" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#A5D6A7"/>
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="33dp"
+                android:background="@color/listSensorColor"
+                android:id="@+id/linearLayout2">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/list_border"
+                    android:src="@mipmap/ic_luminosidade"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Luminosidade"
+                    android:textSize="15sp"
+                    android:layout_weight="5"
+                    android:layout_marginLeft="5dp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="lux"
+                    android:textSize="12sp"
+                    android:layout_weight="2"
+                    android:gravity="bottom|right"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="3dp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="- -"
+                    android:id="@+id/txt_newLum"
+                    android:textSize="18sp"
+                    android:layout_marginRight="5dp"
+                    android:gravity="bottom|right"
+                    android:textColor="#388E3C"
+                    android:layout_weight="2" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#A5D6A7"/>
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="33dp"
+                android:background="@color/listSensorColor"
+                android:id="@+id/linearLayout3">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/list_border"
+                    android:src="@mipmap/ic_humidade"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Humidade (solo)"
+                    android:textSize="15sp"
+                    android:layout_weight="5"
+                    android:layout_marginLeft="5dp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="%"
+                    android:textSize="12sp"
+                    android:layout_weight="2"
+                    android:gravity="bottom|right"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="3dp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="- -"
+                    android:id="@+id/txt_newHumSolo"
+                    android:textSize="18sp"
+                    android:layout_marginRight="5dp"
+                    android:gravity="bottom|right"
+                    android:textColor="#388E3C"
+                    android:layout_weight="2" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#A5D6A7"/>
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="33dp"
+                android:background="@color/listSensorColor"
+                android:id="@+id/linearLayout4">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/list_border"
+                    android:src="@mipmap/ic_humidade"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Humidade (ar)"
+                    android:textSize="15sp"
+                    android:layout_weight="5"
+                    android:layout_marginLeft="5dp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="%"
+                    android:textSize="12sp"
+                    android:layout_weight="2"
+                    android:gravity="bottom|right"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="3dp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="- -"
+                    android:id="@+id/txt_newHumAr"
+                    android:textSize="18sp"
+                    android:layout_marginRight="5dp"
+                    android:gravity="bottom|right"
+                    android:textColor="#388E3C"
+                    android:layout_weight="2" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#A5D6A7"/>
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="33dp"
+                android:background="@color/listSensorColor"
+                android:id="@+id/linearLayout5">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/list_border"
+                    android:src="@mipmap/ic_pluviosidade"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Pluviosidade"
+                    android:textSize="15sp"
+                    android:layout_weight="5"
+                    android:layout_marginLeft="5dp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="mm^3/h"
+                    android:textSize="12sp"
+                    android:layout_weight="2"
+                    android:gravity="bottom|right"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="3dp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="- -"
+                    android:id="@+id/txt_newPluv"
+                    android:textSize="18sp"
+                    android:layout_marginRight="5dp"
+                    android:gravity="bottom|right"
+                    android:textColor="#388E3C"
+                    android:layout_weight="2" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#A5D6A7"/>
+
         </LinearLayout>
     </LinearLayout>
 
@@ -106,57 +360,80 @@
         android:layout_height="0dp"
         android:layout_weight="0.2"
         android:gravity="bottom"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginRight="5dp">
 
         <Button
             android:id="@+id/btnZona1"
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_weight="0.18"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_weight="2"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:background="@drawable/bg_zonabutton"
-            android:text="@string/lbl_btnZona1" />
+            android:text="@string/lbl_btnZona1"
+            android:textSize="14sp"
+            android:gravity="center_vertical|center_horizontal" />
 
         <Button
             android:id="@+id/btnZona2"
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_weight="0.18"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_weight="2"
             android:background="@drawable/bg_zonabutton"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:text="@string/lbl_btnZona2" />
+            android:text="@string/lbl_btnZona2"
+            android:textSize="14sp"
+            android:gravity="center_vertical|center_horizontal" />
 
         <Button
             android:id="@+id/btnZona3"
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_weight="0.18"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_weight="2"
             android:background="@drawable/bg_zonabutton"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:text="@string/lbl_btnZona3" />
+            android:text="@string/lbl_btnZona3"
+            android:textSize="14sp"
+            android:gravity="center_vertical|center_horizontal" />
 
         <TextView
-            android:id="@+id/txtZonaEscolhida"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.16"
+            android:layout_weight="2"
             android:gravity="right"
-            android:text="@string/lbl_zonaEscolhida"
+            android:text="@string/lbl_zonaAtual"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
             android:id="@+id/txtZonaAtual"
-            android:layout_width="150dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="left"
+            android:text="ZONA X"
+            android:layout_marginLeft="5dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/colorPrimaryText" />
+            android:textColor="@color/colorPrimaryText"
+            android:layout_weight="1.8" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_weight="1.8"
+            android:text="scan"
+            android:background="@drawable/bg_sensorbutton"
+            android:drawableStart="@mipmap/ic_ble"
+            android:textSize="12sp"
+            android:id="@+id/btnBleScan"
+            android:gravity="center_vertical|center_horizontal" />
+
     </LinearLayout>
+
 
 </LinearLayout>

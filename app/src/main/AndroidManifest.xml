@@ -68,12 +68,12 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".SimpleXYPlotActivity"
-            android:screenOrientation="landscape" >
-        </activity>
-        <activity
             android:name=".dbSaveInfoActivity"
             android:label="@string/title_activity_db_save_info" >
+        </activity>
+        <activity
+            android:name=".dbSaveAlertaActivity"
+            android:label="@string/title_activity_db_save_alerta" >
         </activity>
     </application>
 

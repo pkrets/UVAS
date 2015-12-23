@@ -13,7 +13,7 @@
     <string name="lbl_btnSol">Luminosidade</string>
     <string name="lbl_btnChuva">Pluviosidade</string>
     <string name="lbl_btnGPS">GPS</string>
-    <string name="lbl_zonaEscolhida">Zona escolhida:  </string>
+    <string name="lbl_zonaAtual">Zona atual: </string>
     <string name="title_activity_settings">Definições</string>
     <string name="lbl_ativarAlertas">> Activar/desactivar a recepção de Alertas</string>
     <string name="lbl_parametrosAlertas">> Seleccione o intervalo de valores que considera ideais:</string>
@@ -31,4 +31,5 @@
     <string name="alertDialogOk">OK</string>
     <string name="alertDialogCancel">Cancelar</string>
     <string name="title_activity_db_save_info">dbSaveInfoActivity</string>
+    <string name="title_activity_db_save_alerta">dbSaveAlertaActivity</string>
 </resources>
