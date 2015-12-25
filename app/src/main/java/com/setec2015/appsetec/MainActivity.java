@@ -3,8 +3,10 @@ package com.setec2015.appsetec;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -81,8 +83,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
 
         private BluetoothGatt mConnectedGatt;
 
-        private String mTemperature = null;
-        private String mPressão, mHumAr, mLuminosidade, mHumSolo;
+        private String mTemperature, mPressão, mHumAr, mLuminosidade, mHumSolo;
 
         private ProgressDialog mProgress;
 
@@ -129,7 +130,6 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
     @Override
     protected void onResume() {
         super.onResume();
-
     }
 
     @Override
@@ -152,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             mConnectedGatt = null;
         }
     }
+
 
 ////////////////   Fragments (Tabs)   ////////////////
 
@@ -713,13 +714,14 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
                     mProgress.hide();
                     break;
                 case MSG_CLEAR:
-                    mTemperature = "- -";
-                    mPressão = "- -";
-                    mHumAr = "- -";
-                    mLuminosidade = "- -";
-                    mHumSolo = "- -";
+                    mTemperature = "null";
+                    mPressão = "null";
+                    mHumAr = "null";
+                    mLuminosidade = "null";
+                    mHumSolo = "null";
                     break;
             }
+            populateHistoricoDb();
         }
     };
 
@@ -729,7 +731,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
         private void updateTempValues(BluetoothGattCharacteristic characteristic) {
             double temp = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT32, 0);
             mTemperature = String.valueOf((String.format("%.2f", temp/100)));
-                Log.i(TAG, "Temp Caract: " + mTemperature);
+            Log.i(TAG, "Temp Caract: " + mTemperature);
                 //Toast.makeText(this, "Temp Caract: " + mTemperature, Toast.LENGTH_LONG).show();
 
             getMyTemp();
@@ -771,7 +773,6 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             getMyHumSolo();
         }
 
-
         // Send data to display in tab Sensores
         public String getMyTemp() {
             return mTemperature;
@@ -789,6 +790,150 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             return mHumSolo;
         }
 
+        // Populate DB: Historico tables
+        private void populateHistoricoDb()
+        {
+            if(mTemperature != null && mLuminosidade != null && mHumSolo != null && mHumAr != null && mPressão != null) {
+                String data = "12-12-2015, 18h34m";     // Manually inserted for now
+
+                BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
+                backgroundDbTask.execute("add_info_1", mTemperature, mLuminosidade, mHumSolo, mHumAr, mPressão, data);
+            }
+        }
+
+
+
+ ////////////////   ALERTAS   ////////////////
+
+    public void alertaTemperatura() {
+
+        SharedPreferences prefs = getSharedPreferences("DataTemperatura", Context.MODE_PRIVATE);
+            String minTemp = prefs.getString("minTemperatura", "0");
+                double min_temp = Double.parseDouble(minTemp);
+            String maxTemp = prefs.getString("maxTemperatura", "0");
+                double max_temp = Double.parseDouble(maxTemp);
+
+        double temp = Double.parseDouble(mTemperature);
+
+        String type = "Temperatura";
+        String alert1 = "Ultrapassou o valor mínimo desejado: " + minTemp;
+        String alert2 = "Ultrapassou o valor máximo desejado: " + maxTemp;
+        String value = mTemperature + " ºC";
+        String data = "12-12-2015, 18h23m"; // Manually inserted for now
+
+        if(temp < min_temp) {
+            BackgroundDbTask2 backgroundDbTask2  = new BackgroundDbTask2(this);
+            backgroundDbTask2.execute("add_alerta_1", type, alert1, value, data);
+        }
+        else if(temp > max_temp) {
+            BackgroundDbTask2 backgroundDbTask2  = new BackgroundDbTask2(this);
+            backgroundDbTask2.execute("add_alerta_1", type, alert2, value, data);
+        }
+    }
+
+    public void alertaLuminosidade() {
+
+        SharedPreferences prefs = getSharedPreferences("DataLuminosidade", Context.MODE_PRIVATE);
+            String minLum = prefs.getString("minLuminosidade", "0");
+                double min_lum = Double.parseDouble(minLum);
+            String maxLum = prefs.getString("maxLuminosidade", "0");
+                double max_lum = Double.parseDouble(maxLum);
+
+        double lum = Double.parseDouble(mLuminosidade);
+
+        String type = "Luminosidade";
+        String alert1 = "Ultrapassou o valor mínimo desejado: " + minLum;
+        String alert2 = "Ultrapassou o valor máximo desejado: " + maxLum;
+        String value = mLuminosidade + " lux";
+        String data = "12-12-2015, 18h23m"; // Manually inserted for now
+
+        if(lum < min_lum) {
+            BackgroundDbTask2 backgroundDbTask2  = new BackgroundDbTask2(this);
+            backgroundDbTask2.execute("add_alerta_1", type, alert1, value, data);
+        }
+        else if(lum > max_lum) {
+            BackgroundDbTask2 backgroundDbTask2  = new BackgroundDbTask2(this);
+            backgroundDbTask2.execute("add_alerta_1", type, alert2, value, data);
+        }
+    }
+
+    public void alertaHumidadeSolo() {
+
+        SharedPreferences prefs = getSharedPreferences("DataHumidade", Context.MODE_PRIVATE);
+            String minHumSolo = prefs.getString("minHumidadeSolo", "0");
+                double min_humSolo = Double.parseDouble(minHumSolo);
+            String maxHumSolo = prefs.getString("maxHumidadeSolo", "0");
+                double max_humSolo = Double.parseDouble(maxHumSolo);
+
+        double humSolo = Double.parseDouble(mHumSolo);
+
+        String type = "Humidade (solo)";
+        String alert1 = "Ultrapassou o valor mínimo desejado: " + minHumSolo;
+        String alert2 = "Ultrapassou o valor máximo desejado: " + maxHumSolo;
+        String value = mHumSolo + " %";
+        String data = "12-12-2015, 18h23m"; // Manually inserted for now
+
+        if(humSolo < min_humSolo) {
+            BackgroundDbTask2 backgroundDbTask2  = new BackgroundDbTask2(this);
+            backgroundDbTask2.execute("add_alerta_1", type, alert1, value, data);
+        }
+        else if(humSolo > max_humSolo) {
+            BackgroundDbTask2 backgroundDbTask2  = new BackgroundDbTask2(this);
+            backgroundDbTask2.execute("add_alerta_1", type, alert2, value, data);
+        }
+    }
+
+    public void alertaHumidadeAr() {
+
+        SharedPreferences prefs = getSharedPreferences("DataHumidade", Context.MODE_PRIVATE);
+            String minHumAr = prefs.getString("minHumidadeAr", "0");
+                double min_humAr = Double.parseDouble(minHumAr);
+            String maxHumAr = prefs.getString("maxHumidadeAr", "0");
+                double max_humAr = Double.parseDouble(maxHumAr);
+
+        double humAr = Double.parseDouble(mHumAr);
+
+        String type = "Humidade (ar)";
+        String alert1 = "Ultrapassou o valor mínimo desejado: " + minHumAr;
+        String alert2 = "Ultrapassou o valor máximo desejado: " + maxHumAr;
+        String value = mHumAr + " %";
+        String data = "12-12-2015, 18h23m"; // Manually inserted for now
+
+        if(humAr < min_humAr) {
+            BackgroundDbTask2 backgroundDbTask2  = new BackgroundDbTask2(this);
+            backgroundDbTask2.execute("add_alerta_1", type, alert1, value, data);
+        }
+        else if(humAr > max_humAr) {
+            BackgroundDbTask2 backgroundDbTask2  = new BackgroundDbTask2(this);
+            backgroundDbTask2.execute("add_alerta_1", type, alert2, value, data);
+        }
+    }
+
+    public void alertaPluviosidade() {
+
+        SharedPreferences prefs = getSharedPreferences("DataPluviosidade", Context.MODE_PRIVATE);
+            String minPluv = prefs.getString("minPluviosidade", "0");
+                double min_pluv = Double.parseDouble(minPluv);
+            String maxPluv = prefs.getString("maxPluviosidade", "0");
+                double max_pluv = Double.parseDouble(maxPluv);
+
+        double pluv = Double.parseDouble(mPressão); // Trocar por PLUVIOSIDADE !!!
+
+        String type = "Pluviosidade";
+        String alert1 = "Ultrapassou o valor mínimo desejado: " + minPluv;
+        String alert2 = "Ultrapassou o valor máximo desejado: " + maxPluv;
+        String value = mPressão + " mm^3";
+        String data = "12-12-2015, 18h23m"; // Manually inserted for now
+
+        if(pluv < min_pluv) {
+            BackgroundDbTask2 backgroundDbTask2  = new BackgroundDbTask2(this);
+            backgroundDbTask2.execute("add_alerta_1", type, alert1, value, data);
+        }
+        else if(pluv > max_pluv) {
+            BackgroundDbTask2 backgroundDbTask2  = new BackgroundDbTask2(this);
+            backgroundDbTask2.execute("add_alerta_1", type, alert2, value, data);
+        }
+    }
 
 }
 
