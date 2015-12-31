@@ -35,9 +35,17 @@ public class dbSaveInfoActivity extends AppCompatActivity {
             pluv = new_pluv.getText().toString();
             data = new_data.getText().toString();
 
-            BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
-            backgroundDbTask.execute("add_info_1", temp, lum, humSolo, humAr, pluv, data);
-            finish();
+            /*
+            // Write in Local DB
+                BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
+                backgroundDbTask.execute("add_info_1", temp, lum, humSolo, humAr, pluv, data);
+                finish();
+            */
+
+            // Write in Online DB
+                BackgroundOnlineDbTask backgroundOnlineDbTask = new BackgroundOnlineDbTask(this);
+                backgroundOnlineDbTask.execute("add_info_1", temp, lum, humSolo, humAr, pluv, data);
+                finish();
         }
 
     // Add the manually inserted row to the table from Zona 2 - "pandlet2_table"
@@ -50,9 +58,17 @@ public class dbSaveInfoActivity extends AppCompatActivity {
             pluv = new_pluv.getText().toString();
             data = new_data.getText().toString();
 
-            BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
-            backgroundDbTask.execute("add_info_2", temp, lum, humSolo, humAr, pluv, data);
-            finish();
+            /*
+            // Write in Local DB
+                BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
+                backgroundDbTask.execute("add_info_2", temp, lum, humSolo, humAr, pluv, data);
+                finish();
+            */
+
+            // Write in Online DB
+                BackgroundOnlineDbTask backgroundOnlineDbTask = new BackgroundOnlineDbTask(this);
+                backgroundOnlineDbTask.execute("add_info_2", temp, lum, humSolo, humAr, pluv, data);
+                finish();
         }
 
     // Add the manually inserted row to the table from Zona 3 - "pandlet3_table"
@@ -65,9 +81,17 @@ public class dbSaveInfoActivity extends AppCompatActivity {
             pluv = new_pluv.getText().toString();
             data = new_data.getText().toString();
 
-            BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
-            backgroundDbTask.execute("add_info_3", temp, lum, humSolo, humAr, pluv, data);
-            finish();
+            /*
+            // Write in Local DB
+                BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
+                backgroundDbTask.execute("add_info_3", temp, lum, humSolo, humAr, pluv, data);
+                finish();
+            */
+
+            // Write in Online DB
+                BackgroundOnlineDbTask backgroundOnlineDbTask = new BackgroundOnlineDbTask(this);
+                backgroundOnlineDbTask.execute("add_info_3", temp, lum, humSolo, humAr, pluv, data);
+                finish();
         }
 
 //////////////////////////////

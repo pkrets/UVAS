@@ -132,7 +132,7 @@ public class tabSensores extends Fragment {
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(zona1Location, zoomLevel));
 
                 MainActivity activity = (MainActivity) getActivity();
-                newTemp = activity.getMyTemp();
+                newTemp = activity.getMyTempUI();
                 newLum = activity.getMyLum();
                 newHumSolo = activity.getMyHumSolo();
                 newHumAr = activity.getMyHumAr();

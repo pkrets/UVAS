@@ -99,7 +99,7 @@ public class tabAlertas extends Fragment {
                 zonaEscolhida = txtZonaAtual.getText().toString();
 
                 BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2((getContext()));
-                backgroundDbTask2.execute("get_alerta_3x");
+                backgroundDbTask2.execute("get_alerta_3");
             }
         });
 

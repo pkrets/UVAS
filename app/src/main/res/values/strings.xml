@@ -2,6 +2,7 @@
     <string name="app_name">Universal Vine Aid System</string>
 
     <string name="action_settings">Definições</string>
+    <string name="action_login">Iniciar Sessão Online</string>
     <string name="action_help">Ajuda</string>
     <string name="action_logout">Terminar Sessão</string>
     <string name="title_activity_maps">Map</string>
@@ -22,9 +23,9 @@
     <string name="lbl_settingsSol">3. Exposição Solar</string>
     <string name="title_activity_start">StartActivity</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="lbl_loginButton">Iniciar Sessão</string>
-    <string name="lbl_RegistarButton">Registar na Rede</string>
+
+    <string name="lbl_entrarButton">Entrar</string>
+    <string name="lbl_loginButton">Iniciar Sessão Online</string>
     <string name="lbl_btnaplicarsettings">Aplicar</string>
     <string name="lbl_valoresSensores">Últimos dados recebidos:</string>
 
@@ -32,4 +33,6 @@
     <string name="alertDialogCancel">Cancelar</string>
     <string name="title_activity_db_save_info">dbSaveInfoActivity</string>
     <string name="title_activity_db_save_alerta">dbSaveAlertaActivity</string>
+    <string name="title_activity_login">Iniciar Sessão Online</string>
+
 </resources>

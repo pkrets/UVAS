@@ -60,9 +60,15 @@ public class tabHistorico extends Fragment {
                 txtZonaAtual.setText(zona1);
                 zonaEscolhida = txtZonaAtual.getText().toString();
 
-                BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
-                backgroundDbTask.execute("get_info_1");
+                /*
+                // Get data from Local BD
+                    BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
+                    backgroundDbTask.execute("get_info_1");
+                */
 
+                //Get data from Online BD
+                    BackgroundOnlineDbTask backgroundOnlineDbTask = new BackgroundOnlineDbTask(getContext());
+                    backgroundOnlineDbTask.execute("get_info_1");
             }
         });
 

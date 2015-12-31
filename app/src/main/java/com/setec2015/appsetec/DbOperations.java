@@ -19,8 +19,7 @@ public class DbOperations extends SQLiteOpenHelper {
           >>> NOTE : every time the table structure or the queries are altered, the
           DATABASE_VERSION must be INCREMENTED in order to call the onUpgrade method.
               > Version 1 -- DB created with 3 tables (HISTORICO) including <create_table> & <drop_table> queries
-              > Version 2 -- 3 tables added (ALERTAS) including <create_table> & <drop_table> queries
-                */
+    */
     private static final int DB_VERSION = 1;
 
 /////// Tables from "HISTORICO" //////////////////

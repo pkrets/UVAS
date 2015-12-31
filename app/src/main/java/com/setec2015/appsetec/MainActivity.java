@@ -722,6 +722,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
                     break;
             }
             populateHistoricoDb();
+            //alertaTemperatura();
         }
     };
 
@@ -730,11 +731,12 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
 
         private void updateTempValues(BluetoothGattCharacteristic characteristic) {
             double temp = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT32, 0);
-            mTemperature = String.valueOf((String.format("%.2f", temp/100)));
-            Log.i(TAG, "Temp Caract: " + mTemperature);
+            mTemperature = String.valueOf((String.format("%.2f", temp / 100)));
+                Log.i(TAG, "Temp Caract: " + mTemperature);
                 //Toast.makeText(this, "Temp Caract: " + mTemperature, Toast.LENGTH_LONG).show();
+            getMyTempUI();
+            //alertaTemperatura();
 
-            getMyTemp();
         }
 
         private void updatePresValues(BluetoothGattCharacteristic characteristic) {
@@ -774,7 +776,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
         }
 
         // Send data to display in tab Sensores
-        public String getMyTemp() {
+        public String getMyTempUI() {
             return mTemperature;
         }
         public String getMyPres() {
@@ -802,7 +804,6 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
         }
 
 
-
  ////////////////   ALERTAS   ////////////////
 
     public void alertaTemperatura() {
@@ -810,24 +811,36 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
         SharedPreferences prefs = getSharedPreferences("DataTemperatura", Context.MODE_PRIVATE);
             String minTemp = prefs.getString("minTemperatura", "0");
                 double min_temp = Double.parseDouble(minTemp);
+                //double min_temp = 24.0;
             String maxTemp = prefs.getString("maxTemperatura", "0");
                 double max_temp = Double.parseDouble(maxTemp);
+                //double max_temp = 25.0;
 
-        double temp = Double.parseDouble(mTemperature);
-
-        String type = "Temperatura";
-        String alert1 = "Ultrapassou o valor mínimo desejado: " + minTemp;
-        String alert2 = "Ultrapassou o valor máximo desejado: " + maxTemp;
-        String value = mTemperature + " ºC";
-        String data = "12-12-2015, 18h23m"; // Manually inserted for now
-
-        if(temp < min_temp) {
-            BackgroundDbTask2 backgroundDbTask2  = new BackgroundDbTask2(this);
-            backgroundDbTask2.execute("add_alerta_1", type, alert1, value, data);
+        double TMP;
+            Log.i("ALERTA 1", "mTemperature = " + mTemperature);
+        if(mTemperature != null && !mTemperature.isEmpty()) {
+            TMP = Double.parseDouble(mTemperature);
+            Log.i("ALERTA 2", "mTemperature = " + TMP);
+        }else {
+            TMP = 0;
         }
-        else if(temp > max_temp) {
-            BackgroundDbTask2 backgroundDbTask2  = new BackgroundDbTask2(this);
-            backgroundDbTask2.execute("add_alerta_1", type, alert2, value, data);
+
+        if(TMP != 0) {
+            //float temp = Float.parseFloat(mTemperature);
+
+            String type = "Temperatura";
+            String alert1 = "Ultrapassou o valor mínimo desejado: " + minTemp;
+            String alert2 = "Ultrapassou o valor máximo desejado: " + maxTemp;
+            String value = mTemperature + " ºC";
+            String data = "12-12-2015, 18h23m"; // Manually inserted for now
+
+            if (TMP < min_temp) {
+                BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2(this);
+                backgroundDbTask2.execute("add_alerta_1", type, alert1, value, data);
+            } else if (TMP > max_temp) {
+                BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2(this);
+                backgroundDbTask2.execute("add_alerta_1", type, alert2, value, data);
+            }
         }
     }
 

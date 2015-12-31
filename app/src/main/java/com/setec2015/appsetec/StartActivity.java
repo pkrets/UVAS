@@ -3,27 +3,24 @@ package com.setec2015.appsetec;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 public class StartActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button btnLogin, btnRegistarRede, btnBDhistorico, btnBDalertas;
-
+    private Button btnEntrar, btnLoginOnline, btnBDhistorico, btnBDalertas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        btnLogin = (Button) findViewById(R.id.btnLogin);
-        btnLogin.setOnClickListener(this);
+        btnEntrar = (Button) findViewById(R.id.btnEntrar);
+        btnEntrar.setOnClickListener(this);
 
-        btnRegistarRede = (Button) findViewById(R.id.btnRegistarRede);
-        btnRegistarRede.setOnClickListener(this);
+        btnLoginOnline = (Button) findViewById(R.id.btnLoginOnline);
+        btnLoginOnline.setOnClickListener(this);
 
         btnBDalertas = (Button) findViewById(R.id.btnBDalertas);
         btnBDalertas.setOnClickListener(this);
@@ -37,14 +34,13 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         // Button "Iniciar Sessão"
-        if (view.getId() == R.id.btnLogin) {
+        if (view.getId() == R.id.btnEntrar) {
             startActivity(new Intent(this, MainActivity.class));
         }
 
         // Button "Registar na Rede"
-        if (view.getId() == R.id.btnRegistarRede) {
-            Toast.makeText(getApplicationContext(), "Botão > Registar na Rede < clicado!", Toast.LENGTH_LONG).show();
-
+        if (view.getId() == R.id.btnLoginOnline) {
+            startActivity(new Intent(this, LoginActivity.class));
         }
 
         // Button "BD Alertas"

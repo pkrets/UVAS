@@ -15,9 +15,9 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
 
     Context ctx;
 
-    ListDataAdapter listDataAdapter;
-
     Activity activity;
+
+    ListDataAdapter listDataAdapter;
 
     ListView historicoListView;
 
