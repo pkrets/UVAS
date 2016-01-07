@@ -2,8 +2,11 @@
 
 package com.setec2015.appsetec;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +37,6 @@ public class tabHistorico extends Fragment {
             // Restore last state for checked position.
             zonaAtual = savedInstanceState.getString("zona");
         }
-
     }
 
     @Override
@@ -51,7 +53,6 @@ public class tabHistorico extends Fragment {
 
 
 
-
         // Button "Zona 1"
         btnZona1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,15 +61,14 @@ public class tabHistorico extends Fragment {
                 txtZonaAtual.setText(zona1);
                 zonaEscolhida = txtZonaAtual.getText().toString();
 
-                /*
-                // Get data from Local BD
-                    BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
-                    backgroundDbTask.execute("get_info_1");
-                */
+                BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
+                backgroundDbTask.execute("get_info_1");
 
-                //Get data from Online BD
-                    BackgroundOnlineDbTask backgroundOnlineDbTask = new BackgroundOnlineDbTask(getContext());
-                    backgroundOnlineDbTask.execute("get_info_1");
+                /*if (log) {
+                    //Get data from Online Db
+                        BackgroundOnlineDbTask backgroundOnlineDbTask = new BackgroundOnlineDbTask(getContext());
+                        backgroundOnlineDbTask.execute("get_info_1");
+                }*/
             }
         });
 
@@ -106,8 +106,6 @@ public class tabHistorico extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-
     }
 
 
@@ -116,7 +114,6 @@ public class tabHistorico extends Fragment {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putString("zona", zonaEscolhida);
     }
-
 
 
 }

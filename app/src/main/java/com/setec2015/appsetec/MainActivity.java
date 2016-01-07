@@ -124,6 +124,19 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
         mProgress = new ProgressDialog(this);
         mProgress.setIndeterminate(true);
         mProgress.setCancelable(false);
+
+        SharedPreferences prefs = this.getSharedPreferences("LoginStatus", Context.MODE_PRIVATE);
+        Boolean log = prefs.getBoolean("isLogged", false);
+
+        if(log) {
+            // Local DB - delete table from Zona 1 (pandlet1_table)
+                BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
+                backgroundDbTask.execute("delete_info_1");
+
+            // Online DB - get all rows from Zona 1 (pandlet1_values)
+                BackgroundOnlineDbTask backgroundOnlineDbTask = new BackgroundOnlineDbTask(this);
+                backgroundOnlineDbTask.execute("get_info_1");
+        }
     }
 
 

@@ -35,17 +35,16 @@ public class dbSaveInfoActivity extends AppCompatActivity {
             pluv = new_pluv.getText().toString();
             data = new_data.getText().toString();
 
-            /*
+
             // Write in Local DB
                 BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
                 backgroundDbTask.execute("add_info_1", temp, lum, humSolo, humAr, pluv, data);
-                finish();
-            */
 
+            /*
             // Write in Online DB
                 BackgroundOnlineDbTask backgroundOnlineDbTask = new BackgroundOnlineDbTask(this);
                 backgroundOnlineDbTask.execute("add_info_1", temp, lum, humSolo, humAr, pluv, data);
-                finish();
+            */
         }
 
     // Add the manually inserted row to the table from Zona 2 - "pandlet2_table"
@@ -58,17 +57,16 @@ public class dbSaveInfoActivity extends AppCompatActivity {
             pluv = new_pluv.getText().toString();
             data = new_data.getText().toString();
 
-            /*
+
             // Write in Local DB
                 BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
                 backgroundDbTask.execute("add_info_2", temp, lum, humSolo, humAr, pluv, data);
-                finish();
-            */
 
+            /*
             // Write in Online DB
                 BackgroundOnlineDbTask backgroundOnlineDbTask = new BackgroundOnlineDbTask(this);
                 backgroundOnlineDbTask.execute("add_info_2", temp, lum, humSolo, humAr, pluv, data);
-                finish();
+            */
         }
 
     // Add the manually inserted row to the table from Zona 3 - "pandlet3_table"
@@ -81,17 +79,16 @@ public class dbSaveInfoActivity extends AppCompatActivity {
             pluv = new_pluv.getText().toString();
             data = new_data.getText().toString();
 
-            /*
+
             // Write in Local DB
                 BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
                 backgroundDbTask.execute("add_info_3", temp, lum, humSolo, humAr, pluv, data);
-                finish();
-            */
 
+            /*
             // Write in Online DB
                 BackgroundOnlineDbTask backgroundOnlineDbTask = new BackgroundOnlineDbTask(this);
                 backgroundOnlineDbTask.execute("add_info_3", temp, lum, humSolo, humAr, pluv, data);
-                finish();
+            */
         }
 
 //////////////////////////////
@@ -103,14 +100,14 @@ public class dbSaveInfoActivity extends AppCompatActivity {
             backgroundDbTask.execute("delete_info_1");
         }
 
-    // Delete ALL ROWS in the table from Zona 1 - "pandlet1_table"
+    // Delete ALL ROWS in the table from Zona 2 - "pandlet2_table"
         public  void deleteAllRows2(View view)
         {
             BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
             backgroundDbTask.execute("delete_info_2");
         }
 
-    // Delete ALL ROWS in the table from Zona 1 - "pandlet1_table"
+    // Delete ALL ROWS in the table from Zona 3 - "pandlet3_table"
         public  void deleteAllRows3(View view)
         {
             BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);

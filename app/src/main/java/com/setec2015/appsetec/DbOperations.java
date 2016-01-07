@@ -140,6 +140,22 @@ public class DbOperations extends SQLiteOpenHelper {
             return cursor;
         }
 
+    // Get Last Row from TABLE 1 in DB -- pandlet1_table
+    public Cursor getLastRow1(SQLiteDatabase db)
+    {
+        Cursor cursor;
+
+        String [] projections = {DbDataContract.DataEntry_1.ID, DbDataContract.DataEntry_1.TEMP,
+                DbDataContract.DataEntry_1.LUM, DbDataContract.DataEntry_1.HUM_SOLO,
+                DbDataContract.DataEntry_1.HUM_AR, DbDataContract.DataEntry_1.PLUV,
+                DbDataContract.DataEntry_1.DATA};
+
+        cursor = db.query(DbDataContract.DataEntry_1.TABLE_NAME, projections, null, null, null, null, null);
+        Log.d("DATABASE OPERATIONS", "Data retrieved from Table: " + DbDataContract.DataEntry_1.TABLE_NAME);
+
+        return cursor;
+    }
+
     // Delete All Rows from TABLE 1 in DB -- pandlet1_table
         public void deleteInfo1(SQLiteDatabase db)
         {

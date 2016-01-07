@@ -3,6 +3,7 @@ package com.setec2015.appsetec;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -43,6 +44,9 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, ListData, String> 
     String json_string;
     JSONObject jsonObject;
     JSONArray jsonArray;
+
+    Boolean LoginSuccess;
+    String welcome;
 
     //AlertDialog alertDialog;
 
@@ -112,7 +116,15 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, ListData, String> 
 
                 Log.d("LOGIN", "response = " + response);
 
-                return "Login successful!";
+                if(response.equals("Login Falhou!")) {
+                    LoginSuccess = false;
+                }
+                else {
+                    LoginSuccess = true;
+                    welcome = response;
+                }
+
+                return "Iniciar Sessão Online";
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -147,7 +159,6 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, ListData, String> 
                         URLEncoder.encode("pluviosity", "UTF-8") + "=" + URLEncoder.encode(pluv, "UTF-8") + "&" +
                         URLEncoder.encode("timestamp", "UTF-8") + "=" + URLEncoder.encode(data, "UTF-8");
 
-
                 bufferedWriter.write(data_string);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -160,7 +171,7 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, ListData, String> 
                 // Terminate connection
                 httpURLConnection.disconnect();
 
-                return "One Row of Data Inserted !";
+                return "Nova linha inserida na BD!";
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -238,7 +249,7 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, ListData, String> 
                 // Terminate connection
                 httpURLConnection.disconnect();
 
-                return "One Row of Data Inserted !";
+                return "Nova linha inserida na BD!";
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -273,7 +284,6 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, ListData, String> 
                         URLEncoder.encode("pluviosity", "UTF-8") + "=" + URLEncoder.encode(pluv, "UTF-8") + "&" +
                         URLEncoder.encode("timestamp", "UTF-8") + "=" + URLEncoder.encode(data, "UTF-8");
 
-
                 bufferedWriter.write(data_string);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -286,7 +296,7 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, ListData, String> 
                 // Terminate connection
                 httpURLConnection.disconnect();
 
-                return "One Row of Data Inserted !";
+                return "Nova linha inserida na BD!";
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -306,15 +316,29 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, ListData, String> 
     @Override
     protected void onPostExecute(String result) {
 
-        if(result.equals("Sessão iniciada com sucesso!")) {
-            Toast.makeText(ctx, result, Toast.LENGTH_LONG).show();
+        if(result.equals("Iniciar Sessão Online"))
+        {
+            if(LoginSuccess) {
+                Toast.makeText(ctx, "Sessão online iniciada com sucesso!\n\n" + welcome, Toast.LENGTH_LONG).show();
 
-            Intent intent = new Intent();
-            intent.setClass(ctx, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // is there other way ?
-            ctx.startActivity(intent);
+                SharedPreferences prefs = ctx.getSharedPreferences("LoginStatus", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putBoolean("isLogged", true);
+                editor.commit();
+
+                    Boolean log = prefs.getBoolean("isLogged", false);
+                    Log.i("LOGGED STATUS 2", String.valueOf(log));
+
+                Intent intent = new Intent();
+                intent.setClass(ctx, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // is there other way ?
+                ctx.startActivity(intent);
+            }
+            else if (!LoginSuccess){
+                Toast.makeText(ctx, "Iniciar sessão online falhou!\n\nOs campos 'E-mail' e/ou 'Password' estão incorrectos...", Toast.LENGTH_LONG).show();
+            }
         }
-        else if(result.equals("One Row of Data Inserted !"))
+        else if(result.equals("Nova linha inserida na BD!"))
         {
             Toast.makeText(ctx, result, Toast.LENGTH_LONG).show();
         }
@@ -323,15 +347,11 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, ListData, String> 
             json_string = result;
                 Log.i("READ ONLINE DB", result);
 
-            historicoListView = (ListView) activity.findViewById(R.id.historicoListView);
-            listDataAdapter = new ListDataAdapter(ctx, R.layout.historico_list_item);
-            historicoListView.setAdapter(listDataAdapter);
-
             try {
                 jsonObject = new JSONObject(json_string);
                 jsonArray = jsonObject.getJSONArray("server_response");
                     Log.i("JSON ARRAY", jsonArray.toString());
-                String id, temp, lum, humSolo, humAr, pluv, data;
+                String temp, lum, humSolo, humAr, pluv, data;
 
                 int count = 0;
                     Log.i("LENGTH OF JSON ARRAY", String.valueOf(jsonArray.length()));
@@ -339,16 +359,17 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, ListData, String> 
                 while(count < jsonArray.length())
                 {
                     JSONObject JO = jsonArray.getJSONObject(count); // return the JSON object on the first index (row)
-                        id = JO.getString("id");
                         temp = JO.getString("temperature");
                         lum = JO.getString("luminosity");
                         humSolo = JO.getString("soil_moisture");
                         humAr = JO.getString("relative_humidity");
                         pluv = JO.getString("pluviosity");
                         data = JO.getString("timestamp");
-                    ListData listData = new ListData(id, temp, lum, humSolo, humAr, pluv, data);
-                    listDataAdapter.add(listData);
                     count++;
+
+                    // Local DB - write all data received from Online DB - Zona 1
+                        BackgroundDbTask backgroundDbTask = new BackgroundDbTask(ctx);
+                        backgroundDbTask.execute("add_info_1", temp, lum, humSolo, humAr, pluv, data);
                 }
 
             } catch (JSONException e) {

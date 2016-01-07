@@ -13,6 +13,8 @@ import android.widget.Toast;
  */
 public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
 
+    String lastTemp1, lastLum1, lastHumSolo1, lastHumAr1, lastPluv1, lastData1;
+
     Context ctx;
 
     Activity activity;
@@ -58,6 +60,7 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
         else if(method.equals("get_info_1"))
         {
             String id1, temp1, lum1, humSolo1, humAr1, pluv1, data1;
+            int row = 0;
 
             historicoListView = (ListView) activity.findViewById(R.id.historicoListView);
 
@@ -80,11 +83,31 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
 
                     ListData listData = new ListData(id1, temp1, lum1, humSolo1, humAr1, pluv1, data1);
                     publishProgress(listData);
+                    row++;
 
-                } while (cursor.moveToPrevious()); // return True if another row is available
+                } while (row<3 && cursor.moveToPrevious()); // only the last 3 rows (most recent)
             }
 
         return "get_info_1";
+        }
+
+        else if(method.equals("last_info_1"))
+        {
+            SQLiteDatabase db1 = dbOperations.getReadableDatabase();
+            Cursor cursor = dbOperations.getLastRow1(db1);
+
+            // Check if data is available
+            if(cursor.moveToLast())
+            {
+                lastTemp1 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.TEMP));
+                lastLum1 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.LUM));
+                lastHumSolo1 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.HUM_SOLO));
+                lastHumAr1 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.HUM_AR));
+                lastPluv1 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.PLUV));
+                lastData1 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.DATA));
+            }
+
+        return "last_info_1";
         }
 
         else if(method.equals("delete_info_1"))
@@ -114,6 +137,7 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
         else if(method.equals("get_info_2"))
         {
             String id2, temp2, lum2, humSolo2, humAr2, pluv2, data2;
+            int row = 0;
 
             historicoListView = (ListView) activity.findViewById(R.id.historicoListView);
 
@@ -136,8 +160,9 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
 
                     ListData listData = new ListData(id2, temp2, lum2, humSolo2, humAr2, pluv2, data2);
                     publishProgress(listData);
+                    row++;
 
-                } while (cursor.moveToPrevious()); // return True if another row is available
+                } while (row<3 && cursor.moveToPrevious()); // only the last 3 rows (most recent)
             }
 
             return "get_info_2";
@@ -170,6 +195,7 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
         else if(method.equals("get_info_3"))
         {
             String id3, temp3, lum3, humSolo3, humAr3, pluv3, data3;
+            int row = 0;
 
             historicoListView = (ListView) activity.findViewById(R.id.historicoListView);
 
@@ -192,8 +218,9 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
 
                     ListData listData = new ListData(id3, temp3, lum3, humSolo3, humAr3, pluv3, data3);
                     publishProgress(listData);
+                    row++;
 
-                } while (cursor.moveToPrevious()); // return True if another row is available
+                } while (row<3 && cursor.moveToPrevious()); // only the last 3 rows (most recent)
             }
 
             return "get_info_3";
@@ -223,10 +250,22 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
         {
             historicoListView.setAdapter(listDataAdapter);
         }
+        else if(result.equals("last_info_1"))
+        {
+            getLastTemp1(); getLastLum1(); getLastHumSolo1(); getLastHumAr1(); getLastPluv1(); getLastData1();
+        }
         else
         {
             Toast.makeText(ctx, result, Toast.LENGTH_LONG).show();
         }
 
     }
+
+    private String getLastTemp1() { return lastTemp1; }
+    private String getLastLum1() { return lastLum1; }
+    private String getLastHumSolo1() { return lastHumSolo1; }
+    private String getLastHumAr1() { return lastHumAr1; }
+    private String getLastPluv1() { return lastTemp1; }
+    private String getLastData1() { return lastData1; }
+
 }

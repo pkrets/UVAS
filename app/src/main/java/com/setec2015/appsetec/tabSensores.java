@@ -131,6 +131,10 @@ public class tabSensores extends Fragment {
                 map.addMarker(new MarkerOptions().position(zona1Location).title("Zona 1"));
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(zona1Location, zoomLevel));
 
+                BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
+                backgroundDbTask.execute("last_info_1");
+
+                /* DATA DIRECTLY FROM BLE
                 MainActivity activity = (MainActivity) getActivity();
                 newTemp = activity.getMyTempUI();
                 newLum = activity.getMyLum();
@@ -139,6 +143,7 @@ public class tabSensores extends Fragment {
                 newPluv = activity.getMyPres(); // WRONG SENSOR ==> should be "PLuviosidade"
 
                 populateLastSensorValue(newTemp, newLum, newHumSolo, newHumAr, newPluv);
+                */
             }
         });
 
