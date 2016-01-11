@@ -7,6 +7,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.audiofx.BassBoost;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.provider.Settings;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -49,6 +53,8 @@ import java.util.UUID;
 
 
 public class MainActivity extends AppCompatActivity implements BluetoothAdapter.LeScanCallback {
+
+    private static boolean RUN_ONCE = true;
 
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
@@ -128,17 +134,54 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
         SharedPreferences prefs = this.getSharedPreferences("LoginStatus", Context.MODE_PRIVATE);
         Boolean log = prefs.getBoolean("isLogged", false);
 
+        /*
+         * When user is LOGGED, the Local DB is deleted and updated with the Online DB
+         */
         if(log) {
-            // Local DB - delete table from Zona 1 (pandlet1_table)
-                BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
-                backgroundDbTask.execute("delete_info_1");
 
-            // Online DB - get all rows from Zona 1 (pandlet1_values)
-                BackgroundOnlineDbTask backgroundOnlineDbTask = new BackgroundOnlineDbTask(this);
-                backgroundOnlineDbTask.execute("get_info_1");
+            /*
+             * We first need to enforce that an Internet connection is existent, and ask the
+             * user to enable one if they have not done so.
+             */
+            ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+            if(networkInfo != null && networkInfo.isConnected()) {
+                updateLocalDb();
+            }
+            else {
+                Intent enableInternetIntent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+                startActivity(enableInternetIntent);
+            }
+
         }
     }
 
+    private void updateLocalDb() {
+
+        if(RUN_ONCE) {
+            RUN_ONCE = false;
+
+            // Local DB - delete all local tables (pandlet1_table, pandlet2_table, pandlet3_table)
+                BackgroundDbTask backgroundDbTask_A = new BackgroundDbTask(this);
+                backgroundDbTask_A.execute("delete_info_1");
+
+                BackgroundDbTask backgroundDbTask_B = new BackgroundDbTask(this);
+                backgroundDbTask_B.execute("delete_info_2");
+
+                BackgroundDbTask backgroundDbTask_C = new BackgroundDbTask(this);
+                backgroundDbTask_C.execute("delete_info_3");
+
+            // Online DB - get new data from all online tables (pandlet1_values, pandlet2_values, pandlet3_values)
+                BackgroundOnlineDbTask backgroundOnlineDbTask_A = new BackgroundOnlineDbTask(this);
+                backgroundOnlineDbTask_A.execute("get_info_1");
+
+                BackgroundOnlineDbTask backgroundOnlineDbTask_B = new BackgroundOnlineDbTask(this);
+                backgroundOnlineDbTask_B.execute("get_info_2");
+
+                BackgroundOnlineDbTask backgroundOnlineDbTask_C = new BackgroundOnlineDbTask(this);
+                backgroundOnlineDbTask_C.execute("get_info_3");
+        }
+    }
 
     @Override
     protected void onResume() {
@@ -164,6 +207,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             mConnectedGatt.disconnect();
             mConnectedGatt = null;
         }
+        RUN_ONCE = false;
     }
 
 
@@ -262,7 +306,8 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             // Button -- Logout
             case R.id.action_logout:
                 new AlertDialog.Builder(this)
-                        .setMessage("Deseja terminar a sessão?")
+                        .setTitle("Terminar a sessão?")
+                        .setIcon(R.mipmap.ic_logout)
                         .setCancelable(false)
                         .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -291,7 +336,8 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
-                .setMessage("Deseja terminar a sessão?")
+                .setTitle("Terminar a sessão?")
+                .setIcon(R.mipmap.ic_logout)
                 .setCancelable(false)
                 .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

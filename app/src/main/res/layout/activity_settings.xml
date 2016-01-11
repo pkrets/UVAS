@@ -46,11 +46,17 @@
                     android:layout_marginLeft="15dp"
                     android:layout_weight="8" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="off  "
+                    android:id="@+id/txt_off"/>
+
                 <Switch
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/switchAlertas"
-                    android:checked="true" />
+                    android:id="@+id/switchAlertas" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -58,7 +64,8 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="  on"
                     android:gravity="right"
-                    android:layout_marginRight="15dp" />
+                    android:layout_marginRight="15dp"
+                    android:id="@+id/txt_on"/>
             </LinearLayout>
 
             <View
@@ -209,7 +216,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="Humidade (ar e solo)"
+                            android:text="Humidade (solo e ar)"
                             android:textSize="14sp"
                             android:textColor="#37474F"
                             android:layout_weight="5"

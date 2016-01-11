@@ -141,20 +141,20 @@ public class DbOperations extends SQLiteOpenHelper {
         }
 
     // Get Last Row from TABLE 1 in DB -- pandlet1_table
-    public Cursor getLastRow1(SQLiteDatabase db)
-    {
-        Cursor cursor;
+        public Cursor getLastRow1(SQLiteDatabase db)
+        {
+            Cursor cursor;
 
-        String [] projections = {DbDataContract.DataEntry_1.ID, DbDataContract.DataEntry_1.TEMP,
-                DbDataContract.DataEntry_1.LUM, DbDataContract.DataEntry_1.HUM_SOLO,
-                DbDataContract.DataEntry_1.HUM_AR, DbDataContract.DataEntry_1.PLUV,
-                DbDataContract.DataEntry_1.DATA};
+            String [] projections = {DbDataContract.DataEntry_1.ID, DbDataContract.DataEntry_1.TEMP,
+                    DbDataContract.DataEntry_1.LUM, DbDataContract.DataEntry_1.HUM_SOLO,
+                    DbDataContract.DataEntry_1.HUM_AR, DbDataContract.DataEntry_1.PLUV,
+                    DbDataContract.DataEntry_1.DATA};
 
-        cursor = db.query(DbDataContract.DataEntry_1.TABLE_NAME, projections, null, null, null, null, null);
-        Log.d("DATABASE OPERATIONS", "Data retrieved from Table: " + DbDataContract.DataEntry_1.TABLE_NAME);
+            cursor = db.query(DbDataContract.DataEntry_1.TABLE_NAME, projections, null, null, null, null, null);
+                Log.d("DATABASE OPERATIONS", "Data retrieved from Table: " + DbDataContract.DataEntry_1.TABLE_NAME);
 
-        return cursor;
-    }
+            return cursor;
+        }
 
     // Delete All Rows from TABLE 1 in DB -- pandlet1_table
         public void deleteInfo1(SQLiteDatabase db)
@@ -193,10 +193,27 @@ public class DbOperations extends SQLiteOpenHelper {
                     DbDataContract.DataEntry_2.DATA};
 
             cursor = db.query(DbDataContract.DataEntry_2.TABLE_NAME, projections, null, null, null, null, null);
+                Log.d("DATABASE OPERATIONS", "Data retrieved from Table: " + DbDataContract.DataEntry_2.TABLE_NAME);
+
+            return cursor;
+        }
+
+    // Get Last Row from TABLE 2 in DB -- pandlet2_table
+        public Cursor getLastRow2(SQLiteDatabase db)
+        {
+            Cursor cursor;
+
+            String [] projections = {DbDataContract.DataEntry_2.ID, DbDataContract.DataEntry_2.TEMP,
+                    DbDataContract.DataEntry_2.LUM, DbDataContract.DataEntry_2.HUM_SOLO,
+                    DbDataContract.DataEntry_2.HUM_AR, DbDataContract.DataEntry_2.PLUV,
+                    DbDataContract.DataEntry_2.DATA};
+
+            cursor = db.query(DbDataContract.DataEntry_2.TABLE_NAME, projections, null, null, null, null, null);
             Log.d("DATABASE OPERATIONS", "Data retrieved from Table: " + DbDataContract.DataEntry_2.TABLE_NAME);
 
             return cursor;
         }
+
 
     // Delete All Rows from TABLE 2 in DB -- pandlet2_table
         public void deleteInfo2(SQLiteDatabase db)
@@ -210,43 +227,59 @@ public class DbOperations extends SQLiteOpenHelper {
 //////////////////////////  TABLE 3  /////////////////////////////////////
 
     // Add a Row to TABLE 3 in DB -- pandlet3_table
-    public void addInfo3(String temp, String lum, String humSolo, String humAr, String pluv, String data, SQLiteDatabase db)
-    {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(DbDataContract.DataEntry_3.TEMP, temp);
-        contentValues.put(DbDataContract.DataEntry_3.LUM, lum);
-        contentValues.put(DbDataContract.DataEntry_3.HUM_SOLO, humSolo);
-        contentValues.put(DbDataContract.DataEntry_3.HUM_AR, humAr);
-        contentValues.put(DbDataContract.DataEntry_3.PLUV, pluv);
-        contentValues.put(DbDataContract.DataEntry_3.DATA, data);
+        public void addInfo3(String temp, String lum, String humSolo, String humAr, String pluv, String data, SQLiteDatabase db)
+        {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(DbDataContract.DataEntry_3.TEMP, temp);
+            contentValues.put(DbDataContract.DataEntry_3.LUM, lum);
+            contentValues.put(DbDataContract.DataEntry_3.HUM_SOLO, humSolo);
+            contentValues.put(DbDataContract.DataEntry_3.HUM_AR, humAr);
+            contentValues.put(DbDataContract.DataEntry_3.PLUV, pluv);
+            contentValues.put(DbDataContract.DataEntry_3.DATA, data);
 
-        db.insert(DbDataContract.DataEntry_3.TABLE_NAME, null, contentValues);
-        Log.d("DATABASE OPERATIONS", "One Row Inserted in Table: " + DbDataContract.DataEntry_3.TABLE_NAME);
-    }
+            db.insert(DbDataContract.DataEntry_3.TABLE_NAME, null, contentValues);
+                Log.d("DATABASE OPERATIONS", "One Row Inserted in Table: " + DbDataContract.DataEntry_3.TABLE_NAME);
+        }
 
     // Get All Rows from TABLE 3 in DB -- pandlet3_table
-    public Cursor getInfo3(SQLiteDatabase db)
-    {
-        Cursor cursor;
+        public Cursor getInfo3(SQLiteDatabase db)
+        {
+            Cursor cursor;
 
-        String [] projections = {DbDataContract.DataEntry_3.ID, DbDataContract.DataEntry_3.TEMP,
-                DbDataContract.DataEntry_3.LUM, DbDataContract.DataEntry_3.HUM_SOLO,
-                DbDataContract.DataEntry_3.HUM_AR, DbDataContract.DataEntry_3.PLUV,
-                DbDataContract.DataEntry_3.DATA};
+            String [] projections = {DbDataContract.DataEntry_3.ID, DbDataContract.DataEntry_3.TEMP,
+                    DbDataContract.DataEntry_3.LUM, DbDataContract.DataEntry_3.HUM_SOLO,
+                    DbDataContract.DataEntry_3.HUM_AR, DbDataContract.DataEntry_3.PLUV,
+                    DbDataContract.DataEntry_3.DATA};
 
-        cursor = db.query(DbDataContract.DataEntry_3.TABLE_NAME, projections, null, null, null, null, null);
-        Log.d("DATABASE OPERATIONS", "Data retrieved from Table: " + DbDataContract.DataEntry_3.TABLE_NAME);
+            cursor = db.query(DbDataContract.DataEntry_3.TABLE_NAME, projections, null, null, null, null, null);
+                Log.d("DATABASE OPERATIONS", "Data retrieved from Table: " + DbDataContract.DataEntry_3.TABLE_NAME);
 
-        return cursor;
-    }
+            return cursor;
+        }
+
+    // Get Last Row from TABLE 3 in DB -- pandlet3_table
+        public Cursor getLastRow3(SQLiteDatabase db)
+        {
+            Cursor cursor;
+
+            String [] projections = {DbDataContract.DataEntry_3.ID, DbDataContract.DataEntry_3.TEMP,
+                    DbDataContract.DataEntry_3.LUM, DbDataContract.DataEntry_3.HUM_SOLO,
+                    DbDataContract.DataEntry_3.HUM_AR, DbDataContract.DataEntry_3.PLUV,
+                    DbDataContract.DataEntry_3.DATA};
+
+            cursor = db.query(DbDataContract.DataEntry_3.TABLE_NAME, projections, null, null, null, null, null);
+            Log.d("DATABASE OPERATIONS", "Data retrieved from Table: " + DbDataContract.DataEntry_3.TABLE_NAME);
+
+            return cursor;
+        }
 
     // Delete All Rows from TABLE 3 in DB -- pandlet3_table
-    public void deleteInfo3(SQLiteDatabase db)
-    {
-        db.execSQL("DELETE FROM '"+ DbDataContract.DataEntry_3.TABLE_NAME +"'");
-        db.execSQL("UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE name= '"+ DbDataContract.DataEntry_3.TABLE_NAME +"'");
-        Log.d("DATABASE OPERATIONS", "All Rows Deleted in Table: " + DbDataContract.DataEntry_3.TABLE_NAME);
-    }
+        public void deleteInfo3(SQLiteDatabase db)
+        {
+            db.execSQL("DELETE FROM '"+ DbDataContract.DataEntry_3.TABLE_NAME +"'");
+            db.execSQL("UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE name= '"+ DbDataContract.DataEntry_3.TABLE_NAME +"'");
+                Log.d("DATABASE OPERATIONS", "All Rows Deleted in Table: " + DbDataContract.DataEntry_3.TABLE_NAME);
+        }
 
 
 //////////////////////////  TABLE 4  /////////////////////////////////////
@@ -261,7 +294,7 @@ public class DbOperations extends SQLiteOpenHelper {
             contentValues.put(DbDataContract.DataEntry_4.DATA, data);
 
             db.insert(DbDataContract.DataEntry_4.TABLE_NAME, null, contentValues);
-            Log.d("DATABASE OPERATIONS", "One Row Inserted in Table: " + DbDataContract.DataEntry_4.TABLE_NAME);
+                Log.d("DATABASE OPERATIONS", "One Row Inserted in Table: " + DbDataContract.DataEntry_4.TABLE_NAME);
         }
 
     // Get All Rows from TABLE 4 in DB -- alertas1_table
@@ -291,99 +324,83 @@ public class DbOperations extends SQLiteOpenHelper {
 //////////////////////////  TABLE 5  /////////////////////////////////////
 
     // Add a Row to TABLE 5 in DB -- alertas2_table
-    public void addAlerta2(String type, String alert, String value, String data, SQLiteDatabase db)
-    {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(DbDataContract.DataEntry_5.TYPE, type);
-        contentValues.put(DbDataContract.DataEntry_5.ALERT, alert);
-        contentValues.put(DbDataContract.DataEntry_5.VALUE, value);
-        contentValues.put(DbDataContract.DataEntry_5.DATA, data);
+        public void addAlerta2(String type, String alert, String value, String data, SQLiteDatabase db)
+        {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(DbDataContract.DataEntry_5.TYPE, type);
+            contentValues.put(DbDataContract.DataEntry_5.ALERT, alert);
+            contentValues.put(DbDataContract.DataEntry_5.VALUE, value);
+            contentValues.put(DbDataContract.DataEntry_5.DATA, data);
 
-        db.insert(DbDataContract.DataEntry_5.TABLE_NAME, null, contentValues);
-        Log.d("DATABASE OPERATIONS", "One Row Inserted in Table: " + DbDataContract.DataEntry_5.TABLE_NAME);
-    }
+            db.insert(DbDataContract.DataEntry_5.TABLE_NAME, null, contentValues);
+                Log.d("DATABASE OPERATIONS", "One Row Inserted in Table: " + DbDataContract.DataEntry_5.TABLE_NAME);
+        }
 
     // Get All Rows from TABLE 5 in DB -- alertas2_table
-    public Cursor getAlerta2(SQLiteDatabase db)
-    {
-        Cursor cursor;
+        public Cursor getAlerta2(SQLiteDatabase db)
+        {
+            Cursor cursor;
 
-        String [] projections = {DbDataContract.DataEntry_5.ID, DbDataContract.DataEntry_5.TYPE,
-                DbDataContract.DataEntry_5.ALERT, DbDataContract.DataEntry_5.VALUE,
-                DbDataContract.DataEntry_5.DATA};
+            String [] projections = {DbDataContract.DataEntry_5.ID, DbDataContract.DataEntry_5.TYPE,
+                    DbDataContract.DataEntry_5.ALERT, DbDataContract.DataEntry_5.VALUE,
+                    DbDataContract.DataEntry_5.DATA};
 
-        cursor = db.query(DbDataContract.DataEntry_5.TABLE_NAME, projections, null, null, null, null, null);
-        Log.d("DATABASE OPERATIONS", "Data retrieved from Table: " + DbDataContract.DataEntry_5.TABLE_NAME);
+            cursor = db.query(DbDataContract.DataEntry_5.TABLE_NAME, projections, null, null, null, null, null);
+                Log.d("DATABASE OPERATIONS", "Data retrieved from Table: " + DbDataContract.DataEntry_5.TABLE_NAME);
 
-        return cursor;
-    }
+            return cursor;
+        }
 
     // Delete All Rows from TABLE 4 in DB -- alertas1_table
-    public void deleteAlerta2(SQLiteDatabase db)
-    {
-        db.execSQL("DELETE FROM '"+ DbDataContract.DataEntry_5.TABLE_NAME +"'");
-        db.execSQL("UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE name= '"+ DbDataContract.DataEntry_5.TABLE_NAME +"'");
-        Log.d("DATABASE OPERATIONS", "All Rows Deleted in Table: " + DbDataContract.DataEntry_5.TABLE_NAME);
-    }
+        public void deleteAlerta2(SQLiteDatabase db)
+        {
+            db.execSQL("DELETE FROM '"+ DbDataContract.DataEntry_5.TABLE_NAME +"'");
+            db.execSQL("UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE name= '"+ DbDataContract.DataEntry_5.TABLE_NAME +"'");
+                Log.d("DATABASE OPERATIONS", "All Rows Deleted in Table: " + DbDataContract.DataEntry_5.TABLE_NAME);
+        }
 
 
 //////////////////////////  TABLE 6  /////////////////////////////////////
 
     // Add a Row to TABLE 6 in DB -- alertas3_table
-    public void addAlerta3(String type, String alert, String value, String data, SQLiteDatabase db)
-    {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(DbDataContract.DataEntry_6.TYPE, type);
-        contentValues.put(DbDataContract.DataEntry_6.ALERT, alert);
-        contentValues.put(DbDataContract.DataEntry_6.VALUE, value);
-        contentValues.put(DbDataContract.DataEntry_6.DATA, data);
+        public void addAlerta3(String type, String alert, String value, String data, SQLiteDatabase db)
+        {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(DbDataContract.DataEntry_6.TYPE, type);
+            contentValues.put(DbDataContract.DataEntry_6.ALERT, alert);
+            contentValues.put(DbDataContract.DataEntry_6.VALUE, value);
+            contentValues.put(DbDataContract.DataEntry_6.DATA, data);
 
-        db.insert(DbDataContract.DataEntry_6.TABLE_NAME, null, contentValues);
-        Log.d("DATABASE OPERATIONS", "One Row Inserted in Table: " + DbDataContract.DataEntry_6.TABLE_NAME);
-    }
+            db.insert(DbDataContract.DataEntry_6.TABLE_NAME, null, contentValues);
+                Log.d("DATABASE OPERATIONS", "One Row Inserted in Table: " + DbDataContract.DataEntry_6.TABLE_NAME);
+        }
 
     // Get All Rows from TABLE 6 in DB -- alertas3_table
-    public Cursor getAlerta3(SQLiteDatabase db)
-    {
-        Cursor cursor;
-
-        String [] projections = {DbDataContract.DataEntry_6.ID, DbDataContract.DataEntry_6.TYPE,
-                DbDataContract.DataEntry_6.ALERT, DbDataContract.DataEntry_6.VALUE,
-                DbDataContract.DataEntry_6.DATA};
-
-        cursor = db.query(DbDataContract.DataEntry_6.TABLE_NAME, projections, null, null, null, null, null);
-        Log.d("DATABASE OPERATIONS", "Data retrieved from Table: " + DbDataContract.DataEntry_6.TABLE_NAME);
-
-        return cursor;
-    }
-
-    // Delete All Rows from TABLE 6 in DB -- alertas3_table
-    public void deleteAlerta3(SQLiteDatabase db)
-    {
-        db.execSQL("DELETE FROM '"+ DbDataContract.DataEntry_6.TABLE_NAME +"'");
-        db.execSQL("UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE name= '"+ DbDataContract.DataEntry_6.TABLE_NAME +"'");
-        Log.d("DATABASE OPERATIONS", "All Rows Deleted in Table: " + DbDataContract.DataEntry_6.TABLE_NAME);
-    }
-
-
-
-//////////////////////////////////////////////////////////////////////////////
-
-/*    // Get Last Row from TABLE 1 in DB -- pandlet1_table
-        public Cursor getLastRead1(SQLiteDatabase db)
+        public Cursor getAlerta3(SQLiteDatabase db)
         {
             Cursor cursor;
 
-            String [] projections = {DbDataContract.DataEntry_1.TEMP,
-                    DbDataContract.DataEntry_1.LUM, DbDataContract.DataEntry_1.HUM_SOLO,
-                    DbDataContract.DataEntry_1.HUM_AR, DbDataContract.DataEntry_1.PLUV};
+            String [] projections = {DbDataContract.DataEntry_6.ID, DbDataContract.DataEntry_6.TYPE,
+                    DbDataContract.DataEntry_6.ALERT, DbDataContract.DataEntry_6.VALUE,
+                    DbDataContract.DataEntry_6.DATA};
 
-            cursor = db.query(DbDataContract.DataEntry_1.TABLE_NAME, projections, null, null, null, null, null);
-                Log.d("DATABASE OPERATIONS", "Data retrieved from Table: " + DbDataContract.DataEntry_1.TABLE_NAME);
+            cursor = db.query(DbDataContract.DataEntry_6.TABLE_NAME, projections, null, null, null, null, null);
+                Log.d("DATABASE OPERATIONS", "Data retrieved from Table: " + DbDataContract.DataEntry_6.TABLE_NAME);
 
             return cursor;
         }
-*/
+
+    // Delete All Rows from TABLE 6 in DB -- alertas3_table
+        public void deleteAlerta3(SQLiteDatabase db)
+        {
+            db.execSQL("DELETE FROM '"+ DbDataContract.DataEntry_6.TABLE_NAME +"'");
+            db.execSQL("UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE name= '"+ DbDataContract.DataEntry_6.TABLE_NAME +"'");
+                Log.d("DATABASE OPERATIONS", "All Rows Deleted in Table: " + DbDataContract.DataEntry_6.TABLE_NAME);
+        }
+
+
+
+
 
 //////////////////////////////////////////////////////////////////////////////
 

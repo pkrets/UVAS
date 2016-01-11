@@ -38,8 +38,6 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, ListData, String> 
 
     ListDataAdapter listDataAdapter;
 
-    ListView historicoListView;
-
     String JSON_STRING;
     String json_string;
     JSONObject jsonObject;
@@ -47,6 +45,7 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, ListData, String> 
 
     Boolean LoginSuccess;
     String welcome;
+    String table;
 
     //AlertDialog alertDialog;
 
@@ -183,6 +182,7 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, ListData, String> 
         else if (method.equals("get_info_1"))
         {
             StringBuilder stringBuilder = new StringBuilder();
+            table = "zona1";
 
             try {
                 URL url = new URL(getJson_pandlet1_url);
@@ -258,6 +258,38 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, ListData, String> 
             }
         }
 
+        else if (method.equals("get_info_2"))
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            table = "zona2";
+
+            try {
+                URL url = new URL(getJson_pandlet2_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+                InputStream IS = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(IS));
+
+                while ((JSON_STRING = bufferedReader.readLine()) != null)
+                {
+                    stringBuilder.append(JSON_STRING + "\n");
+                }
+
+                bufferedReader.close();
+                IS.close();
+
+                // Terminate connection
+                httpURLConnection.disconnect();
+
+                return stringBuilder.toString().trim();
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
 /*  --------- HISTORICO 3 --------- */
         else if (method.equals("add_info_3"))
         {
@@ -305,6 +337,38 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, ListData, String> 
             }
         }
 
+        else if (method.equals("get_info_3"))
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            table = "zona3";
+
+            try {
+                URL url = new URL(getJson_pandlet3_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+                InputStream IS = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(IS));
+
+                while ((JSON_STRING = bufferedReader.readLine()) != null)
+                {
+                    stringBuilder.append(JSON_STRING + "\n");
+                }
+
+                bufferedReader.close();
+                IS.close();
+
+                // Terminate connection
+                httpURLConnection.disconnect();
+
+                return stringBuilder.toString().trim();
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         return null;
     }
 
@@ -335,12 +399,12 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, ListData, String> 
                 ctx.startActivity(intent);
             }
             else if (!LoginSuccess){
-                Toast.makeText(ctx, "Iniciar sessão online falhou!\n\nOs campos 'E-mail' e/ou 'Password' estão incorrectos...", Toast.LENGTH_LONG).show();
+                Toast.makeText(ctx, "Iniciar sessão online falhou!\n\nOs campos 'E-mail' e/ou 'Password' estão incorretos...", Toast.LENGTH_LONG).show();
             }
         }
         else if(result.equals("Nova linha inserida na BD!"))
         {
-            Toast.makeText(ctx, result, Toast.LENGTH_LONG).show();
+            Toast.makeText(ctx, result, Toast.LENGTH_SHORT).show();
         }
         else
         {
@@ -367,9 +431,19 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, ListData, String> 
                         data = JO.getString("timestamp");
                     count++;
 
-                    // Local DB - write all data received from Online DB - Zona 1
-                        BackgroundDbTask backgroundDbTask = new BackgroundDbTask(ctx);
-                        backgroundDbTask.execute("add_info_1", temp, lum, humSolo, humAr, pluv, data);
+                    // Local DB - write all data received from Online DB in its correspondent table in Local BD
+                        if(table.equals("zona1")) {
+                            BackgroundDbTask backgroundDbTask = new BackgroundDbTask(ctx);
+                            backgroundDbTask.execute("add_info_1", temp, lum, humSolo, humAr, pluv, data);
+                        }
+                        else if(table.equals("zona2")) {
+                            BackgroundDbTask backgroundDbTask = new BackgroundDbTask(ctx);
+                            backgroundDbTask.execute("add_info_2", temp, lum, humSolo, humAr, pluv, data);
+                        }
+                        else if(table.equals("zona3")) {
+                            BackgroundDbTask backgroundDbTask = new BackgroundDbTask(ctx);
+                            backgroundDbTask.execute("add_info_3", temp, lum, humSolo, humAr, pluv, data);
+                        }
                 }
 
             } catch (JSONException e) {

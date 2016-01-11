@@ -14,6 +14,9 @@ import android.widget.Toast;
 public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
 
     String lastTemp1, lastLum1, lastHumSolo1, lastHumAr1, lastPluv1, lastData1;
+    String lastTemp2, lastLum2, lastHumSolo2, lastHumAr2, lastPluv2, lastData2;
+    String lastTemp3, lastLum3, lastHumSolo3, lastHumAr3, lastPluv3, lastData3;
+    String table;
 
     Context ctx;
 
@@ -44,44 +47,44 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
 /*  --------- HISTORICO 1 --------- */
         if(method.equals("add_info_1"))
         {
-            String temp1 = params[1];
-            String lum1 = params[2];
-            String humSolo1 = params[3];
-            String humAr1 = params[4];
-            String pluv1 = params[5];
-            String data1 = params[6];
+            String temp = params[1];
+            String lum = params[2];
+            String humSolo = params[3];
+            String humAr = params[4];
+            String pluv = params[5];
+            String data = params[6];
 
-            SQLiteDatabase db1 = dbOperations.getWritableDatabase();
-            dbOperations.addInfo1(temp1, lum1, humSolo1, humAr1, pluv1, data1, db1);
+            SQLiteDatabase db = dbOperations.getWritableDatabase();
+            dbOperations.addInfo1(temp, lum, humSolo, humAr, pluv, data, db);
 
             return "One Row Inserted (BackgroundTask) in table: " + DbDataContract.DataEntry_1.TABLE_NAME;
         }
 
         else if(method.equals("get_info_1"))
         {
-            String id1, temp1, lum1, humSolo1, humAr1, pluv1, data1;
+            String id, temp, lum, humSolo, humAr, pluv, data;
             int row = 0;
 
             historicoListView = (ListView) activity.findViewById(R.id.historicoListView);
 
             listDataAdapter = new ListDataAdapter(ctx, R.layout.historico_list_item);
 
-            SQLiteDatabase db1 = dbOperations.getReadableDatabase();
-            Cursor cursor = dbOperations.getInfo1(db1);
+            SQLiteDatabase db = dbOperations.getReadableDatabase();
+            Cursor cursor = dbOperations.getInfo1(db);
 
             // Check if data is available
             if(cursor.moveToLast())
             {
                 do {
-                    id1 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.ID));
-                    temp1 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.TEMP));
-                    lum1 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.LUM));
-                    humSolo1 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.HUM_SOLO));
-                    humAr1 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.HUM_AR));
-                    pluv1 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.PLUV));
-                    data1 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.DATA));
+                    id = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.ID));
+                    temp = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.TEMP));
+                    lum = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.LUM));
+                    humSolo = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.HUM_SOLO));
+                    humAr = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.HUM_AR));
+                    pluv = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.PLUV));
+                    data = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.DATA));
 
-                    ListData listData = new ListData(id1, temp1, lum1, humSolo1, humAr1, pluv1, data1);
+                    ListData listData = new ListData(id, temp, lum, humSolo, humAr, pluv, data);
                     publishProgress(listData);
                     row++;
 
@@ -93,8 +96,9 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
 
         else if(method.equals("last_info_1"))
         {
-            SQLiteDatabase db1 = dbOperations.getReadableDatabase();
-            Cursor cursor = dbOperations.getLastRow1(db1);
+            SQLiteDatabase db = dbOperations.getReadableDatabase();
+            Cursor cursor = dbOperations.getLastRow1(db);
+            table = "zona1";
 
             // Check if data is available
             if(cursor.moveToLast())
@@ -121,22 +125,22 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
 /*  --------- HISTORICO 2 --------- */
         else if(method.equals("add_info_2"))
         {
-            String temp2 = params[1];
-            String lum2 = params[2];
-            String humSolo2 = params[3];
-            String humAr2 = params[4];
-            String pluv2 = params[5];
-            String data2 = params[6];
+            String temp = params[1];
+            String lum = params[2];
+            String humSolo = params[3];
+            String humAr = params[4];
+            String pluv = params[5];
+            String data = params[6];
 
-            SQLiteDatabase db2 = dbOperations.getWritableDatabase();
-            dbOperations.addInfo2(temp2, lum2, humSolo2, humAr2, pluv2, data2, db2);
+            SQLiteDatabase db = dbOperations.getWritableDatabase();
+            dbOperations.addInfo2(temp, lum, humSolo, humAr, pluv, data, db);
 
             return "One Row Inserted (BackgroundTask) in table: " + DbDataContract.DataEntry_2.TABLE_NAME;
         }
 
         else if(method.equals("get_info_2"))
         {
-            String id2, temp2, lum2, humSolo2, humAr2, pluv2, data2;
+            String id, temp, lum, humSolo, humAr, pluv, data;
             int row = 0;
 
             historicoListView = (ListView) activity.findViewById(R.id.historicoListView);
@@ -150,15 +154,15 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
             if(cursor.moveToLast())
             {
                 do {
-                    id2 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_2.ID));
-                    temp2 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_2.TEMP));
-                    lum2 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_2.LUM));
-                    humSolo2 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_2.HUM_SOLO));
-                    humAr2 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_2.HUM_AR));
-                    pluv2 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_2.PLUV));
-                    data2 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_2.DATA));
+                    id = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_2.ID));
+                    temp = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_2.TEMP));
+                    lum = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_2.LUM));
+                    humSolo = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_2.HUM_SOLO));
+                    humAr = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_2.HUM_AR));
+                    pluv = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_2.PLUV));
+                    data = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_2.DATA));
 
-                    ListData listData = new ListData(id2, temp2, lum2, humSolo2, humAr2, pluv2, data2);
+                    ListData listData = new ListData(id, temp, lum, humSolo, humAr, pluv, data);
                     publishProgress(listData);
                     row++;
 
@@ -166,6 +170,26 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
             }
 
             return "get_info_2";
+        }
+
+        else if(method.equals("last_info_2"))
+        {
+            SQLiteDatabase db = dbOperations.getReadableDatabase();
+            Cursor cursor = dbOperations.getLastRow2(db);
+            table = "zona2";
+
+            // Check if data is available
+            if(cursor.moveToLast())
+            {
+                lastTemp2 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_2.TEMP));
+                lastLum2 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_2.LUM));
+                lastHumSolo2 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_2.HUM_SOLO));
+                lastHumAr2 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_2.HUM_AR));
+                lastPluv2 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_2.PLUV));
+                lastData2 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_2.DATA));
+            }
+
+            return "last_info_2";
         }
 
         else if(method.equals("delete_info_2"))
@@ -179,44 +203,44 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
 /*  --------- HISTORICO 3 --------- */
         else if (method.equals("add_info_3"))
         {
-            String temp3 = params[1];
-            String lum3 = params[2];
-            String humSolo3 = params[3];
-            String humAr3 = params[4];
-            String pluv3 = params[5];
-            String data3 = params[6];
+            String temp = params[1];
+            String lum = params[2];
+            String humSolo = params[3];
+            String humAr = params[4];
+            String pluv = params[5];
+            String data = params[6];
 
-            SQLiteDatabase db3 = dbOperations.getWritableDatabase();
-            dbOperations.addInfo3(temp3, lum3, humSolo3, humAr3, pluv3, data3, db3);
+            SQLiteDatabase db = dbOperations.getWritableDatabase();
+            dbOperations.addInfo3(temp, lum, humSolo, humAr, pluv, data, db);
 
             return "One Row Inserted (BackgroundTask) in table: " + DbDataContract.DataEntry_3.TABLE_NAME;
         }
 
         else if(method.equals("get_info_3"))
         {
-            String id3, temp3, lum3, humSolo3, humAr3, pluv3, data3;
+            String id, temp, lum, humSolo, humAr, pluv, data;
             int row = 0;
 
             historicoListView = (ListView) activity.findViewById(R.id.historicoListView);
 
             listDataAdapter = new ListDataAdapter(ctx, R.layout.historico_list_item);
 
-            SQLiteDatabase db3 = dbOperations.getReadableDatabase();
-            Cursor cursor = dbOperations.getInfo3(db3);
+            SQLiteDatabase db = dbOperations.getReadableDatabase();
+            Cursor cursor = dbOperations.getInfo3(db);
 
             // Check if data is available
             if(cursor.moveToLast())
             {
                 do {
-                    id3 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_3.ID));
-                    temp3 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_3.TEMP));
-                    lum3 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_3.LUM));
-                    humSolo3 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_3.HUM_SOLO));
-                    humAr3 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_3.HUM_AR));
-                    pluv3 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_3.PLUV));
-                    data3 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_3.DATA));
+                    id = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_3.ID));
+                    temp = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_3.TEMP));
+                    lum = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_3.LUM));
+                    humSolo = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_3.HUM_SOLO));
+                    humAr = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_3.HUM_AR));
+                    pluv = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_3.PLUV));
+                    data = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_3.DATA));
 
-                    ListData listData = new ListData(id3, temp3, lum3, humSolo3, humAr3, pluv3, data3);
+                    ListData listData = new ListData(id, temp, lum, humSolo, humAr, pluv, data);
                     publishProgress(listData);
                     row++;
 
@@ -226,6 +250,26 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
             return "get_info_3";
         }
 
+        else if(method.equals("last_info_3"))
+        {
+            SQLiteDatabase db = dbOperations.getReadableDatabase();
+            Cursor cursor = dbOperations.getLastRow3(db);
+            table = "zona3";
+
+            // Check if data is available
+            if(cursor.moveToLast())
+            {
+                lastTemp3 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_3.TEMP));
+                lastLum3 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_3.LUM));
+                lastHumSolo3 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_3.HUM_SOLO));
+                lastHumAr3 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_3.HUM_AR));
+                lastPluv3 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_3.PLUV));
+                lastData3 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_3.DATA));
+            }
+
+            return "last_info_3";
+        }
+
         else if(method.equals("delete_info_3"))
         {
             SQLiteDatabase db = dbOperations.getWritableDatabase();
@@ -233,7 +277,6 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
 
             return "All Rows Deleted (BackgroundTask) in table: " + DbDataContract.DataEntry_3.TABLE_NAME;
         }
-
 
         return null;
     }
@@ -250,22 +293,40 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
         {
             historicoListView.setAdapter(listDataAdapter);
         }
-        else if(result.equals("last_info_1"))
+        else if(result.equals("last_info_1") | result.equals("last_info_2") | result.equals("last_info_3"))
         {
-            getLastTemp1(); getLastLum1(); getLastHumSolo1(); getLastHumAr1(); getLastPluv1(); getLastData1();
+            if (table.equals("zona1")) {
+
+                Toast.makeText(ctx, "Zona 1: " + lastTemp1 + " " + lastLum1 + " " + lastHumSolo1 + " "
+                        + lastHumAr1 + " " + lastPluv1 + " " + lastData1, Toast.LENGTH_LONG).show();
+            }
+            else if (table.equals("zona2")) {
+
+                Toast.makeText(ctx, "Zona 2: " + lastTemp2 + " " + lastLum2 + " " + lastHumSolo2 + " "
+                        + lastHumAr2 + " " + lastPluv2 + " " + lastData2, Toast.LENGTH_LONG).show();
+            }
+            else if (table.equals("zona3")) {
+
+                Toast.makeText(ctx, "Zona 3: " + lastTemp3 + " " + lastLum3 + " " + lastHumSolo3 + " "
+                        + lastHumAr3 + " " + lastPluv3 + " " + lastData3, Toast.LENGTH_LONG).show();
+            }
+
+            //getLastTemp1(); getLastLum1(); getLastHumSolo1(); getLastHumAr1(); getLastPluv1(); getLastData1();
         }
         else
         {
-            Toast.makeText(ctx, result, Toast.LENGTH_LONG).show();
+            Toast.makeText(ctx, result, Toast.LENGTH_SHORT).show();
         }
 
     }
 
+
+    /*
     private String getLastTemp1() { return lastTemp1; }
     private String getLastLum1() { return lastLum1; }
     private String getLastHumSolo1() { return lastHumSolo1; }
     private String getLastHumAr1() { return lastHumAr1; }
-    private String getLastPluv1() { return lastTemp1; }
+    private String getLastPluv1() { return lastPluv1; }
     private String getLastData1() { return lastData1; }
-
+    */
 }

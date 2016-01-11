@@ -104,7 +104,7 @@
                 android:adjustViewBounds="true"
                 android:maxHeight="18dp"
                 android:maxWidth="18dp"
-                android:src="@mipmap/ic_humidade"
+                android:src="@mipmap/ic_humsolo"
                 android:layout_gravity="center_vertical" />
 
 
@@ -137,7 +137,7 @@
                 android:adjustViewBounds="true"
                 android:maxHeight="18dp"
                 android:maxWidth="18dp"
-                android:src="@mipmap/ic_humidade"
+                android:src="@mipmap/ic_humar"
                 android:layout_gravity="center_vertical" />
 
             <TextView

@@ -28,13 +28,13 @@ public class tabSensores extends Fragment {
     private ImageButton btnSatellite;
     private Button btnZoomIn;
     private Button btnZoomOut;
-    TextView txtZonaAtual, txt_newTemp, txt_newLum, txt_newHumSolo, txt_newHumAr, txt_newPluv;
+    private TextView txtZonaAtual, txt_newTemp, txt_newLum, txt_newHumSolo, txt_newHumAr, txt_newPluv;
 
     String newTemp, newLum, newHumSolo, newHumAr, newPluv;
 
-    String zona1 = "ZONA 1";
-    String zona2 = "ZONA 2";
-    String zona3 = "ZONA 3";
+    String zona1 = " ZONA 1 - Norte";
+    String zona2 = " ZONA 2 - Este";
+    String zona3 = " ZONA 3 - Oeste";
 
     float zoomLevel = 14;
 
@@ -87,6 +87,8 @@ public class tabSensores extends Fragment {
         populateLastSensorValue(tempBundle, lumBundle, humSoloBundle, humArBundle, pluvBundle);
 
 
+
+
 /////////// Map Buttons ///////////
 
         // Change Map Type: normal view <-> satellite view
@@ -134,6 +136,7 @@ public class tabSensores extends Fragment {
                 BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
                 backgroundDbTask.execute("last_info_1");
 
+
                 /* DATA DIRECTLY FROM BLE
                 MainActivity activity = (MainActivity) getActivity();
                 newTemp = activity.getMyTempUI();
@@ -158,6 +161,9 @@ public class tabSensores extends Fragment {
                 LatLng zona2Location = new LatLng(13.682140112679154, 100.53525868803263);
                 map.addMarker(new MarkerOptions().position(zona2Location).title("Zona 2"));
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(zona2Location, zoomLevel));
+
+                BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
+                backgroundDbTask.execute("last_info_2");
             }
         });
 
@@ -173,6 +179,8 @@ public class tabSensores extends Fragment {
                 map.addMarker(new MarkerOptions().position(zona3Location).title("Zona 3"));
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(zona3Location, zoomLevel));
 
+                BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
+                backgroundDbTask.execute("last_info_3");
             }
         });
 
@@ -193,7 +201,16 @@ public class tabSensores extends Fragment {
             fragment = SupportMapFragment.newInstance();
             fm.beginTransaction().replace(R.id.map, fragment).commit();
         }
+
+
     }
+
+
+
+
+
+
+
 
 
 

@@ -28,12 +28,14 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
-public class SettingsActivity extends AppCompatActivity implements dialogPraga1.DataSettings {
+public class SettingsActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
 
     private Switch switchAlertas;
+    String alertasOn, alertasOn_saved;
 
+    private TextView txt_off, txt_on;
 
     View view;
     LayoutInflater inflater;
@@ -46,7 +48,9 @@ public class SettingsActivity extends AppCompatActivity implements dialogPraga1.
         private CheckBox checkBoxPraga1, checkBoxPraga2, checkBoxPraga3, checkBoxPraga4;
         private Button btnConfigPraga1, btnConfigPraga2, btnConfigPraga3, btnConfigPraga4;
 
-        String boxPraga1, boxPraga1_saved;
+        String boxTemp, boxLum, boxHum, boxPluv, boxOutros, boxPraga1, boxPraga2, boxPraga3, boxPraga4;
+        String boxTemp_saved, boxLum_saved, boxHum_saved, boxPluv_saved, boxOutros_saved,
+                boxPraga1_saved, boxPraga2_saved, boxPraga3_saved, boxPraga4_saved;
 
 
 
@@ -67,6 +71,8 @@ public class SettingsActivity extends AppCompatActivity implements dialogPraga1.
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         switchAlertas = (Switch) findViewById(R.id.switchAlertas);
+        txt_off = (TextView) findViewById(R.id.txt_off);
+        txt_on = (TextView) findViewById(R.id.txt_on);
 
     // Fetch UI objects from "Sensores" alerts
         checkBoxTemperatura = (CheckBox) findViewById(R.id.checkBoxTemperatura);
@@ -115,14 +121,32 @@ public class SettingsActivity extends AppCompatActivity implements dialogPraga1.
 
     // Retrieve data from the SharedPreferences (which alerts where selected)
         SharedPreferences prefs = getSharedPreferences("DataSettingsState", Context.MODE_PRIVATE);
-        boxPraga1_saved = prefs.getString("boxTemp", "false");
-        if(boxPraga1_saved == "true") {
-            checkBoxPraga1.setChecked(true);
-        }
-        else {
-            checkBoxPraga1.setChecked(false);
-        }
+        alertasOn_saved = prefs.getString("alertasOn", "true");
+            switchAlertas.setChecked(Boolean.parseBoolean(alertasOn_saved));
+        boxTemp_saved = prefs.getString("boxTemp", "false");
+            checkBoxTemperatura.setChecked(Boolean.parseBoolean(boxTemp_saved));
+        boxLum_saved = prefs.getString("boxLum", "false");
+            checkBoxLuminosidade.setChecked(Boolean.parseBoolean(boxLum_saved));
+        boxHum_saved = prefs.getString("boxHum", "false");
+            checkBoxHumidade.setChecked(Boolean.parseBoolean(boxHum_saved));
+        boxPluv_saved = prefs.getString("boxPluv", "false");
+            checkBoxPluviosidade.setChecked(Boolean.parseBoolean(boxPluv_saved));
+        boxOutros_saved = prefs.getString("boxOutros", "false");
+            checkBoxOutros.setChecked(Boolean.parseBoolean(boxOutros_saved));
+        boxPraga1_saved = prefs.getString("boxPraga1", "false");
+            checkBoxPraga1.setChecked(Boolean.parseBoolean(boxPraga1_saved));
+        boxPraga2_saved = prefs.getString("boxPraga2", "false");
+            checkBoxPraga2.setChecked(Boolean.parseBoolean(boxPraga2_saved));
+        boxPraga3_saved = prefs.getString("boxPraga3", "false");
+            checkBoxPraga3.setChecked(Boolean.parseBoolean(boxPraga3_saved));
+        boxPraga4_saved = prefs.getString("boxPraga4", "false");
+            checkBoxPraga4.setChecked(Boolean.parseBoolean(boxPraga4_saved));
 
+        if(alertasOn_saved.matches("true")) {
+            txt_off.setVisibility(View.INVISIBLE);
+        } else if(alertasOn_saved.matches("false")) {
+            txt_on.setVisibility(View.INVISIBLE);
+        }
 
 
 
@@ -135,6 +159,9 @@ public class SettingsActivity extends AppCompatActivity implements dialogPraga1.
                     if (isChecked) {
                         Toast.makeText(getApplicationContext(), "A receção de Alertas foi ativada!", Toast.LENGTH_SHORT).show();
 
+                            txt_on.setVisibility(View.VISIBLE);
+                            txt_off.setVisibility(View.INVISIBLE);
+                            alertasOn = "true";
                         // When the switch "Alertas" is ON, the alerts regarding the sensors are activated
                             checkBoxTemperatura.setChecked(true);
                             checkBoxLuminosidade.setChecked(true);
@@ -145,6 +172,9 @@ public class SettingsActivity extends AppCompatActivity implements dialogPraga1.
                     else {
                         Toast.makeText(getApplicationContext(), "A receção de Alertas foi desativada!", Toast.LENGTH_SHORT).show();
 
+                            txt_off.setVisibility(View.VISIBLE);
+                            txt_on.setVisibility(View.INVISIBLE);
+                            alertasOn = "false";
                         // When the switch "Alertas" is OFF, all the alerts are deactivated
                             checkBoxTemperatura.setChecked(false);
                             checkBoxLuminosidade.setChecked(false);
@@ -166,9 +196,12 @@ public class SettingsActivity extends AppCompatActivity implements dialogPraga1.
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) {
                         btnConfigTemp.setVisibility(View.VISIBLE);
+                        boxTemp = "true";
                     }
                     else {
-                        btnConfigTemp.setVisibility(View.INVISIBLE); }
+                        btnConfigTemp.setVisibility(View.INVISIBLE);
+                        boxTemp = "false";
+                    }
                 }
             });
 
@@ -177,9 +210,13 @@ public class SettingsActivity extends AppCompatActivity implements dialogPraga1.
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) {
-                        btnConfigLum.setVisibility(View.VISIBLE); }
+                        btnConfigLum.setVisibility(View.VISIBLE);
+                        boxLum = "true";
+                    }
                     else {
-                        btnConfigLum.setVisibility(View.INVISIBLE); }
+                        btnConfigLum.setVisibility(View.INVISIBLE);
+                        boxLum = "false";
+                    }
                 }
             });
 
@@ -188,9 +225,13 @@ public class SettingsActivity extends AppCompatActivity implements dialogPraga1.
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) {
-                        btnConfigHum.setVisibility(View.VISIBLE); }
+                        btnConfigHum.setVisibility(View.VISIBLE);
+                        boxHum = "true";
+                    }
                     else {
-                        btnConfigHum.setVisibility(View.INVISIBLE); }
+                        btnConfigHum.setVisibility(View.INVISIBLE);
+                        boxHum = "false";
+                    }
                 }
             });
 
@@ -199,9 +240,13 @@ public class SettingsActivity extends AppCompatActivity implements dialogPraga1.
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) {
-                        btnConfigPluv.setVisibility(View.VISIBLE); }
+                        btnConfigPluv.setVisibility(View.VISIBLE);
+                        boxPluv = "true";
+                    }
                     else {
-                        btnConfigPluv.setVisibility(View.INVISIBLE); }
+                        btnConfigPluv.setVisibility(View.INVISIBLE);
+                        boxPluv = "false";
+                    }
                 }
             });
 
@@ -210,10 +255,10 @@ public class SettingsActivity extends AppCompatActivity implements dialogPraga1.
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) {
-
+                        boxOutros = "true";
                     }
                     else {
-
+                        boxOutros = "false";
                     }
                 }
             });
@@ -226,20 +271,10 @@ public class SettingsActivity extends AppCompatActivity implements dialogPraga1.
                     if(isChecked) {
                         btnConfigPraga1.setVisibility(View.VISIBLE);
                         boxPraga1 = "true";
-
-                        SharedPreferences prefs = getSharedPreferences("DataSettingsState", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = prefs.edit();
-                        editor.putString("boxPraga1", boxPraga1);
-                        editor.commit();
                     }
                     else {
                         btnConfigPraga1.setVisibility(View.INVISIBLE);
                         boxPraga1 = "false";
-
-                        SharedPreferences prefs = getSharedPreferences("DataSettingsState", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = prefs.edit();
-                        editor.putString("boxPraga1", boxPraga1);
-                        editor.commit();
                     }
                 }
             });
@@ -250,9 +285,11 @@ public class SettingsActivity extends AppCompatActivity implements dialogPraga1.
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) {
                         btnConfigPraga2.setVisibility(View.VISIBLE);
+                        boxPraga2 = "true";
                     }
                     else {
                         btnConfigPraga2.setVisibility(View.INVISIBLE);
+                        boxPraga2 = "false";
                     }
                 }
             });
@@ -263,9 +300,11 @@ public class SettingsActivity extends AppCompatActivity implements dialogPraga1.
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) {
                         btnConfigPraga3.setVisibility(View.VISIBLE);
+                        boxPraga3 = "true";
                     }
                     else {
                         btnConfigPraga3.setVisibility(View.INVISIBLE);
+                        boxPraga3 = "false";
                     }
                 }
             });
@@ -276,9 +315,11 @@ public class SettingsActivity extends AppCompatActivity implements dialogPraga1.
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) {
                         btnConfigPraga4.setVisibility(View.VISIBLE);
+                        boxPraga4 = "true";
                     }
                     else {
                         btnConfigPraga4.setVisibility(View.INVISIBLE);
+                        boxPraga4 = "false";
                     }
                 }
             });
@@ -396,15 +437,25 @@ public class SettingsActivity extends AppCompatActivity implements dialogPraga1.
     }
 
 
-
-
-    // Function from Interface defined in dialogPraga1.java
     @Override
-    public void onDialogMessage(String message) {
-        Toast.makeText(this, message,Toast.LENGTH_SHORT).show();
+    protected void onDestroy() {
+        super.onDestroy();
+
+        SharedPreferences prefs = getSharedPreferences("DataSettingsState", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("alertasOn", alertasOn);
+        editor.putString("boxTemp", boxTemp);
+        editor.putString("boxLum", boxLum);
+        editor.putString("boxHum", boxHum);
+        editor.putString("boxPluv", boxPluv);
+        editor.putString("boxOutros", boxOutros);
+        editor.putString("boxPraga1", boxPraga1);
+        editor.putString("boxPraga2", boxPraga2);
+        editor.putString("boxPraga3", boxPraga3);
+        editor.putString("boxPraga4", boxPraga4);
+        editor.commit();
+
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
