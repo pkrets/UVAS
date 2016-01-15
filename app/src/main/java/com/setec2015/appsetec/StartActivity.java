@@ -43,6 +43,11 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+    }
+
+    @Override
     public void onClick(View view) {
         // Button "Iniciar Sessão"
         if (view.getId() == R.id.btnEntrar) {

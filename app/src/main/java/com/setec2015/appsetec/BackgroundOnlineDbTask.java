@@ -30,7 +30,7 @@ import java.net.URLEncoder;
 /**
  * Created by Krets on 29/12/2015.
  */
-public class BackgroundOnlineDbTask extends AsyncTask<String, ListData, String> {
+public class BackgroundOnlineDbTask extends AsyncTask<String, Void, String> {
 
     Context ctx;
 
@@ -71,6 +71,9 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, ListData, String> 
         String getJson_pandlet1_url = "http://androidsetec.netau.net/read_pandlet1_json.php";
         String getJson_pandlet2_url = "http://androidsetec.netau.net/read_pandlet2_json.php";
         String getJson_pandlet3_url = "http://androidsetec.netau.net/read_pandlet3_json.php";
+        String update_pandlet1_url = "http://androidsetec.netau.net/update_pandlet1.php";
+        String update_pandlet2_url = "http://androidsetec.netau.net/update_pandlet2.php"; // not done
+        String update_pandlet3_url = "http://androidsetec.netau.net/update_pandlet3.php"; // not done
 
         String method = params[0];
 
@@ -203,6 +206,52 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, ListData, String> 
                 httpURLConnection.disconnect();
 
                 return stringBuilder.toString().trim();
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        else if (method.equals("update_info_1"))
+        {
+            String temp = params[1];
+            String lum = params[2];
+            String humSolo = params[3];
+            String humAr = params[4];
+            String pluv = params[5];
+            String data = params[6];
+
+            try {
+                URL url = new URL(update_pandlet1_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+
+                OutputStream OS = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(OS, "UTF-8"));
+
+                String data_string = URLEncoder.encode("temperature", "UTF-8") + "=" + URLEncoder.encode(temp, "UTF-8") + "&" +
+                        URLEncoder.encode("luminosity", "UTF-8") + "=" + URLEncoder.encode(lum, "UTF-8") + "&" +
+                        URLEncoder.encode("soil_moisture", "UTF-8") + "=" + URLEncoder.encode(humSolo, "UTF-8") + "&" +
+                        URLEncoder.encode("relative_humidity", "UTF-8") + "=" + URLEncoder.encode(humAr, "UTF-8") + "&" +
+                        URLEncoder.encode("pluviosity", "UTF-8") + "=" + URLEncoder.encode(pluv, "UTF-8") + "&" +
+                        URLEncoder.encode("timestamp", "UTF-8") + "=" + URLEncoder.encode(data, "UTF-8");
+
+                bufferedWriter.write(data_string);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                OS.close();
+
+                // Get response from the server
+                InputStream IS = httpURLConnection.getInputStream();
+                IS.close();
+
+                // Terminate connection
+                httpURLConnection.disconnect();
+
+                return "Sincronização: Nova linha inserida na BD Online!";
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -373,8 +422,8 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, ListData, String> 
     }
 
     @Override
-    protected void onProgressUpdate(ListData... values) {
-        listDataAdapter.add(values[0]);
+    protected void onProgressUpdate(Void... values) {
+        super.onProgressUpdate(values);
     }
 
     @Override
@@ -402,7 +451,11 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, ListData, String> 
                 Toast.makeText(ctx, "Iniciar sessão online falhou!\n\nOs campos 'E-mail' e/ou 'Password' estão incorretos...", Toast.LENGTH_LONG).show();
             }
         }
-        else if(result.equals("Nova linha inserida na BD!"))
+        else if(result.equals("Nova linha inserida na BD Online!"))
+        {
+            Toast.makeText(ctx, result, Toast.LENGTH_SHORT).show();
+        }
+        else if(result.equals("Sincronização: Nova linha inserida na BD Online!"))
         {
             Toast.makeText(ctx, result, Toast.LENGTH_SHORT).show();
         }

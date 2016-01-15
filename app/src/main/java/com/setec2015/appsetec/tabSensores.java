@@ -28,9 +28,9 @@ public class tabSensores extends Fragment {
     private ImageButton btnSatellite;
     private Button btnZoomIn;
     private Button btnZoomOut;
-    private TextView txtZonaAtual, txt_newTemp, txt_newLum, txt_newHumSolo, txt_newHumAr, txt_newPluv;
+    private TextView txtZonaAtual, txt_newTemp, txt_newLum, txt_newHumSolo, txt_newHumAr, txt_newPluv, txt_newData;
 
-    String newTemp, newLum, newHumSolo, newHumAr, newPluv;
+    String newTemp, newLum, newHumSolo, newHumAr, newPluv, newData;
 
     String zona1 = " ZONA 1 - Norte";
     String zona2 = " ZONA 2 - Este";
@@ -42,7 +42,7 @@ public class tabSensores extends Fragment {
     private GoogleMap map;
 
     public String zonaBundle, zonaEscolhida;
-    public String tempBundle, lumBundle, humSoloBundle, humArBundle, pluvBundle;
+    public String tempBundle, lumBundle, humSoloBundle, humArBundle, pluvBundle, dataBundle;
 
     Bundle savedInstanceState;
 
@@ -58,6 +58,7 @@ public class tabSensores extends Fragment {
             humSoloBundle = savedInstanceState.getString("humS");
             humArBundle = savedInstanceState.getString("humA");
             pluvBundle = savedInstanceState.getString("pluv");
+            dataBundle = savedInstanceState.getString("data");
         }
     }
 
@@ -83,8 +84,9 @@ public class tabSensores extends Fragment {
         txt_newHumSolo = (TextView) view.findViewById(R.id.txt_newHumSolo);
         txt_newHumAr = (TextView) view.findViewById(R.id.txt_newHumAr);
         txt_newPluv = (TextView) view.findViewById(R.id.txt_newPluv);
+        txt_newData = (TextView) view.findViewById(R.id.txt_newData);
 
-        populateLastSensorValue(tempBundle, lumBundle, humSoloBundle, humArBundle, pluvBundle);
+        populateLastSensorValue(tempBundle, lumBundle, humSoloBundle, humArBundle, pluvBundle, dataBundle);
 
 
 
@@ -135,6 +137,7 @@ public class tabSensores extends Fragment {
 
                 BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
                 backgroundDbTask.execute("last_info_1");
+
 
 
                 /* DATA DIRECTLY FROM BLE
@@ -201,30 +204,19 @@ public class tabSensores extends Fragment {
             fragment = SupportMapFragment.newInstance();
             fm.beginTransaction().replace(R.id.map, fragment).commit();
         }
-
-
     }
 
 
 
 
-
-
-
-
-
-
-
-    private void populateLastSensorValue(String temp, String lum, String humSolo, String humAr, String pluv) {
+    private void populateLastSensorValue(String temp, String lum, String humSolo, String humAr, String pluv, String data) {
         txt_newTemp.setText(temp);
         txt_newLum.setText(lum);
         txt_newHumSolo.setText(humSolo);
         txt_newHumAr.setText(humAr);
         txt_newPluv.setText(pluv);
+        txt_newData.setText(data);
     }
-
-
-
 
 
 
@@ -237,6 +229,7 @@ public class tabSensores extends Fragment {
             savedInstanceState.putString("humS", newHumSolo);
             savedInstanceState.putString("humA", newHumAr);
             savedInstanceState.putString("pluv", newPluv);
+            savedInstanceState.putString("data", newData);
     }
 
 

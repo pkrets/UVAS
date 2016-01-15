@@ -158,7 +158,7 @@ public class tabHistorico extends Fragment {
                     else if (zonaEscolhida.matches(zona3)) {
                         new AlertDialog.Builder(getContext())
                                 .setTitle(Html.fromHtml("Apagar os registos do " + "<u>" +"Histórico" +"</u>" + " da:"))
-                                .setMessage(Html.fromHtml("<b><i>" + "&emsp&emsp&emsp&emsp" + zona1 + "</i></b>"))
+                                .setMessage(Html.fromHtml("<b><i>" + "&emsp&emsp&emsp&emsp" + zona3 + "</i></b>"))
                                 .setIcon(R.mipmap.ic_delete)
                                 .setCancelable(false)
                                 .setPositiveButton("Apagar", new DialogInterface.OnClickListener() {

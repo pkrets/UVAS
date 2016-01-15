@@ -48,8 +48,8 @@ public class SettingsActivity extends AppCompatActivity {
         private CheckBox checkBoxPraga1, checkBoxPraga2, checkBoxPraga3, checkBoxPraga4;
         private Button btnConfigPraga1, btnConfigPraga2, btnConfigPraga3, btnConfigPraga4;
 
-        String boxTemp, boxLum, boxHum, boxPluv, boxOutros, boxPraga1, boxPraga2, boxPraga3, boxPraga4;
-        String boxTemp_saved, boxLum_saved, boxHum_saved, boxPluv_saved, boxOutros_saved,
+    String boxTemp, boxLum, boxHum, boxPluv, boxOutros, boxPraga1, boxPraga2, boxPraga3, boxPraga4;
+    String boxTemp_saved, boxLum_saved, boxHum_saved, boxPluv_saved, boxOutros_saved,
                 boxPraga1_saved, boxPraga2_saved, boxPraga3_saved, boxPraga4_saved;
 
 
@@ -74,73 +74,141 @@ public class SettingsActivity extends AppCompatActivity {
         txt_off = (TextView) findViewById(R.id.txt_off);
         txt_on = (TextView) findViewById(R.id.txt_on);
 
+
     // Fetch UI objects from "Sensores" alerts
         checkBoxTemperatura = (CheckBox) findViewById(R.id.checkBoxTemperatura);
         btnConfigTemp = (Button) findViewById(R.id.btnConfigTemp);
-            //btnConfigTemp.setOnClickListener(this);
 
         checkBoxLuminosidade = (CheckBox) findViewById(R.id.checkBoxLuminosidade);
         btnConfigLum = (Button) findViewById(R.id.btnConfigLum);
-            //btnConfigLum.setOnClickListener(this);
+            btnConfigLum.setVisibility(View.INVISIBLE);
 
         checkBoxHumidade = (CheckBox) findViewById(R.id.checkBoxHumidade);
         btnConfigHum = (Button) findViewById(R.id.btnConfigHum);
-            //btnConfigTemp.setOnClickListener(this);
+            btnConfigHum.setVisibility(View.INVISIBLE);
 
         checkBoxPluviosidade = (CheckBox) findViewById(R.id.checkBoxPluviosidade);
         btnConfigPluv = (Button) findViewById(R.id.btnConfigPLuv);
-            //btnConfigPluv.setOnClickListener(this);
+            btnConfigPluv.setVisibility(View.INVISIBLE);
 
         checkBoxOutros = (CheckBox) findViewById(R.id.checkBoxOutros);
 
 
-    // Fetch UI objects from "Sensores" alerts
+    // Fetch UI objects from "Doenças" alerts
         checkBoxPraga1 = (CheckBox) findViewById(R.id.checkBoxPraga1);
         btnConfigPraga1 = (Button) findViewById(R.id.btnConfigPraga1);
             btnConfigPraga1.setVisibility(View.INVISIBLE);
-            //btnConfigPraga1.setOnClickListener(this);
 
         checkBoxPraga2 = (CheckBox) findViewById(R.id.checkBoxPraga2);
         btnConfigPraga2 = (Button) findViewById(R.id.btnConfigPraga2);
             btnConfigPraga2.setVisibility(View.INVISIBLE);
-            //btnConfigPraga2.setOnClickListener(this);
-
 
         checkBoxPraga3 = (CheckBox) findViewById(R.id.checkBoxPraga3);
         btnConfigPraga3 = (Button) findViewById(R.id.btnConfigPraga3);
             btnConfigPraga3.setVisibility(View.INVISIBLE);
-            //btnConfigPraga3.setOnClickListener(this);
 
         checkBoxPraga4 = (CheckBox) findViewById(R.id.checkBoxPraga4);
         btnConfigPraga4 = (Button) findViewById(R.id.btnConfigPraga4);
             btnConfigPraga4.setVisibility(View.INVISIBLE);
-            //btnConfigPraga4.setOnClickListener(this);
-
 
 
 
     // Retrieve data from the SharedPreferences (which alerts where selected)
         SharedPreferences prefs = getSharedPreferences("DataSettingsState", Context.MODE_PRIVATE);
-        alertasOn_saved = prefs.getString("alertasOn", "true");
+        alertasOn_saved = prefs.getString("alertasOn", null);
             switchAlertas.setChecked(Boolean.parseBoolean(alertasOn_saved));
-        boxTemp_saved = prefs.getString("boxTemp", "false");
+            alertasOn = alertasOn_saved;
+               /* if(alertasOn.equals("false")) {
+                    btnConfigTemp.setVisibility(View.INVISIBLE);
+                    btnConfigLum.setVisibility(View.INVISIBLE);
+                    btnConfigHum.setVisibility(View.INVISIBLE);
+                    btnConfigPluv.setVisibility(View.INVISIBLE);
+                    btnConfigPraga1.setVisibility(View.INVISIBLE);
+                    btnConfigPraga2.setVisibility(View.INVISIBLE);
+                    btnConfigPraga3.setVisibility(View.INVISIBLE);
+                    btnConfigPraga4.setVisibility(View.INVISIBLE);
+                    btnConfigTemp.setVisibility(View.INVISIBLE);
+
+                }
+                else {
+                    btnConfigTemp.setVisibility(View.VISIBLE);
+                }*/
+        boxTemp_saved = prefs.getString("boxTemp", null);
             checkBoxTemperatura.setChecked(Boolean.parseBoolean(boxTemp_saved));
-        boxLum_saved = prefs.getString("boxLum", "false");
+            boxTemp = boxTemp_saved;
+                if(boxTemp.equals("false")) {
+                    btnConfigTemp.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    btnConfigTemp.setVisibility(View.VISIBLE);
+                }
+        boxLum_saved = prefs.getString("boxLum", null);
             checkBoxLuminosidade.setChecked(Boolean.parseBoolean(boxLum_saved));
-        boxHum_saved = prefs.getString("boxHum", "false");
+            boxLum = boxLum_saved;
+                if(boxLum.equals("false")) {
+                    btnConfigLum.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    btnConfigLum.setVisibility(View.VISIBLE);
+                }
+        boxHum_saved = prefs.getString("boxHum", null);
             checkBoxHumidade.setChecked(Boolean.parseBoolean(boxHum_saved));
-        boxPluv_saved = prefs.getString("boxPluv", "false");
+            boxHum = boxHum_saved;
+                if(boxHum.equals("false")) {
+                    btnConfigHum.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    btnConfigHum.setVisibility(View.VISIBLE);
+                }
+        boxPluv_saved = prefs.getString("boxPluv", null);
             checkBoxPluviosidade.setChecked(Boolean.parseBoolean(boxPluv_saved));
-        boxOutros_saved = prefs.getString("boxOutros", "false");
+            boxPluv = boxPluv_saved;
+                if(boxPluv.equals("false")) {
+                    btnConfigPluv.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    btnConfigPluv.setVisibility(View.VISIBLE);
+                }
+        boxOutros_saved = prefs.getString("boxOutros", null);
             checkBoxOutros.setChecked(Boolean.parseBoolean(boxOutros_saved));
-        boxPraga1_saved = prefs.getString("boxPraga1", "false");
+            boxOutros = boxOutros_saved;
+        boxPraga1_saved = prefs.getString("boxPraga1", null);
             checkBoxPraga1.setChecked(Boolean.parseBoolean(boxPraga1_saved));
-        boxPraga2_saved = prefs.getString("boxPraga2", "false");
+            boxPraga1 = boxPraga1_saved;
+            if(boxPraga1.equals("false")) {
+                btnConfigPraga1.setVisibility(View.INVISIBLE);
+            }
+            else {
+                btnConfigPraga1.setVisibility(View.VISIBLE);
+            }
+        boxPraga2_saved = prefs.getString("boxPraga2", null);
             checkBoxPraga2.setChecked(Boolean.parseBoolean(boxPraga2_saved));
-        boxPraga3_saved = prefs.getString("boxPraga3", "false");
+            boxPraga2 = boxPraga2_saved;
+                if(boxPraga2.equals("false")) {
+                    btnConfigPraga2.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    btnConfigPraga2.setVisibility(View.VISIBLE);
+                }
+        boxPraga3_saved = prefs.getString("boxPraga3", null);
             checkBoxPraga3.setChecked(Boolean.parseBoolean(boxPraga3_saved));
-        boxPraga4_saved = prefs.getString("boxPraga4", "false");
+            boxPraga3 = boxPraga3_saved;
+                if(boxPraga3.equals("false")) {
+                    btnConfigPraga3.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    btnConfigPraga3.setVisibility(View.VISIBLE);
+                }
+        boxPraga4_saved = prefs.getString("boxPraga4", null);
             checkBoxPraga4.setChecked(Boolean.parseBoolean(boxPraga4_saved));
+            boxPraga4 = boxPraga4_saved;
+                if(boxPraga4.equals("false")) {
+                    btnConfigPraga4.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    btnConfigPraga4.setVisibility(View.VISIBLE);
+                }
+
 
         if(alertasOn_saved.matches("true")) {
             txt_off.setVisibility(View.INVISIBLE);
@@ -149,10 +217,10 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
 
-
 //////////////////// Switch and toggles
 
         // Switch activate/deactivate "Alertas"
+
             switchAlertas.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

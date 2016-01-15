@@ -138,7 +138,6 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
          * When user is LOGGED, the Local DB is deleted and updated with the Online DB
          */
         if(log) {
-
             /*
              * We first need to enforce that an Internet connection is existent, and ask the
              * user to enable one if they have not done so.
@@ -146,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
             if(networkInfo != null && networkInfo.isConnected()) {
-                updateLocalDb();
+                updateOnlineDb();
             }
             else {
                 Intent enableInternetIntent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
@@ -156,10 +155,19 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
         }
     }
 
-    private void updateLocalDb() {
-
+    private void updateOnlineDb() {
         if(RUN_ONCE) {
             RUN_ONCE = false;
+
+            // Local DB - get all rows from all tables (pandlet1_table, pandlet2_table, pandlet3_table)
+                BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
+                backgroundDbTask.execute("get_new_1");
+
+            //updateLocalDb();
+        }
+    }
+
+    private void updateLocalDb() {
 
             // Local DB - delete all local tables (pandlet1_table, pandlet2_table, pandlet3_table)
                 BackgroundDbTask backgroundDbTask_A = new BackgroundDbTask(this);
@@ -180,7 +188,6 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
 
                 BackgroundOnlineDbTask backgroundOnlineDbTask_C = new BackgroundOnlineDbTask(this);
                 backgroundOnlineDbTask_C.execute("get_info_3");
-        }
     }
 
     @Override
@@ -267,10 +274,10 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         //Add any device elements we've discovered to the overflow menu
-        for (int i=0; i < mDevices.size(); i++) {
+        /*for (int i=0; i < mDevices.size(); i++) {
             BluetoothDevice device = mDevices.valueAt(i);
             menu.add(0, mDevices.keyAt(i), 0, device.getName());
-        }
+        }*/
         return true;
     }
 
@@ -317,18 +324,6 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
                         .setNegativeButton("Não", null)
                         .show();
                 break;
-
-            default:
-                //Obtain the discovered device to connect with
-                BluetoothDevice device = mDevices.get(item.getItemId());
-                Log.i(TAG, "Connecting to "+device.getName());
-                /*
-                 * Make a connection with the device using the special LE-specific
-                 * connectGatt() method, passing in a callback for GATT events
-                 */
-                mConnectedGatt = device.connectGatt(this, false, mGattCallback);
-                //Display progress UI
-                mHandler.sendMessage(Message.obtain(null, MSG_PROGRESS, "Connecting to " + device.getName() + "..."));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -382,45 +377,44 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
     private void ConnectToDeviceDialog() {
 
         if(mDevices.size() == 0) {
-            Toast.makeText(this, "Nenhum dispositivo BLE detectado.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Nenhum dispositivo BLE encontrado...", Toast.LENGTH_LONG).show();
         }
         else {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Escolha o dispositivo BLE desejado:");
-            builder.setIcon(R.mipmap.ic_ble);
 
             ListView deviceList = new ListView(this);
             for (int i=0; i < mDevices.size(); i++) {
                 BluetoothDevice device = mDevices.valueAt(i);
-                String deviceFound = device.getName();
+                String deviceFound = "\t\t\t\t\t" + device.getName();
                 ArrayAdapter<String> deviceAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new String[] {deviceFound});
                 deviceList.setAdapter(deviceAdapter);
             }
             builder.setView(deviceList);
             final Dialog dialog = builder.create();
-
             dialog.show();
 
-            /*deviceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            deviceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    switch(position) {
-                        case 0: // Pandlet 1 (Zona 1)
+                    int i = position;
+                    //Obtain the discovered device to connect with
+                    BluetoothDevice device = mDevices.valueAt(i);
+                        Log.i(TAG, "Connecting to " + device.getName());
+                    /*
+                     * Make a connection with the device using the special LE-specific
+                     * connectGatt() method, passing in a callback for GATT events
+                     */
+                    if(!device.equals(null)) {
+                        mConnectedGatt = device.connectGatt(getApplicationContext(), false, mGattCallback);
+                        //Display progress UI
+                        mHandler.sendMessage(Message.obtain(null, MSG_PROGRESS, "A estabelecer ligação com " + device.getName() + "..."));
+                        dialog.dismiss();
+                     }
 
-                            //Obtain the discovered device to connect with
-                            BluetoothDevice device = mDevices.get(position);
-                            Log.i(TAG, "Connecting to "+device.getName());
-                            /*
-                             * Make a connection with the device using the special LE-specific
-                             * connectGatt() method, passing in a callback for GATT events
-
-                            mConnectedGatt = device.connectGatt(getApplicationContext(), false, mGattCallback);
-                            //Display progress UI
-                            mHandler.sendMessage(Message.obtain(null, MSG_PROGRESS, "Connecting to " + device.getName() + "..."));
-                            break;
-                    }
                 }
-            });*/
+
+            });
         }
     }
 
@@ -862,150 +856,6 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             }
         }
 
-
- ////////////////   ALERTAS   ////////////////
-
-    public void alertaTemperatura() {
-
-        SharedPreferences prefs = getSharedPreferences("DataTemperatura", Context.MODE_PRIVATE);
-            String minTemp = prefs.getString("minTemperatura", "0");
-                double min_temp = Double.parseDouble(minTemp);
-                //double min_temp = 24.0;
-            String maxTemp = prefs.getString("maxTemperatura", "0");
-                double max_temp = Double.parseDouble(maxTemp);
-                //double max_temp = 25.0;
-
-        double TMP;
-            Log.i("ALERTA 1", "mTemperature = " + mTemperature);
-        if(mTemperature != null && !mTemperature.isEmpty()) {
-            TMP = Double.parseDouble(mTemperature);
-            Log.i("ALERTA 2", "mTemperature = " + TMP);
-        }else {
-            TMP = 0;
-        }
-
-        if(TMP != 0) {
-            //float temp = Float.parseFloat(mTemperature);
-
-            String type = "Temperatura";
-            String alert1 = "Ultrapassou o valor mínimo desejado: " + minTemp;
-            String alert2 = "Ultrapassou o valor máximo desejado: " + maxTemp;
-            String value = mTemperature + " ºC";
-            String data = "12-12-2015, 18h23m"; // Manually inserted for now
-
-            if (TMP < min_temp) {
-                BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2(this);
-                backgroundDbTask2.execute("add_alerta_1", type, alert1, value, data);
-            } else if (TMP > max_temp) {
-                BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2(this);
-                backgroundDbTask2.execute("add_alerta_1", type, alert2, value, data);
-            }
-        }
-    }
-
-    public void alertaLuminosidade() {
-
-        SharedPreferences prefs = getSharedPreferences("DataLuminosidade", Context.MODE_PRIVATE);
-            String minLum = prefs.getString("minLuminosidade", "0");
-                double min_lum = Double.parseDouble(minLum);
-            String maxLum = prefs.getString("maxLuminosidade", "0");
-                double max_lum = Double.parseDouble(maxLum);
-
-        double lum = Double.parseDouble(mLuminosidade);
-
-        String type = "Luminosidade";
-        String alert1 = "Ultrapassou o valor mínimo desejado: " + minLum;
-        String alert2 = "Ultrapassou o valor máximo desejado: " + maxLum;
-        String value = mLuminosidade + " lux";
-        String data = "12-12-2015, 18h23m"; // Manually inserted for now
-
-        if(lum < min_lum) {
-            BackgroundDbTask2 backgroundDbTask2  = new BackgroundDbTask2(this);
-            backgroundDbTask2.execute("add_alerta_1", type, alert1, value, data);
-        }
-        else if(lum > max_lum) {
-            BackgroundDbTask2 backgroundDbTask2  = new BackgroundDbTask2(this);
-            backgroundDbTask2.execute("add_alerta_1", type, alert2, value, data);
-        }
-    }
-
-    public void alertaHumidadeSolo() {
-
-        SharedPreferences prefs = getSharedPreferences("DataHumidade", Context.MODE_PRIVATE);
-            String minHumSolo = prefs.getString("minHumidadeSolo", "0");
-                double min_humSolo = Double.parseDouble(minHumSolo);
-            String maxHumSolo = prefs.getString("maxHumidadeSolo", "0");
-                double max_humSolo = Double.parseDouble(maxHumSolo);
-
-        double humSolo = Double.parseDouble(mHumSolo);
-
-        String type = "Humidade (solo)";
-        String alert1 = "Ultrapassou o valor mínimo desejado: " + minHumSolo;
-        String alert2 = "Ultrapassou o valor máximo desejado: " + maxHumSolo;
-        String value = mHumSolo + " %";
-        String data = "12-12-2015, 18h23m"; // Manually inserted for now
-
-        if(humSolo < min_humSolo) {
-            BackgroundDbTask2 backgroundDbTask2  = new BackgroundDbTask2(this);
-            backgroundDbTask2.execute("add_alerta_1", type, alert1, value, data);
-        }
-        else if(humSolo > max_humSolo) {
-            BackgroundDbTask2 backgroundDbTask2  = new BackgroundDbTask2(this);
-            backgroundDbTask2.execute("add_alerta_1", type, alert2, value, data);
-        }
-    }
-
-    public void alertaHumidadeAr() {
-
-        SharedPreferences prefs = getSharedPreferences("DataHumidade", Context.MODE_PRIVATE);
-            String minHumAr = prefs.getString("minHumidadeAr", "0");
-                double min_humAr = Double.parseDouble(minHumAr);
-            String maxHumAr = prefs.getString("maxHumidadeAr", "0");
-                double max_humAr = Double.parseDouble(maxHumAr);
-
-        double humAr = Double.parseDouble(mHumAr);
-
-        String type = "Humidade (ar)";
-        String alert1 = "Ultrapassou o valor mínimo desejado: " + minHumAr;
-        String alert2 = "Ultrapassou o valor máximo desejado: " + maxHumAr;
-        String value = mHumAr + " %";
-        String data = "12-12-2015, 18h23m"; // Manually inserted for now
-
-        if(humAr < min_humAr) {
-            BackgroundDbTask2 backgroundDbTask2  = new BackgroundDbTask2(this);
-            backgroundDbTask2.execute("add_alerta_1", type, alert1, value, data);
-        }
-        else if(humAr > max_humAr) {
-            BackgroundDbTask2 backgroundDbTask2  = new BackgroundDbTask2(this);
-            backgroundDbTask2.execute("add_alerta_1", type, alert2, value, data);
-        }
-    }
-
-    public void alertaPluviosidade() {
-
-        SharedPreferences prefs = getSharedPreferences("DataPluviosidade", Context.MODE_PRIVATE);
-            String minPluv = prefs.getString("minPluviosidade", "0");
-                double min_pluv = Double.parseDouble(minPluv);
-            String maxPluv = prefs.getString("maxPluviosidade", "0");
-                double max_pluv = Double.parseDouble(maxPluv);
-
-        double pluv = Double.parseDouble(mPressão); // Trocar por PLUVIOSIDADE !!!
-
-        String type = "Pluviosidade";
-        String alert1 = "Ultrapassou o valor mínimo desejado: " + minPluv;
-        String alert2 = "Ultrapassou o valor máximo desejado: " + maxPluv;
-        String value = mPressão + " mm^3";
-        String data = "12-12-2015, 18h23m"; // Manually inserted for now
-
-        if(pluv < min_pluv) {
-            BackgroundDbTask2 backgroundDbTask2  = new BackgroundDbTask2(this);
-            backgroundDbTask2.execute("add_alerta_1", type, alert1, value, data);
-        }
-        else if(pluv > max_pluv) {
-            BackgroundDbTask2 backgroundDbTask2  = new BackgroundDbTask2(this);
-            backgroundDbTask2.execute("add_alerta_1", type, alert2, value, data);
-        }
-    }
 
 }
 

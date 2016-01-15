@@ -117,7 +117,6 @@
                             android:layout_width="0dp"
                             android:layout_height="45dp"
                             android:id="@+id/checkBoxTemperatura"
-                            android:checked="true"
                             android:layout_weight="1"/>
 
                         <TextView
@@ -163,7 +162,6 @@
                             android:layout_width="0dp"
                             android:layout_height="45dp"
                             android:id="@+id/checkBoxLuminosidade"
-                            android:checked="true"
                             android:layout_weight="1" />
 
                         <TextView
@@ -209,7 +207,6 @@
                             android:layout_width="0dp"
                             android:layout_height="45dp"
                             android:id="@+id/checkBoxHumidade"
-                            android:checked="true"
                             android:layout_weight="1" />
 
                         <TextView
@@ -255,7 +252,6 @@
                             android:layout_width="0dp"
                             android:layout_height="45dp"
                             android:id="@+id/checkBoxPluviosidade"
-                            android:checked="true"
                             android:layout_weight="1" />
 
                         <TextView
@@ -301,7 +297,6 @@
                             android:layout_width="0dp"
                             android:layout_height="45dp"
                             android:id="@+id/checkBoxOutros"
-                            android:checked="true"
                             android:layout_weight="1" />
 
                         <TextView

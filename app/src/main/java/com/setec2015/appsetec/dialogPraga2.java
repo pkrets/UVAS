@@ -36,7 +36,6 @@ public class dialogPraga2 extends DialogFragment implements View.OnClickListener
 
     private static boolean RUN_ONCE = true;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_praga2, null);

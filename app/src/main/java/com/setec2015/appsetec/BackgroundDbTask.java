@@ -2,9 +2,12 @@ package com.setec2015.appsetec;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -13,9 +16,12 @@ import android.widget.Toast;
  */
 public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
 
+    String newId, newTemp, newLum, newHumSolo, newHumAr, newPluv, newData;
+
     String lastTemp1, lastLum1, lastHumSolo1, lastHumAr1, lastPluv1, lastData1;
     String lastTemp2, lastLum2, lastHumSolo2, lastHumAr2, lastPluv2, lastData2;
     String lastTemp3, lastLum3, lastHumSolo3, lastHumAr3, lastPluv3, lastData3;
+
     String table;
 
     Context ctx;
@@ -92,6 +98,29 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
             }
 
         return "get_info_1";
+        }
+
+        else if(method.equals("get_new_1"))
+        {
+            SQLiteDatabase db = dbOperations.getReadableDatabase();
+            Cursor cursor = dbOperations.getInfo1(db);
+            table = "zona1";
+
+            if(cursor.moveToLast())
+            {
+                do {
+                    newId = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.ID));
+                    newTemp = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.TEMP));
+                    newLum = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.LUM));
+                    newHumSolo = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.HUM_SOLO));
+                    newHumAr = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.HUM_AR));
+                    newPluv = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.PLUV));
+                    newData = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.DATA));
+
+                } while (cursor.moveToPrevious()); // get all rows
+            }
+
+            return "get_new_1";
         }
 
         else if(method.equals("last_info_1"))
@@ -281,6 +310,7 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
         return null;
     }
 
+
     @Override
     protected void onProgressUpdate(ListData... values) {
         listDataAdapter.add(values[0]);
@@ -292,6 +322,10 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
         if(result.equals("get_info_1") | result.equals("get_info_2") | result.equals("get_info_3"))
         {
             historicoListView.setAdapter(listDataAdapter);
+        }
+        else if(result.equals("get_new_1"))
+        {
+            Toast.makeText(ctx, result, Toast.LENGTH_SHORT).show();
         }
         else if(result.equals("last_info_1") | result.equals("last_info_2") | result.equals("last_info_3"))
         {
@@ -310,8 +344,6 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
                 Toast.makeText(ctx, "Zona 3: " + lastTemp3 + " " + lastLum3 + " " + lastHumSolo3 + " "
                         + lastHumAr3 + " " + lastPluv3 + " " + lastData3, Toast.LENGTH_LONG).show();
             }
-
-            //getLastTemp1(); getLastLum1(); getLastHumSolo1(); getLastHumAr1(); getLastPluv1(); getLastData1();
         }
         else
         {
@@ -319,14 +351,4 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
         }
 
     }
-
-
-    /*
-    private String getLastTemp1() { return lastTemp1; }
-    private String getLastLum1() { return lastLum1; }
-    private String getLastHumSolo1() { return lastHumSolo1; }
-    private String getLastHumAr1() { return lastHumAr1; }
-    private String getLastPluv1() { return lastPluv1; }
-    private String getLastData1() { return lastData1; }
-    */
 }

@@ -34,16 +34,8 @@ public class dialogPraga1 extends DialogFragment implements View.OnClickListener
     EditText edt_minPluvPraga1, edt_maxPluvPraga1;
     String minPluvPraga1, minPluvPraga1_saved, maxPluvPraga1, maxPluvPraga1_saved;
 
-    DataSettings dataSettings;
 
     private static boolean RUN_ONCE = true;
-
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        dataSettings = (DataSettings) activity;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -148,18 +140,11 @@ public class dialogPraga1 extends DialogFragment implements View.OnClickListener
             editor.putString("maxPluvPraga1", maxPluvPraga1);
             editor.commit();
 
-            dataSettings.onDialogMessage("OK was clicked with value = " + minTempPraga1);
             dismiss();
         }
         else
         {
-            dataSettings.onDialogMessage("CANCELAR was clicked");
             dismiss();
         }
-    }
-
-
-    interface DataSettings {
-        public void onDialogMessage(String message);
     }
 }
