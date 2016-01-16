@@ -2,8 +2,10 @@
 
 package com.setec2015.appsetec;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -61,7 +63,7 @@ public class tabAlertas extends Fragment {
 
 
         // Display warning icons of new Alert
-            SharedPreferences prefs = getActivity().getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
+        SharedPreferences prefs = getActivity().getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
             newAlerta1 = prefs.getBoolean("newAlerta1", false);
             newAlerta2 = prefs.getBoolean("newAlerta2", false);
             newAlerta3 = prefs.getBoolean("newAlerta3", false);
@@ -156,10 +158,10 @@ public class tabAlertas extends Fragment {
 
                 // Delete Table from Alertas - Zona 1
                 if (zonaEscolhida.matches(zona1)) {
-                    new AlertDialog.Builder(getContext())
-                            .setTitle(Html.fromHtml("Apagar os registos de " + "<u>" +"Alertas" +"</u>" + " da:"))
-                            .setMessage(Html.fromHtml("<b><i>" + "&emsp&emsp&emsp&emsp" + zona1 + "</i></b>"))
+                    new android.app.AlertDialog.Builder(getContext())
+                            .setTitle("Limpar registos de Alertas")
                             .setIcon(R.mipmap.ic_delete)
+                            .setMessage("Deseja apagar os registos de Alertas de" + zona1 + " ?\nEsta ação é irreversível.")
                             .setCancelable(false)
                             .setPositiveButton("Apagar", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
@@ -178,10 +180,10 @@ public class tabAlertas extends Fragment {
                 }
                 // Delete Table from Alertas - Zona 2
                 else if (zonaEscolhida.matches(zona2)) {
-                    new AlertDialog.Builder(getContext())
-                            .setTitle(Html.fromHtml("Apagar os registos de " + "<u>" +"Alertas" +"</u>" + " da:"))
-                            .setMessage(Html.fromHtml("<b><i>" + "&emsp&emsp&emsp&emsp" + zona2 + "</i></b>"))
+                    new android.app.AlertDialog.Builder(getContext())
+                            .setTitle("Limpar registos de Alertas")
                             .setIcon(R.mipmap.ic_delete)
+                            .setMessage("Deseja apagar os registos de Alertas de" + zona2 + " ?\nEsta ação é irreversível.")
                             .setCancelable(false)
                             .setPositiveButton("Apagar", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
@@ -200,10 +202,10 @@ public class tabAlertas extends Fragment {
                 }
                 // Delete Table from Alertas - Zona 3
                 else if (zonaEscolhida.matches(zona3)) {
-                    new AlertDialog.Builder(getContext())
-                            .setTitle(Html.fromHtml("Apagar os registos de " + "<u>" +"Alertas" +"</u>" + " da:"))
-                            .setMessage(Html.fromHtml("<b><i>" + "&emsp&emsp&emsp&emsp" + zona3 + "</i></b>"))
+                    new android.app.AlertDialog.Builder(getContext())
+                            .setTitle("Limpar registos de Alertas")
                             .setIcon(R.mipmap.ic_delete)
+                            .setMessage("Deseja apagar os registos de Alertas de" + zona3 + " ?\nEsta ação é irreversível.")
                             .setCancelable(false)
                             .setPositiveButton("Apagar", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {

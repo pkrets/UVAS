@@ -13,6 +13,8 @@ public class dbSaveInfoActivity extends AppCompatActivity {
     EditText new_temp, new_lum, new_humSolo, new_humAr, new_pluv, new_data;
     String temp, lum, humSolo, humAr, pluv, data;
     String alertaDbTask, alertaUI;
+    Boolean alertasOn, boxTemp, boxLum, boxHum, boxPluv, boxOutros, boxPraga1, boxPraga2, boxPraga3, boxPraga4;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +45,19 @@ public class dbSaveInfoActivity extends AppCompatActivity {
                 backgroundDbTask.execute("add_info_1", temp, lum, humSolo, humAr, pluv, data);
 
             // ALERTAS
-                alertaDbTask = "add_alerta_1";
-                alertaTemperatura();
-                alertaLuminosidade();
-                alertaHumidadeSolo();
-                alertaHumidadeAr();
-                alertaPluviosidade();
+            SharedPreferences prefs = getSharedPreferences("DataSettingsState", Context.MODE_PRIVATE);
+                alertasOn = prefs.getBoolean("alertasOn", false);
+                boxTemp = prefs.getBoolean("boxTemp", false);
+                boxLum = prefs.getBoolean("boxLum", false);
+                boxHum = prefs.getBoolean("boxHum", false);
+                boxPluv = prefs.getBoolean("boxPluv", false);
+                    if(alertasOn) {
+                        alertaDbTask = "add_alerta_1";
+                        if(boxTemp) { alertaTemperatura(); }
+                        if(boxLum) { alertaLuminosidade(); }
+                        if(boxHum) { alertaHumidadeSolo(); alertaHumidadeAr(); }
+                        if(boxPluv) { alertaPluviosidade(); }
+                    }
         }
 
     // Add the manually inserted row to the table from Zona 2 - "pandlet2_table"
@@ -66,12 +75,19 @@ public class dbSaveInfoActivity extends AppCompatActivity {
                 backgroundDbTask.execute("add_info_2", temp, lum, humSolo, humAr, pluv, data);
 
             // ALERTAS
-                alertaDbTask = "add_alerta_2";
-                alertaTemperatura();
-                alertaLuminosidade();
-                alertaHumidadeSolo();
-                alertaHumidadeAr();
-                alertaPluviosidade();
+            SharedPreferences prefs = getSharedPreferences("DataSettingsState", Context.MODE_PRIVATE);
+                alertasOn = prefs.getBoolean("alertasOn", false);
+                boxTemp = prefs.getBoolean("boxTemp", false);
+                boxLum = prefs.getBoolean("boxLum", false);
+                boxHum = prefs.getBoolean("boxHum", false);
+                boxPluv = prefs.getBoolean("boxPluv", false);
+                    if(alertasOn) {
+                        alertaDbTask = "add_alerta_2";
+                        if(boxTemp) { alertaTemperatura(); }
+                        if(boxLum) { alertaLuminosidade(); }
+                        if(boxHum) { alertaHumidadeSolo(); alertaHumidadeAr(); }
+                        if(boxPluv) { alertaPluviosidade(); }
+                    }
         }
 
     // Add the manually inserted row to the table from Zona 3 - "pandlet3_table"
@@ -89,12 +105,19 @@ public class dbSaveInfoActivity extends AppCompatActivity {
                 backgroundDbTask.execute("add_info_3", temp, lum, humSolo, humAr, pluv, data);
 
             // ALERTAS
-                alertaDbTask = "add_alerta_3";
-                alertaTemperatura();
-                alertaLuminosidade();
-                alertaHumidadeSolo();
-                alertaHumidadeAr();
-                alertaPluviosidade();
+            SharedPreferences prefs = getSharedPreferences("DataSettingsState", Context.MODE_PRIVATE);
+                alertasOn = prefs.getBoolean("alertasOn", false);
+                boxTemp = prefs.getBoolean("boxTemp", false);
+                boxLum = prefs.getBoolean("boxLum", false);
+                boxHum = prefs.getBoolean("boxHum", false);
+                boxPluv = prefs.getBoolean("boxPluv", false);
+                    if(alertasOn) {
+                        alertaDbTask = "add_alerta_3";
+                        if(boxTemp) { alertaTemperatura(); }
+                        if(boxLum) { alertaLuminosidade(); }
+                        if(boxHum) { alertaHumidadeSolo(); alertaHumidadeAr(); }
+                        if(boxPluv) { alertaPluviosidade(); }
+                    }
         }
 
 //////////////////////////////

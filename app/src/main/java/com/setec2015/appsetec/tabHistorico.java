@@ -65,7 +65,7 @@ public class tabHistorico extends Fragment {
 
 
         // Display warning icons of new Alert
-            SharedPreferences prefs = getActivity().getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
+        SharedPreferences prefs = getActivity().getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
             newValueHist1 = prefs.getBoolean("newValueHist1", false);
             newValueHist2 = prefs.getBoolean("newValueHist2", false);
             newValueHist3 = prefs.getBoolean("newValueHist3", false);
@@ -161,10 +161,10 @@ public class tabHistorico extends Fragment {
 
                 // Delete Table from "Histórico" - Zona 1
                     if (zonaEscolhida.matches(zona1)) {
-                        new AlertDialog.Builder(getContext())
-                                .setTitle(Html.fromHtml("Apagar os registos do " + "<u>" +"Histórico" +"</u>" + " da:"))
-                                .setMessage(Html.fromHtml("<b><i>" + "&emsp&emsp&emsp&emsp" + zona1 + "</i></b>"))
+                        new android.app.AlertDialog.Builder(getContext())
+                                .setTitle("Limpar registos do Histórico")
                                 .setIcon(R.mipmap.ic_delete)
+                                .setMessage("Deseja apagar os registos do Histórico de" + zona1 + " ?\nEsta ação é irreversível.")
                                 .setCancelable(false)
                                 .setPositiveButton("Apagar", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
@@ -183,10 +183,10 @@ public class tabHistorico extends Fragment {
                     }
                 // Delete Table from "Histórico" - Zona 2
                     else if (zonaEscolhida.matches(zona2)) {
-                        new AlertDialog.Builder(getContext())
-                                .setTitle(Html.fromHtml("Apagar os registos do " + "<u>" +"Histórico" +"</u>" + " da:"))
-                                .setMessage(Html.fromHtml("<b><i>" + "&emsp&emsp&emsp&emsp" + zona2 + "</i></b>"))
+                        new android.app.AlertDialog.Builder(getContext())
+                                .setTitle("Limpar registos do Histórico")
                                 .setIcon(R.mipmap.ic_delete)
+                                .setMessage("Deseja apagar os registos do Histórico de" + zona2 + " ?\nEsta ação é irreversível.")
                                 .setCancelable(false)
                                 .setPositiveButton("Apagar", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
@@ -205,10 +205,10 @@ public class tabHistorico extends Fragment {
                     }
                 // Delete Table from "Histórico" - Zona 3
                     else if (zonaEscolhida.matches(zona3)) {
-                        new AlertDialog.Builder(getContext())
-                                .setTitle(Html.fromHtml("Apagar os registos do " + "<u>" +"Histórico" +"</u>" + " da:"))
-                                .setMessage(Html.fromHtml("<b><i>" + "&emsp&emsp&emsp&emsp" + zona3 + "</i></b>"))
+                        new android.app.AlertDialog.Builder(getContext())
+                                .setTitle("Limpar registos do Histórico")
                                 .setIcon(R.mipmap.ic_delete)
+                                .setMessage("Deseja apagar os registos do Histórico de" + zona3 + " ?\nEsta ação é irreversível.")
                                 .setCancelable(false)
                                 .setPositiveButton("Apagar", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {

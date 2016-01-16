@@ -1,6 +1,9 @@
 package com.setec2015.appsetec;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -39,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        //getSupportActionBar().setIcon(R.mipmap.ic_settings);
+        getSupportActionBar().setIcon(R.mipmap.ic_login);
 
         inflater = LoginActivity.this.getLayoutInflater();
 
@@ -84,11 +87,20 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
         else {
-            Intent enableInternetIntent = new Intent(Settings.ACTION_WIFI_SETTINGS);
-            startActivity(enableInternetIntent);
+            new AlertDialog.Builder(this)
+                    .setTitle("Sem conexão à Internet")
+                    .setIcon(R.mipmap.ic_aviso)
+                    .setMessage("Para iniciar sessão online, necessita de uma conexão à internet por Wi-Fi ou 3G (dados móveis).\nDeseja ligar-se à Internet?")
+                    .setCancelable(false)
+                    .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent enableInternetIntent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+                            startActivity(enableInternetIntent);
+                        }
+                    })
+                    .setNegativeButton("Não", null)
+                    .show();
         }
-
-
 
     }
 

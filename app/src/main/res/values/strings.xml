@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Universal Vine Aid System</string>
 
-    <string name="action_settings">Definições</string>
+    <string name="action_settings">Definições de Alertas</string>
     <string name="action_login">Iniciar Sessão Online</string>
     <string name="action_help">Ajuda</string>
     <string name="action_logout">Terminar Sessão</string>
@@ -15,7 +15,7 @@
     <string name="lbl_btnChuva">Pluviosidade</string>
     <string name="lbl_btnGPS">GPS</string>
     <string name="lbl_zonaAtual">Zona atual: </string>
-    <string name="title_activity_settings">Definições</string>
+    <string name="title_activity_settings">Definições de Alertas</string>
     <string name="lbl_ativarAlertas">> Activar/desactivar a recepção de Alertas</string>
     <string name="lbl_parametrosAlertas">> Seleccione o intervalo de valores que considera ideais:</string>
     <string name="lbl_settingsTemperatura">1. Temperatura</string>

@@ -33,7 +33,7 @@ public class SettingsActivity extends AppCompatActivity {
     private Toolbar mToolbar;
 
     private Switch switchAlertas;
-    String alertasOn, alertasOn_saved;
+    Boolean alertasOn, alertasOn_saved;
 
     private TextView txt_off, txt_on;
 
@@ -48,8 +48,8 @@ public class SettingsActivity extends AppCompatActivity {
         private CheckBox checkBoxPraga1, checkBoxPraga2, checkBoxPraga3, checkBoxPraga4;
         private Button btnConfigPraga1, btnConfigPraga2, btnConfigPraga3, btnConfigPraga4;
 
-    String boxTemp, boxLum, boxHum, boxPluv, boxOutros, boxPraga1, boxPraga2, boxPraga3, boxPraga4;
-    String boxTemp_saved, boxLum_saved, boxHum_saved, boxPluv_saved, boxOutros_saved,
+    Boolean boxTemp, boxLum, boxHum, boxPluv, boxOutros, boxPraga1, boxPraga2, boxPraga3, boxPraga4;
+    Boolean boxTemp_saved, boxLum_saved, boxHum_saved, boxPluv_saved, boxOutros_saved,
                 boxPraga1_saved, boxPraga2_saved, boxPraga3_saved, boxPraga4_saved;
 
 
@@ -78,6 +78,7 @@ public class SettingsActivity extends AppCompatActivity {
     // Fetch UI objects from "Sensores" alerts
         checkBoxTemperatura = (CheckBox) findViewById(R.id.checkBoxTemperatura);
         btnConfigTemp = (Button) findViewById(R.id.btnConfigTemp);
+            btnConfigTemp.setVisibility(View.INVISIBLE);
 
         checkBoxLuminosidade = (CheckBox) findViewById(R.id.checkBoxLuminosidade);
         btnConfigLum = (Button) findViewById(R.id.btnConfigLum);
@@ -114,95 +115,82 @@ public class SettingsActivity extends AppCompatActivity {
 
 
     // Retrieve data from the SharedPreferences (which alerts where selected)
-        SharedPreferences prefs = getSharedPreferences("DataSettingsState", Context.MODE_PRIVATE);
-        alertasOn_saved = prefs.getString("alertasOn", null);
-            switchAlertas.setChecked(Boolean.parseBoolean(alertasOn_saved));
+    SharedPreferences prefs = getSharedPreferences("DataSettingsState", Context.MODE_PRIVATE);
+        alertasOn_saved = prefs.getBoolean("alertasOn", false);
+            switchAlertas.setChecked(alertasOn_saved);
             alertasOn = alertasOn_saved;
-               /* if(alertasOn.equals("false")) {
-                    btnConfigTemp.setVisibility(View.INVISIBLE);
-                    btnConfigLum.setVisibility(View.INVISIBLE);
-                    btnConfigHum.setVisibility(View.INVISIBLE);
-                    btnConfigPluv.setVisibility(View.INVISIBLE);
-                    btnConfigPraga1.setVisibility(View.INVISIBLE);
-                    btnConfigPraga2.setVisibility(View.INVISIBLE);
-                    btnConfigPraga3.setVisibility(View.INVISIBLE);
-                    btnConfigPraga4.setVisibility(View.INVISIBLE);
-                    btnConfigTemp.setVisibility(View.INVISIBLE);
 
-                }
-                else {
-                    btnConfigTemp.setVisibility(View.VISIBLE);
-                }*/
-        boxTemp_saved = prefs.getString("boxTemp", null);
-            checkBoxTemperatura.setChecked(Boolean.parseBoolean(boxTemp_saved));
+        boxTemp_saved = prefs.getBoolean("boxTemp", false);
+            checkBoxTemperatura.setChecked(boxTemp_saved);
             boxTemp = boxTemp_saved;
-                if(boxTemp.equals("false")) {
+                if(boxTemp.equals(false)) {
                     btnConfigTemp.setVisibility(View.INVISIBLE);
                 }
                 else {
                     btnConfigTemp.setVisibility(View.VISIBLE);
                 }
-        boxLum_saved = prefs.getString("boxLum", null);
-            checkBoxLuminosidade.setChecked(Boolean.parseBoolean(boxLum_saved));
+        boxLum_saved = prefs.getBoolean("boxLum", false);
+            checkBoxLuminosidade.setChecked(boxLum_saved);
             boxLum = boxLum_saved;
-                if(boxLum.equals("false")) {
+                if(boxLum.equals(false)) {
                     btnConfigLum.setVisibility(View.INVISIBLE);
                 }
                 else {
                     btnConfigLum.setVisibility(View.VISIBLE);
                 }
-        boxHum_saved = prefs.getString("boxHum", null);
-            checkBoxHumidade.setChecked(Boolean.parseBoolean(boxHum_saved));
+        boxHum_saved = prefs.getBoolean("boxHum", false);
+            checkBoxHumidade.setChecked(boxHum_saved);
             boxHum = boxHum_saved;
-                if(boxHum.equals("false")) {
+                if(boxHum.equals(false)) {
                     btnConfigHum.setVisibility(View.INVISIBLE);
                 }
                 else {
                     btnConfigHum.setVisibility(View.VISIBLE);
                 }
-        boxPluv_saved = prefs.getString("boxPluv", null);
-            checkBoxPluviosidade.setChecked(Boolean.parseBoolean(boxPluv_saved));
+        boxPluv_saved = prefs.getBoolean("boxPluv", false);
+            checkBoxPluviosidade.setChecked(boxPluv_saved);
             boxPluv = boxPluv_saved;
-                if(boxPluv.equals("false")) {
+                if(boxPluv.equals(false)) {
                     btnConfigPluv.setVisibility(View.INVISIBLE);
                 }
                 else {
                     btnConfigPluv.setVisibility(View.VISIBLE);
                 }
-        boxOutros_saved = prefs.getString("boxOutros", null);
-            checkBoxOutros.setChecked(Boolean.parseBoolean(boxOutros_saved));
+        boxOutros_saved = prefs.getBoolean("boxOutros", false);
+            checkBoxOutros.setChecked(boxOutros_saved);
             boxOutros = boxOutros_saved;
-        boxPraga1_saved = prefs.getString("boxPraga1", null);
-            checkBoxPraga1.setChecked(Boolean.parseBoolean(boxPraga1_saved));
+
+        boxPraga1_saved = prefs.getBoolean("boxPraga1", false);
+            checkBoxPraga1.setChecked(boxPraga1_saved);
             boxPraga1 = boxPraga1_saved;
-            if(boxPraga1.equals("false")) {
+            if(boxPraga1.equals(false)) {
                 btnConfigPraga1.setVisibility(View.INVISIBLE);
             }
             else {
                 btnConfigPraga1.setVisibility(View.VISIBLE);
             }
-        boxPraga2_saved = prefs.getString("boxPraga2", null);
-            checkBoxPraga2.setChecked(Boolean.parseBoolean(boxPraga2_saved));
+        boxPraga2_saved = prefs.getBoolean("boxPraga2", false);
+            checkBoxPraga2.setChecked(boxPraga2_saved);
             boxPraga2 = boxPraga2_saved;
-                if(boxPraga2.equals("false")) {
+                if(boxPraga2.equals(false)) {
                     btnConfigPraga2.setVisibility(View.INVISIBLE);
                 }
                 else {
                     btnConfigPraga2.setVisibility(View.VISIBLE);
                 }
-        boxPraga3_saved = prefs.getString("boxPraga3", null);
-            checkBoxPraga3.setChecked(Boolean.parseBoolean(boxPraga3_saved));
+        boxPraga3_saved = prefs.getBoolean("boxPraga3", false);
+            checkBoxPraga3.setChecked(boxPraga3_saved);
             boxPraga3 = boxPraga3_saved;
-                if(boxPraga3.equals("false")) {
+                if(boxPraga3.equals(false)) {
                     btnConfigPraga3.setVisibility(View.INVISIBLE);
                 }
                 else {
                     btnConfigPraga3.setVisibility(View.VISIBLE);
                 }
-        boxPraga4_saved = prefs.getString("boxPraga4", null);
-            checkBoxPraga4.setChecked(Boolean.parseBoolean(boxPraga4_saved));
+        boxPraga4_saved = prefs.getBoolean("boxPraga4", false);
+            checkBoxPraga4.setChecked(boxPraga4_saved);
             boxPraga4 = boxPraga4_saved;
-                if(boxPraga4.equals("false")) {
+                if(boxPraga4.equals(false)) {
                     btnConfigPraga4.setVisibility(View.INVISIBLE);
                 }
                 else {
@@ -210,9 +198,9 @@ public class SettingsActivity extends AppCompatActivity {
                 }
 
 
-        if(alertasOn_saved.matches("true")) {
+        if(alertasOn_saved.equals(true)) {
             txt_off.setVisibility(View.INVISIBLE);
-        } else if(alertasOn_saved.matches("false")) {
+        } else if(alertasOn_saved.equals(false)) {
             txt_on.setVisibility(View.INVISIBLE);
         }
 
@@ -229,7 +217,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                             txt_on.setVisibility(View.VISIBLE);
                             txt_off.setVisibility(View.INVISIBLE);
-                            alertasOn = "true";
+                            alertasOn = true;
                         // When the switch "Alertas" is ON, the alerts regarding the sensors are activated
                             checkBoxTemperatura.setChecked(true);
                             checkBoxLuminosidade.setChecked(true);
@@ -242,7 +230,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                             txt_off.setVisibility(View.VISIBLE);
                             txt_on.setVisibility(View.INVISIBLE);
-                            alertasOn = "false";
+                            alertasOn = false;
                         // When the switch "Alertas" is OFF, all the alerts are deactivated
                             checkBoxTemperatura.setChecked(false);
                             checkBoxLuminosidade.setChecked(false);
@@ -264,11 +252,11 @@ public class SettingsActivity extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) {
                         btnConfigTemp.setVisibility(View.VISIBLE);
-                        boxTemp = "true";
+                        boxTemp = true;
                     }
                     else {
                         btnConfigTemp.setVisibility(View.INVISIBLE);
-                        boxTemp = "false";
+                        boxTemp = false;
                     }
                 }
             });
@@ -279,11 +267,11 @@ public class SettingsActivity extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) {
                         btnConfigLum.setVisibility(View.VISIBLE);
-                        boxLum = "true";
+                        boxLum = true;
                     }
                     else {
                         btnConfigLum.setVisibility(View.INVISIBLE);
-                        boxLum = "false";
+                        boxLum = false;
                     }
                 }
             });
@@ -294,11 +282,11 @@ public class SettingsActivity extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) {
                         btnConfigHum.setVisibility(View.VISIBLE);
-                        boxHum = "true";
+                        boxHum = true;
                     }
                     else {
                         btnConfigHum.setVisibility(View.INVISIBLE);
-                        boxHum = "false";
+                        boxHum = false;
                     }
                 }
             });
@@ -309,11 +297,11 @@ public class SettingsActivity extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) {
                         btnConfigPluv.setVisibility(View.VISIBLE);
-                        boxPluv = "true";
+                        boxPluv = true;
                     }
                     else {
                         btnConfigPluv.setVisibility(View.INVISIBLE);
-                        boxPluv = "false";
+                        boxPluv = false;
                     }
                 }
             });
@@ -323,10 +311,10 @@ public class SettingsActivity extends AppCompatActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) {
-                        boxOutros = "true";
+                        boxOutros = true;
                     }
                     else {
-                        boxOutros = "false";
+                        boxOutros = false;
                     }
                 }
             });
@@ -338,11 +326,11 @@ public class SettingsActivity extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) {
                         btnConfigPraga1.setVisibility(View.VISIBLE);
-                        boxPraga1 = "true";
+                        boxPraga1 = true;
                     }
                     else {
                         btnConfigPraga1.setVisibility(View.INVISIBLE);
-                        boxPraga1 = "false";
+                        boxPraga1 = false;
                     }
                 }
             });
@@ -353,11 +341,11 @@ public class SettingsActivity extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) {
                         btnConfigPraga2.setVisibility(View.VISIBLE);
-                        boxPraga2 = "true";
+                        boxPraga2 = true;
                     }
                     else {
                         btnConfigPraga2.setVisibility(View.INVISIBLE);
-                        boxPraga2 = "false";
+                        boxPraga2 = false;
                     }
                 }
             });
@@ -368,11 +356,11 @@ public class SettingsActivity extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) {
                         btnConfigPraga3.setVisibility(View.VISIBLE);
-                        boxPraga3 = "true";
+                        boxPraga3 = true;
                     }
                     else {
                         btnConfigPraga3.setVisibility(View.INVISIBLE);
-                        boxPraga3 = "false";
+                        boxPraga3 = false;
                     }
                 }
             });
@@ -383,11 +371,11 @@ public class SettingsActivity extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) {
                         btnConfigPraga4.setVisibility(View.VISIBLE);
-                        boxPraga4 = "true";
+                        boxPraga4 = true;
                     }
                     else {
                         btnConfigPraga4.setVisibility(View.INVISIBLE);
-                        boxPraga4 = "false";
+                        boxPraga4 = false;
                     }
                 }
             });
@@ -511,16 +499,16 @@ public class SettingsActivity extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences("DataSettingsState", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("alertasOn", alertasOn);
-        editor.putString("boxTemp", boxTemp);
-        editor.putString("boxLum", boxLum);
-        editor.putString("boxHum", boxHum);
-        editor.putString("boxPluv", boxPluv);
-        editor.putString("boxOutros", boxOutros);
-        editor.putString("boxPraga1", boxPraga1);
-        editor.putString("boxPraga2", boxPraga2);
-        editor.putString("boxPraga3", boxPraga3);
-        editor.putString("boxPraga4", boxPraga4);
+        editor.putBoolean("alertasOn", alertasOn);
+        editor.putBoolean("boxTemp", boxTemp);
+        editor.putBoolean("boxLum", boxLum);
+        editor.putBoolean("boxHum", boxHum);
+        editor.putBoolean("boxPluv", boxPluv);
+        editor.putBoolean("boxOutros", boxOutros);
+        editor.putBoolean("boxPraga1", boxPraga1);
+        editor.putBoolean("boxPraga2", boxPraga2);
+        editor.putBoolean("boxPraga3", boxPraga3);
+        editor.putBoolean("boxPraga4", boxPraga4);
         editor.commit();
 
     }

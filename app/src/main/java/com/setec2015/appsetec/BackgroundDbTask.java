@@ -342,7 +342,11 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
 
         if(result.equals("get_info_1") | result.equals("get_info_2") | result.equals("get_info_3"))
         {
-            historicoListView.setAdapter(listDataAdapter);
+            if(historicoListView.getAdapter() == null) {
+                Toast.makeText(ctx, "Não existem registos de Histórico disponíveis.", Toast.LENGTH_SHORT).show();
+            } else {
+                historicoListView.setAdapter(listDataAdapter);
+            }
         }
         else if(result.equals("get_new_1"))
         {

@@ -306,20 +306,17 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
                 startActivity(new Intent(this, SettingsActivity.class));
                 break;
 
-            // Button -- Help
-            case R.id.action_help:
-                Toast.makeText(getApplicationContext(), "Botão > Ajuda < clicado!", Toast.LENGTH_SHORT).show();
-                break;
-
             // Button -- Logout
             case R.id.action_logout:
-                new AlertDialog.Builder(this)
-                        .setTitle("Terminar a sessão?")
+                new android.app.AlertDialog.Builder(this)
+                        .setTitle("Terminar sessão")
                         .setIcon(R.mipmap.ic_logout)
+                        .setMessage("Deseja terminar a sessão?")
                         .setCancelable(false)
                         .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 startActivity(new Intent(((Dialog) dialog).getContext(), StartActivity.class));
+
                             }
                         })
                         .setNegativeButton("Não", null)
@@ -331,13 +328,15 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
 
     @Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setTitle("Terminar a sessão?")
+        new android.app.AlertDialog.Builder(this)
+                .setTitle("Terminar sessão")
                 .setIcon(R.mipmap.ic_logout)
+                .setMessage("Deseja terminar a sessão?")
                 .setCancelable(false)
                 .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         startActivity(new Intent(((Dialog) dialog).getContext(), StartActivity.class));
+
                     }
                 })
                 .setNegativeButton("Não", null)
