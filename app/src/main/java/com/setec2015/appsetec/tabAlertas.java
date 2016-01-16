@@ -2,11 +2,14 @@
 
 package com.setec2015.appsetec;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +30,8 @@ public class tabAlertas extends Fragment {
     String zona2 = " ZONA 2 - Este";
     String zona3 = " ZONA 3 - Oeste";
 
-    public String zonaAtual, zonaEscolhida;
+    String zonaAtual, zonaEscolhida;
+    Boolean newAlerta1, newAlerta2, newAlerta3;
 
     Bundle savedInstanceState;
 
@@ -39,7 +43,6 @@ public class tabAlertas extends Fragment {
             // Restore last state for checked position.
             zonaAtual = savedInstanceState.getString("zona");
         }
-
     }
 
     @Override
@@ -57,6 +60,26 @@ public class tabAlertas extends Fragment {
         txtZonaAtual.setText(zonaAtual);
 
 
+        // Display warning icons of new Alert
+            SharedPreferences prefs = getActivity().getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
+            newAlerta1 = prefs.getBoolean("newAlerta1", false);
+            newAlerta2 = prefs.getBoolean("newAlerta2", false);
+            newAlerta3 = prefs.getBoolean("newAlerta3", false);
+
+            if(newAlerta1) {
+                btnZona1.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.ic_aviso, 0, 0, 0);
+                btnZona1.setTextSize(13);
+            }
+            if(newAlerta2) {
+                btnZona2.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.ic_aviso, 0, 0, 0);
+                btnZona2.setTextSize(13);
+            }
+            if(newAlerta3) {
+                btnZona3.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.ic_aviso, 0, 0, 0);
+                btnZona3.setTextSize(13);
+            }
+
+
 
         // Button "Zona 1"
         btnZona1.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +92,14 @@ public class tabAlertas extends Fragment {
                 BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2((getContext()));
                 backgroundDbTask2.execute("get_alerta_1");
 
+                // Remove warning icon of new Alert
+                    btnZona1.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
+                    btnZona1.setTextSize(15);
+
+                    SharedPreferences prefs = getActivity().getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean("newAlerta1", false);
+                    editor.commit();
             }
         });
 
@@ -83,6 +114,14 @@ public class tabAlertas extends Fragment {
                 BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2((getContext()));
                 backgroundDbTask2.execute("get_alerta_2");
 
+                // Remove warning icon of new Alert
+                    btnZona2.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
+                    btnZona2.setTextSize(15);
+
+                    SharedPreferences prefs = getActivity().getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean("newAlerta2", false);
+                    editor.commit();
             }
         });
 
@@ -96,6 +135,15 @@ public class tabAlertas extends Fragment {
 
                 BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2((getContext()));
                 backgroundDbTask2.execute("get_alerta_3");
+
+                // Remove warning icon of new Alert
+                    btnZona3.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
+                    btnZona3.setTextSize(15);
+
+                    SharedPreferences prefs = getActivity().getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean("newAlerta3", false);
+                    editor.commit();
             }
         });
 
@@ -187,7 +235,6 @@ public class tabAlertas extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
     }
 
 

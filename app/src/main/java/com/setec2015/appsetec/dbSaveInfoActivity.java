@@ -12,7 +12,7 @@ public class dbSaveInfoActivity extends AppCompatActivity {
 
     EditText new_temp, new_lum, new_humSolo, new_humAr, new_pluv, new_data;
     String temp, lum, humSolo, humAr, pluv, data;
-    String alertaDbTask;
+    String alertaDbTask, alertaUI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,7 +147,9 @@ public class dbSaveInfoActivity extends AppCompatActivity {
             if (TMP < min_temp) {
                 BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2(this);
                 backgroundDbTask2.execute(alertaDbTask, type, alert1, value, date);
-            } else if (TMP > max_temp) {
+
+            }
+            else if (TMP > max_temp) {
                 BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2(this);
                 backgroundDbTask2.execute(alertaDbTask, type, alert2, value, date);
             }

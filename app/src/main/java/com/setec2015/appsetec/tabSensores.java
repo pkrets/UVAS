@@ -2,6 +2,8 @@
 
 package com.setec2015.appsetec;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -31,6 +33,7 @@ public class tabSensores extends Fragment {
     private TextView txtZonaAtual, txt_newTemp, txt_newLum, txt_newHumSolo, txt_newHumAr, txt_newPluv, txt_newData;
 
     String newTemp, newLum, newHumSolo, newHumAr, newPluv, newData;
+    Boolean newValueSensor1, newValueSensor2, newValueSensor3;
 
     String zona1 = " ZONA 1 - Norte";
     String zona2 = " ZONA 2 - Este";
@@ -41,8 +44,8 @@ public class tabSensores extends Fragment {
     private SupportMapFragment fragment;
     private GoogleMap map;
 
-    public String zonaBundle, zonaEscolhida;
-    public String tempBundle, lumBundle, humSoloBundle, humArBundle, pluvBundle, dataBundle;
+    String zonaBundle, zonaEscolhida;
+    String tempBundle, lumBundle, humSoloBundle, humArBundle, pluvBundle, dataBundle;
 
     Bundle savedInstanceState;
 
@@ -89,7 +92,24 @@ public class tabSensores extends Fragment {
         populateLastSensorValue(tempBundle, lumBundle, humSoloBundle, humArBundle, pluvBundle, dataBundle);
 
 
+        // Display warning icons of new Value
+            SharedPreferences prefs = getActivity().getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
+            newValueSensor1 = prefs.getBoolean("newValueSensor1", false);
+            newValueSensor2 = prefs.getBoolean("newValueSensor2", false);
+            newValueSensor3 = prefs.getBoolean("newValueSensor3", false);
 
+            if(newValueSensor1) {
+                btnZona1.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.ic_aviso, 0, 0, 0);
+                btnZona1.setTextSize(13);
+            }
+            if(newValueSensor2) {
+                btnZona2.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.ic_aviso, 0, 0, 0);
+                btnZona2.setTextSize(13);
+            }
+            if(newValueSensor3) {
+                btnZona3.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.ic_aviso, 0, 0, 0);
+                btnZona3.setTextSize(13);
+            }
 
 /////////// Map Buttons ///////////
 
@@ -138,18 +158,14 @@ public class tabSensores extends Fragment {
                 BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
                 backgroundDbTask.execute("last_info_1");
 
+                // Remove warning icon of new Alert
+                    btnZona1.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
+                    btnZona1.setTextSize(15);
 
-
-                /* DATA DIRECTLY FROM BLE
-                MainActivity activity = (MainActivity) getActivity();
-                newTemp = activity.getMyTempUI();
-                newLum = activity.getMyLum();
-                newHumSolo = activity.getMyHumSolo();
-                newHumAr = activity.getMyHumAr();
-                newPluv = activity.getMyPres(); // WRONG SENSOR ==> should be "PLuviosidade"
-
-                populateLastSensorValue(newTemp, newLum, newHumSolo, newHumAr, newPluv);
-                */
+                    SharedPreferences prefs = getActivity().getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean("newValueSensor1", false);
+                    editor.commit();
             }
         });
 
@@ -167,6 +183,15 @@ public class tabSensores extends Fragment {
 
                 BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
                 backgroundDbTask.execute("last_info_2");
+
+                // Remove warning icon of new Alert
+                    btnZona2.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
+                    btnZona2.setTextSize(15);
+
+                    SharedPreferences prefs = getActivity().getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean("newValueSensor2", false);
+                    editor.commit();
             }
         });
 
@@ -184,6 +209,15 @@ public class tabSensores extends Fragment {
 
                 BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
                 backgroundDbTask.execute("last_info_3");
+
+                // Remove warning icon of new Alert
+                    btnZona3.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
+                    btnZona3.setTextSize(15);
+
+                    SharedPreferences prefs = getActivity().getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean("newValueSensor3", false);
+                    editor.commit();
             }
         });
 
@@ -204,6 +238,7 @@ public class tabSensores extends Fragment {
             fragment = SupportMapFragment.newInstance();
             fm.beginTransaction().replace(R.id.map, fragment).commit();
         }
+
     }
 
 

@@ -33,7 +33,8 @@ public class tabHistorico extends Fragment {
     String zona2 = " ZONA 2 - Este";
     String zona3 = " ZONA 3 - Oeste";
 
-    public String zonaAtual, zonaEscolhida;
+    String zonaAtual, zonaEscolhida;
+    Boolean newValueHist1, newValueHist2, newValueHist3;
 
     Bundle savedInstanceState;
 
@@ -63,6 +64,27 @@ public class tabHistorico extends Fragment {
             txtZonaAtual.setText(zonaAtual);
 
 
+        // Display warning icons of new Alert
+            SharedPreferences prefs = getActivity().getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
+            newValueHist1 = prefs.getBoolean("newValueHist1", false);
+            newValueHist2 = prefs.getBoolean("newValueHist2", false);
+            newValueHist3 = prefs.getBoolean("newValueHist3", false);
+
+            if(newValueHist1) {
+                btnZona1.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.ic_aviso, 0, 0, 0);
+                btnZona1.setTextSize(13);
+            }
+            if(newValueHist2) {
+                btnZona2.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.ic_aviso, 0, 0, 0);
+                btnZona2.setTextSize(13);
+            }
+            if(newValueHist3) {
+                btnZona3.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.ic_aviso, 0, 0, 0);
+                btnZona3.setTextSize(13);
+            }
+
+
+
 
         // Button "Zona 1"
         btnZona1.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +96,15 @@ public class tabHistorico extends Fragment {
 
                 BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
                 backgroundDbTask.execute("get_info_1");
+
+                // Remove warning icon of new Alert
+                    btnZona1.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
+                    btnZona1.setTextSize(15);
+
+                    SharedPreferences prefs = getActivity().getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean("newValueHist1", false);
+                    editor.commit();
             }
         });
 
@@ -87,6 +118,15 @@ public class tabHistorico extends Fragment {
 
                 BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
                 backgroundDbTask.execute("get_info_2");
+
+                // Remove warning icon of new Alert
+                    btnZona2.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
+                    btnZona2.setTextSize(15);
+
+                    SharedPreferences prefs = getActivity().getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean("newValueHist2", false);
+                    editor.commit();
             }
         });
 
@@ -100,6 +140,15 @@ public class tabHistorico extends Fragment {
 
                 BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
                 backgroundDbTask.execute("get_info_3");
+
+                // Remove warning icon of new Alert
+                    btnZona3.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
+                    btnZona3.setTextSize(15);
+
+                    SharedPreferences prefs = getActivity().getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean("newValueHist3", false);
+                    editor.commit();
             }
         });
 

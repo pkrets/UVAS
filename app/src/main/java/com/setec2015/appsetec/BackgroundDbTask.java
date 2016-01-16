@@ -59,9 +59,16 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
             String humAr = params[4];
             String pluv = params[5];
             String data = params[6];
+            table = "zona1";
 
             SQLiteDatabase db = dbOperations.getWritableDatabase();
             dbOperations.addInfo1(temp, lum, humSolo, humAr, pluv, data, db);
+
+            SharedPreferences prefs = ctx.getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("newValueSensor1", true);
+            editor.putBoolean("newValueHist1", true);
+            editor.commit();
 
             return "One Row Inserted (BackgroundTask) in table: " + DbDataContract.DataEntry_1.TABLE_NAME;
         }
@@ -160,9 +167,16 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
             String humAr = params[4];
             String pluv = params[5];
             String data = params[6];
+            table = "zona2";
 
             SQLiteDatabase db = dbOperations.getWritableDatabase();
             dbOperations.addInfo2(temp, lum, humSolo, humAr, pluv, data, db);
+
+            SharedPreferences prefs = ctx.getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("newValueSensor2", true);
+            editor.putBoolean("newValueHist2", true);
+            editor.commit();
 
             return "One Row Inserted (BackgroundTask) in table: " + DbDataContract.DataEntry_2.TABLE_NAME;
         }
@@ -238,9 +252,16 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
             String humAr = params[4];
             String pluv = params[5];
             String data = params[6];
+            table = "zona3";
 
             SQLiteDatabase db = dbOperations.getWritableDatabase();
             dbOperations.addInfo3(temp, lum, humSolo, humAr, pluv, data, db);
+
+            SharedPreferences prefs = ctx.getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("newValueSensor3", true);
+            editor.putBoolean("newValueHist3", true);
+            editor.commit();
 
             return "One Row Inserted (BackgroundTask) in table: " + DbDataContract.DataEntry_3.TABLE_NAME;
         }

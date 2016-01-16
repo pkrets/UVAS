@@ -137,7 +137,8 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
         /*
          * When user is LOGGED, the Local DB is deleted and updated with the Online DB
          */
-        if(log) {
+        if(log)
+        {
             /*
              * We first need to enforce that an Internet connection is existent, and ask the
              * user to enable one if they have not done so.
@@ -151,7 +152,6 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
                 Intent enableInternetIntent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
                 startActivity(enableInternetIntent);
             }
-
         }
     }
 
@@ -262,6 +262,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             }
             return null;
         }
+
 
 
     }
