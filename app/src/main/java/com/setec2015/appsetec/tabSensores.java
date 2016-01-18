@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,12 +33,12 @@ public class tabSensores extends Fragment {
     private Button btnZoomOut;
     private TextView txtZonaAtual, txt_newTemp, txt_newLum, txt_newHumSolo, txt_newHumAr, txt_newPluv, txt_newData;
 
-    String newTemp, newLum, newHumSolo, newHumAr, newPluv, newData;
+    String lastTemp, lastLum, lastHumSolo, lastHumAr, lastPluv, lastData;
     Boolean newValueSensor1, newValueSensor2, newValueSensor3;
 
-    String zona1 = " ZONA 1 - Norte";
-    String zona2 = " ZONA 2 - Este";
-    String zona3 = " ZONA 3 - Oeste";
+    String zona1 = "Zona 1";
+    String zona2 = "Zona 2";
+    String zona3 = "Zona 3";
 
     float zoomLevel = 14;
 
@@ -150,6 +151,9 @@ public class tabSensores extends Fragment {
 
                 txtZonaAtual.setText(zona1);
                 zonaEscolhida = txtZonaAtual.getText().toString();
+                    btnZona1.setText(Html.fromHtml("<u><b>"+zona1+"<b></u>"));
+                    btnZona2.setText(zona2);
+                    btnZona3.setText(zona3);
 
                 LatLng zona1Location = new LatLng(13.687140112679154, 100.53925868803263);
                 map.addMarker(new MarkerOptions().position(zona1Location).title("Zona 1"));
@@ -158,12 +162,22 @@ public class tabSensores extends Fragment {
                 BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
                 backgroundDbTask.execute("last_info_1");
 
+                // Get values from SharedPreferences
+                    SharedPreferences prefs = getActivity().getSharedPreferences("DataLastValues", Context.MODE_PRIVATE);
+                        lastTemp = prefs.getString("lastTemp1", "- -");
+                        lastLum = prefs.getString("lastLum1", "- -");
+                        lastHumSolo = prefs.getString("lastHumSolo1", "- -");
+                        lastHumAr = prefs.getString("lastHumAr1", "- -");
+                        lastPluv = prefs.getString("lastPluv1", "- -");
+                        lastData = prefs.getString("lastData1", "- -");
+                    populateLastSensorValue(lastTemp, lastLum, lastHumSolo, lastHumAr, lastPluv, lastData);
+
                 // Remove warning icon of new Alert
                     btnZona1.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
                     btnZona1.setTextSize(15);
 
-                    SharedPreferences prefs = getActivity().getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = prefs.edit();
+                    SharedPreferences pref = getActivity().getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = pref.edit();
                     editor.putBoolean("newValueSensor1", false);
                     editor.commit();
             }
@@ -176,6 +190,9 @@ public class tabSensores extends Fragment {
 
                 txtZonaAtual.setText(zona2);
                 zonaEscolhida = txtZonaAtual.getText().toString();
+                    btnZona2.setText(Html.fromHtml("<u><b>"+zona2+"<b></u>"));
+                    btnZona1.setText(zona1);
+                    btnZona3.setText(zona3);
 
                 LatLng zona2Location = new LatLng(13.682140112679154, 100.53525868803263);
                 map.addMarker(new MarkerOptions().position(zona2Location).title("Zona 2"));
@@ -184,12 +201,22 @@ public class tabSensores extends Fragment {
                 BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
                 backgroundDbTask.execute("last_info_2");
 
+                // Get values from SharedPreferences
+                    SharedPreferences prefs = getActivity().getSharedPreferences("DataLastValues", Context.MODE_PRIVATE);
+                        lastTemp = prefs.getString("lastTemp2", "- -");
+                        lastLum = prefs.getString("lastLum2", "- -");
+                        lastHumSolo = prefs.getString("lastHumSolo2", "- -");
+                        lastHumAr = prefs.getString("lastHumAr2", "- -");
+                        lastPluv = prefs.getString("lastPluv2", "- -");
+                        lastData = prefs.getString("lastData2", "- -");
+                    populateLastSensorValue(lastTemp, lastLum, lastHumSolo, lastHumAr, lastPluv, lastData);
+
                 // Remove warning icon of new Alert
                     btnZona2.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
                     btnZona2.setTextSize(15);
 
-                    SharedPreferences prefs = getActivity().getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = prefs.edit();
+                    SharedPreferences pref = getActivity().getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = pref.edit();
                     editor.putBoolean("newValueSensor2", false);
                     editor.commit();
             }
@@ -202,6 +229,9 @@ public class tabSensores extends Fragment {
 
                 txtZonaAtual.setText(zona3);
                 zonaEscolhida = txtZonaAtual.getText().toString();
+                    btnZona3.setText(Html.fromHtml("<u><b>"+zona3+"<b></u>"));
+                    btnZona2.setText(zona2);
+                    btnZona1.setText(zona1);
 
                 LatLng zona3Location = new LatLng(13.685140112679154, 100.53125868803263);
                 map.addMarker(new MarkerOptions().position(zona3Location).title("Zona 3"));
@@ -210,12 +240,22 @@ public class tabSensores extends Fragment {
                 BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
                 backgroundDbTask.execute("last_info_3");
 
+                // Get values from SharedPreferences
+                    SharedPreferences prefs = getActivity().getSharedPreferences("DataLastValues", Context.MODE_PRIVATE);
+                        lastTemp = prefs.getString("lastTemp3", "- -");
+                        lastLum = prefs.getString("lastLum3", "- -");
+                        lastHumSolo = prefs.getString("lastHumSolo3", "- -");
+                        lastHumAr = prefs.getString("lastHumAr3", "- -");
+                        lastPluv = prefs.getString("lastPluv3", "- -");
+                        lastData = prefs.getString("lastData3", "- -");
+                    populateLastSensorValue(lastTemp, lastLum, lastHumSolo, lastHumAr, lastPluv, lastData);
+
                 // Remove warning icon of new Alert
                     btnZona3.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
                     btnZona3.setTextSize(15);
 
-                    SharedPreferences prefs = getActivity().getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = prefs.edit();
+                    SharedPreferences pref = getActivity().getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = pref.edit();
                     editor.putBoolean("newValueSensor3", false);
                     editor.commit();
             }
@@ -259,12 +299,12 @@ public class tabSensores extends Fragment {
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
             savedInstanceState.putString("zona", zonaEscolhida);
-            savedInstanceState.putString("temp", newTemp);
-            savedInstanceState.putString("lum", newLum);
-            savedInstanceState.putString("humS", newHumSolo);
-            savedInstanceState.putString("humA", newHumAr);
-            savedInstanceState.putString("pluv", newPluv);
-            savedInstanceState.putString("data", newData);
+            savedInstanceState.putString("temp", lastTemp);
+            savedInstanceState.putString("lum", lastLum);
+            savedInstanceState.putString("humS", lastHumSolo);
+            savedInstanceState.putString("humA", lastHumAr);
+            savedInstanceState.putString("pluv", lastPluv);
+            savedInstanceState.putString("data", lastData);
     }
 
 

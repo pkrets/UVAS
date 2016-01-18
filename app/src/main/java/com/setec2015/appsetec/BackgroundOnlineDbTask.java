@@ -1,11 +1,15 @@
 package com.setec2015.appsetec;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
+import android.text.Html;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -432,7 +436,21 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, Void, String> {
         if(result.equals("Iniciar Sessão Online"))
         {
             if(LoginSuccess) {
-                Toast.makeText(ctx, "Sessão online iniciada com sucesso!\n\n" + welcome, Toast.LENGTH_LONG).show();
+                new android.app.AlertDialog.Builder(this.ctx)
+                        .setTitle("Sessão Online")
+                        .setIcon(R.mipmap.ic_login)
+                        .setMessage(Html.fromHtml("<b>" + welcome + "</b>" +
+                                "<br><br>Os registos do Histórico serão atualizados com os registos da sua Base de Dados online."))
+                        .setCancelable(false)
+                        .setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent intent = new Intent();
+                                intent.setClass(ctx, MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // is there other way ?
+                                ctx.startActivity(intent);
+                            }
+                        })
+                        .show();
 
                 SharedPreferences prefs = ctx.getSharedPreferences("LoginStatus", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
@@ -441,11 +459,6 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, Void, String> {
 
                     Boolean log = prefs.getBoolean("isLogged", false);
                     Log.i("LOGGED STATUS 2", String.valueOf(log));
-
-                Intent intent = new Intent();
-                intent.setClass(ctx, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // is there other way ?
-                ctx.startActivity(intent);
             }
             else if (!LoginSuccess){
                 Toast.makeText(ctx, "Iniciar sessão online falhou!\n\nOs campos 'E-mail' e/ou 'Password' estão incorretos...", Toast.LENGTH_LONG).show();

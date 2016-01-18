@@ -59,7 +59,7 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
             String humAr = params[4];
             String pluv = params[5];
             String data = params[6];
-            table = "zona1";
+            table = "Zona 1";
 
             SQLiteDatabase db = dbOperations.getWritableDatabase();
             dbOperations.addInfo1(temp, lum, humSolo, humAr, pluv, data, db);
@@ -111,7 +111,7 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
         {
             SQLiteDatabase db = dbOperations.getReadableDatabase();
             Cursor cursor = dbOperations.getInfo1(db);
-            table = "zona1";
+            table = "Zona 1";
 
             if(cursor.moveToLast())
             {
@@ -134,7 +134,7 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
         {
             SQLiteDatabase db = dbOperations.getReadableDatabase();
             Cursor cursor = dbOperations.getLastRow1(db);
-            table = "zona1";
+            table = "Zona 1";
 
             // Check if data is available
             if(cursor.moveToLast())
@@ -147,15 +147,16 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
                 lastData1 = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.DATA));
             }
 
-        return "last_info_1";
+            return "last_info_1";
         }
 
         else if(method.equals("delete_info_1"))
         {
+            table = "Zona 1";
             SQLiteDatabase db = dbOperations.getWritableDatabase();
             dbOperations.deleteInfo1(db);
 
-            return "All Rows Deleted (BackgroundTask) in table: " + DbDataContract.DataEntry_1.TABLE_NAME;
+            return "delete_info_1";
         }
 
 /*  --------- HISTORICO 2 --------- */
@@ -167,7 +168,7 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
             String humAr = params[4];
             String pluv = params[5];
             String data = params[6];
-            table = "zona2";
+            table = "Zona 2";
 
             SQLiteDatabase db = dbOperations.getWritableDatabase();
             dbOperations.addInfo2(temp, lum, humSolo, humAr, pluv, data, db);
@@ -219,7 +220,7 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
         {
             SQLiteDatabase db = dbOperations.getReadableDatabase();
             Cursor cursor = dbOperations.getLastRow2(db);
-            table = "zona2";
+            table = "Zona 2";
 
             // Check if data is available
             if(cursor.moveToLast())
@@ -237,10 +238,11 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
 
         else if(method.equals("delete_info_2"))
         {
+            table = "Zona 2";
             SQLiteDatabase db = dbOperations.getWritableDatabase();
             dbOperations.deleteInfo2(db);
 
-            return "All Rows Deleted (BackgroundTask) in table: " + DbDataContract.DataEntry_2.TABLE_NAME;
+            return "delete_info_2";
         }
 
 /*  --------- HISTORICO 3 --------- */
@@ -252,7 +254,7 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
             String humAr = params[4];
             String pluv = params[5];
             String data = params[6];
-            table = "zona3";
+            table = "Zona 3";
 
             SQLiteDatabase db = dbOperations.getWritableDatabase();
             dbOperations.addInfo3(temp, lum, humSolo, humAr, pluv, data, db);
@@ -304,7 +306,7 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
         {
             SQLiteDatabase db = dbOperations.getReadableDatabase();
             Cursor cursor = dbOperations.getLastRow3(db);
-            table = "zona3";
+            table = "Zona 3";
 
             // Check if data is available
             if(cursor.moveToLast())
@@ -322,10 +324,11 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
 
         else if(method.equals("delete_info_3"))
         {
+            table = "Zona 3";
             SQLiteDatabase db = dbOperations.getWritableDatabase();
             dbOperations.deleteInfo3(db);
 
-            return "All Rows Deleted (BackgroundTask) in table: " + DbDataContract.DataEntry_3.TABLE_NAME;
+            return "delete_info_3";
         }
 
         return null;
@@ -342,11 +345,7 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
 
         if(result.equals("get_info_1") | result.equals("get_info_2") | result.equals("get_info_3"))
         {
-            if(historicoListView.getAdapter() == null) {
-                Toast.makeText(ctx, "Não existem registos de Histórico disponíveis.", Toast.LENGTH_SHORT).show();
-            } else {
-                historicoListView.setAdapter(listDataAdapter);
-            }
+            historicoListView.setAdapter(listDataAdapter);
         }
         else if(result.equals("get_new_1"))
         {
@@ -354,21 +353,43 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
         }
         else if(result.equals("last_info_1") | result.equals("last_info_2") | result.equals("last_info_3"))
         {
-            if (table.equals("zona1")) {
-
-                Toast.makeText(ctx, "Zona 1: " + lastTemp1 + " " + lastLum1 + " " + lastHumSolo1 + " "
-                        + lastHumAr1 + " " + lastPluv1 + " " + lastData1, Toast.LENGTH_LONG).show();
+            if (table.equals("Zona 1")) {
+                SharedPreferences prefs = ctx.getSharedPreferences("DataLastValues", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("lastTemp1", lastTemp1);
+                editor.putString("lastLum1", lastLum1);
+                editor.putString("lastHumSolo1", lastHumSolo1);
+                editor.putString("lastHumAr1", lastHumAr1);
+                editor.putString("lastPluv1", lastPluv1);
+                editor.putString("lastData1", lastData1);
+                editor.commit();
             }
-            else if (table.equals("zona2")) {
-
-                Toast.makeText(ctx, "Zona 2: " + lastTemp2 + " " + lastLum2 + " " + lastHumSolo2 + " "
-                        + lastHumAr2 + " " + lastPluv2 + " " + lastData2, Toast.LENGTH_LONG).show();
+            else if (table.equals("Zona 2")) {
+                SharedPreferences prefs = ctx.getSharedPreferences("DataLastValues", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("lastTemp2", lastTemp2);
+                editor.putString("lastLum2", lastLum2);
+                editor.putString("lastHumSolo2", lastHumSolo2);
+                editor.putString("lastHumAr2", lastHumAr2);
+                editor.putString("lastPluv2", lastPluv2);
+                editor.putString("lastData2", lastData2);
+                editor.commit();
             }
-            else if (table.equals("zona3")) {
-
-                Toast.makeText(ctx, "Zona 3: " + lastTemp3 + " " + lastLum3 + " " + lastHumSolo3 + " "
-                        + lastHumAr3 + " " + lastPluv3 + " " + lastData3, Toast.LENGTH_LONG).show();
+            else if (table.equals("Zona 3")) {
+                SharedPreferences prefs = ctx.getSharedPreferences("DataLastValues", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("lastTemp3", lastTemp3);
+                editor.putString("lastLum3", lastLum3);
+                editor.putString("lastHumSolo3", lastHumSolo3);
+                editor.putString("lastHumAr3", lastHumAr3);
+                editor.putString("lastPluv3", lastPluv3);
+                editor.putString("lastData3", lastData3);
+                editor.commit();
             }
+        }
+        else if(result.equals("delete_info_1") | result.equals("delete_info_2") | result.equals("delete_info_3"))
+        {
+            Toast.makeText(ctx, "Os registos do Histórico de '" +table+ "' foram apagados.", Toast.LENGTH_SHORT).show();
         }
         else
         {

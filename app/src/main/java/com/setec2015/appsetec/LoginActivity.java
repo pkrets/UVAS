@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                     .setCancelable(false)
                     .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            Intent enableInternetIntent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+                            Intent enableInternetIntent = new Intent(Settings.ACTION_WIFI_SETTINGS);
                             startActivity(enableInternetIntent);
                         }
                     })

@@ -28,9 +28,9 @@ public class tabAlertas extends Fragment {
     private ImageButton btnDeleteTable;
     private TextView txtZonaAtual;
 
-    String zona1 = " ZONA 1 - Norte";
-    String zona2 = " ZONA 2 - Este";
-    String zona3 = " ZONA 3 - Oeste";
+    String zona1 = "Zona 1";
+    String zona2 = "Zona 2";
+    String zona3 = "Zona 3";
 
     String zonaAtual, zonaEscolhida;
     Boolean newAlerta1, newAlerta2, newAlerta3;
@@ -90,6 +90,9 @@ public class tabAlertas extends Fragment {
 
                 txtZonaAtual.setText(zona1);
                 zonaEscolhida = txtZonaAtual.getText().toString();
+                    btnZona1.setText(Html.fromHtml("<u><b>"+zona1+"<b></u>"));
+                    btnZona2.setText(zona2);
+                    btnZona3.setText(zona3);
 
                 BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2((getContext()));
                 backgroundDbTask2.execute("get_alerta_1");
@@ -112,6 +115,9 @@ public class tabAlertas extends Fragment {
 
                 txtZonaAtual.setText(zona2);
                 zonaEscolhida = txtZonaAtual.getText().toString();
+                    btnZona2.setText(Html.fromHtml("<u><b>"+zona2+"<b></u>"));
+                    btnZona1.setText(zona1);
+                    btnZona3.setText(zona3);
 
                 BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2((getContext()));
                 backgroundDbTask2.execute("get_alerta_2");
@@ -134,6 +140,9 @@ public class tabAlertas extends Fragment {
 
                 txtZonaAtual.setText(zona3);
                 zonaEscolhida = txtZonaAtual.getText().toString();
+                    btnZona3.setText(Html.fromHtml("<u><b>"+zona3+"<b></u>"));
+                    btnZona2.setText(zona2);
+                    btnZona1.setText(zona1);
 
                 BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2((getContext()));
                 backgroundDbTask2.execute("get_alerta_3");
@@ -161,7 +170,8 @@ public class tabAlertas extends Fragment {
                     new android.app.AlertDialog.Builder(getContext())
                             .setTitle("Limpar registos de Alertas")
                             .setIcon(R.mipmap.ic_delete)
-                            .setMessage("Deseja apagar os registos de Alertas de" + zona1 + " ?\nEsta ação é irreversível.")
+                            .setMessage(Html.fromHtml("Deseja apagar os registos de Alertas de " + "<b>" + zona1 + "</b>" + " ?" +
+                                    "<br>Esta ação é irreversível."))
                             .setCancelable(false)
                             .setPositiveButton("Apagar", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
@@ -183,7 +193,8 @@ public class tabAlertas extends Fragment {
                     new android.app.AlertDialog.Builder(getContext())
                             .setTitle("Limpar registos de Alertas")
                             .setIcon(R.mipmap.ic_delete)
-                            .setMessage("Deseja apagar os registos de Alertas de" + zona2 + " ?\nEsta ação é irreversível.")
+                            .setMessage(Html.fromHtml("Deseja apagar os registos do Alertas de " + "<b>" + zona2 + "</b>" + " ?" +
+                                    "<br>Esta ação é irreversível."))
                             .setCancelable(false)
                             .setPositiveButton("Apagar", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
@@ -205,7 +216,8 @@ public class tabAlertas extends Fragment {
                     new android.app.AlertDialog.Builder(getContext())
                             .setTitle("Limpar registos de Alertas")
                             .setIcon(R.mipmap.ic_delete)
-                            .setMessage("Deseja apagar os registos de Alertas de" + zona3 + " ?\nEsta ação é irreversível.")
+                            .setMessage(Html.fromHtml("Deseja apagar os registos do Alertas de " + "<b>" + zona3 + "</b>" + " ?" +
+                                    "<br>Esta ação é irreversível."))
                             .setCancelable(false)
                             .setPositiveButton("Apagar", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
@@ -225,7 +237,7 @@ public class tabAlertas extends Fragment {
                 // Display warning message if no table (zona) is selected
                 else
                 {
-                    Toast.makeText(getContext(), "Para apagar registos de 'Alertas', selecione primeiro uma zona.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Para apagar registos de Alertas, selecione primeiro uma zona.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

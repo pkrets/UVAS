@@ -92,7 +92,7 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Dados mais recentes:"
                     android:id="@+id/txtValoresSensores"
-                    android:textSize="12sp"
+                    android:textSize="13sp"
                     android:gravity="right"
                     android:layout_marginRight="5dp" />
 
@@ -103,7 +103,9 @@
                     android:text="DD-MM-AA, HH:MM"
                     android:id="@+id/txt_newData"
                     android:textSize="14sp"
-                    android:gravity="right" />
+                    android:textStyle="bold"
+                    android:gravity="right"
+                    android:layout_marginRight="5dp" />
 
 
             </LinearLayout>
@@ -133,7 +135,7 @@
                     android:layout_height="match_parent"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Temperatura"
-                    android:textSize="15sp"
+                    android:textSize="16sp"
                     android:layout_weight="5"
                     android:layout_marginLeft="5dp"/>
 
@@ -155,6 +157,7 @@
                     android:text="- -"
                     android:id="@+id/txt_newTemp"
                     android:textSize="18sp"
+                    android:textStyle="bold"
                     android:layout_marginRight="5dp"
                     android:gravity="bottom|right"
                     android:textColor="#388E3C"
@@ -184,7 +187,7 @@
                     android:layout_height="match_parent"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Luminosidade"
-                    android:textSize="15sp"
+                    android:textSize="16sp"
                     android:layout_weight="5"
                     android:layout_marginLeft="5dp"/>
 
@@ -206,6 +209,7 @@
                     android:text="- -"
                     android:id="@+id/txt_newLum"
                     android:textSize="18sp"
+                    android:textStyle="bold"
                     android:layout_marginRight="5dp"
                     android:gravity="bottom|right"
                     android:textColor="#388E3C"
@@ -235,8 +239,8 @@
                     android:layout_height="match_parent"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Humidade (solo)"
-                    android:textSize="15sp"
-                    android:layout_weight="5"
+                    android:textSize="16sp"
+                    android:layout_weight="6"
                     android:layout_marginLeft="5dp"/>
 
                 <TextView
@@ -245,7 +249,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="%"
                     android:textSize="12sp"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     android:gravity="bottom|right"
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="3dp"/>
@@ -257,6 +261,7 @@
                     android:text="- -"
                     android:id="@+id/txt_newHumSolo"
                     android:textSize="18sp"
+                    android:textStyle="bold"
                     android:layout_marginRight="5dp"
                     android:gravity="bottom|right"
                     android:textColor="#388E3C"
@@ -286,7 +291,7 @@
                     android:layout_height="match_parent"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Humidade (ar)"
-                    android:textSize="15sp"
+                    android:textSize="16sp"
                     android:layout_weight="5"
                     android:layout_marginLeft="5dp"/>
 
@@ -308,6 +313,7 @@
                     android:text="- -"
                     android:id="@+id/txt_newHumAr"
                     android:textSize="18sp"
+                    android:textStyle="bold"
                     android:layout_marginRight="5dp"
                     android:gravity="bottom|right"
                     android:textColor="#388E3C"
@@ -337,7 +343,7 @@
                     android:layout_height="match_parent"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Pluviosidade"
-                    android:textSize="15sp"
+                    android:textSize="16sp"
                     android:layout_weight="5"
                     android:layout_marginLeft="5dp"/>
 
@@ -359,6 +365,7 @@
                     android:text="- -"
                     android:id="@+id/txt_newPluv"
                     android:textSize="18sp"
+                    android:textStyle="bold"
                     android:layout_marginRight="5dp"
                     android:gravity="bottom|right"
                     android:textColor="#388E3C"
@@ -437,10 +444,13 @@
             android:layout_height="wrap_content"
             android:gravity="left"
             android:text="ZONA X"
+            android:textStyle="bold|italic"
             android:layout_marginLeft="5dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/colorPrimaryText"
-            android:layout_weight="2.6" />
+            android:layout_weight="2.6"
+            android:textSize="20sp"
+            android:paddingLeft="5dp" />
 
         <LinearLayout
             android:orientation="horizontal"

@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
             if(networkInfo != null && networkInfo.isConnected()) {
-                updateOnlineDb();
+                //updateOnlineDb();
             }
             else {
                 Intent enableInternetIntent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
@@ -336,7 +336,6 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
                 .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         startActivity(new Intent(((Dialog) dialog).getContext(), StartActivity.class));
-
                     }
                 })
                 .setNegativeButton("Não", null)
@@ -775,7 +774,6 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
                     break;
             }
             populateHistoricoDb();
-            //alertaTemperatura();
         }
     };
 
@@ -828,7 +826,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             getMyHumSolo();
         }
 
-        // Send data to display in tab Sensores
+        // Send data to display in tab Sensores (currently not used)
         public String getMyTempUI() {
             return mTemperature;
         }
