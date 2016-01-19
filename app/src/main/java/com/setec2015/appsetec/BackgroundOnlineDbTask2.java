@@ -146,6 +146,18 @@ public class BackgroundOnlineDbTask2 extends AsyncTask<String, Void, String> {
                         })
                         .show();
 
+
+                // Local DB - get all rows from all tables (pandlet1_table, pandlet2_table, pandlet3_table)
+                    BackgroundDbTask backgroundDbTaskA = new BackgroundDbTask(ctx);
+                    backgroundDbTaskA.execute("get_new_1");
+
+                    BackgroundDbTask backgroundDbTaskB = new BackgroundDbTask(ctx);
+                    backgroundDbTaskB.execute("get_new_2");
+
+                    BackgroundDbTask backgroundDbTaskC = new BackgroundDbTask(ctx);
+                    backgroundDbTaskC.execute("get_new_3");
+
+
                 SharedPreferences prefs = ctx.getSharedPreferences("LoginStatus", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putBoolean("isLogged", true);

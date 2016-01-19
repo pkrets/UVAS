@@ -1,6 +1,7 @@
 package com.setec2015.appsetec;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -109,7 +110,7 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
                     publishProgress(listData);
                     row++;
 
-                } while (row<3 && cursor.moveToPrevious()); // only the last 3 rows (most recent)
+                } while (cursor.moveToPrevious()); // only the last 3 rows (most recent)
             }
 
         return "get_info_1";
@@ -224,10 +225,39 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
                     publishProgress(listData);
                     row++;
 
-                } while (row<3 && cursor.moveToPrevious()); // only the last 3 rows (most recent)
+                } while (cursor.moveToPrevious()); // only the last 3 rows (most recent)
             }
 
             return "get_info_2";
+        }
+
+        else if(method.equals("get_new_2"))
+        {
+            SQLiteDatabase db = dbOperations.getReadableDatabase();
+            Cursor cursor = dbOperations.getInfo2(db);
+            table = "Zona 2";
+
+            JSONArray resultSet = new JSONArray();
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                int totalColumn = cursor.getColumnCount();
+                JSONObject rowObject = new JSONObject();
+                for (int i = 0; i < totalColumn; i++) {
+                    if (cursor.getColumnName(i) != null) {
+                        try {
+                            rowObject.put(cursor.getColumnName(i),
+                                    cursor.getString(i));
+                        } catch (Exception e) {
+                            Log.d("JSON ERROR", e.getMessage());
+                        }
+                    }
+                }
+                resultSet.put(rowObject);
+                cursor.moveToNext();
+            }
+            cursor.close();
+
+            return resultSet.toString();
         }
 
         else if(method.equals("last_info_2"))
@@ -310,10 +340,39 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
                     publishProgress(listData);
                     row++;
 
-                } while (row<3 && cursor.moveToPrevious()); // only the last 3 rows (most recent)
+                } while (cursor.moveToPrevious()); // only the last 3 rows (most recent)
             }
 
             return "get_info_3";
+        }
+
+        else if(method.equals("get_new_3"))
+        {
+            SQLiteDatabase db = dbOperations.getReadableDatabase();
+            Cursor cursor = dbOperations.getInfo3(db);
+            table = "Zona 3";
+
+            JSONArray resultSet = new JSONArray();
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                int totalColumn = cursor.getColumnCount();
+                JSONObject rowObject = new JSONObject();
+                for (int i = 0; i < totalColumn; i++) {
+                    if (cursor.getColumnName(i) != null) {
+                        try {
+                            rowObject.put(cursor.getColumnName(i),
+                                    cursor.getString(i));
+                        } catch (Exception e) {
+                            Log.d("JSON ERROR", e.getMessage());
+                        }
+                    }
+                }
+                resultSet.put(rowObject);
+                cursor.moveToNext();
+            }
+            cursor.close();
+
+            return resultSet.toString();
         }
 
         else if(method.equals("last_info_3"))
@@ -357,13 +416,14 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
     @Override
     protected void onPostExecute(String result) {
 
-        if(result.equals("get_info_1") | result.equals("get_info_2") | result.equals("get_info_3"))
+        if(result.equals("add_info_1") | result.equals("add_info_2") | result.equals("add_info_3"))
+        {
+            //Toast.makeText(ctx, "Novo registo inserido na tabela da " + table, Toast.LENGTH_SHORT).show();
+            Log.i("LOCAL DB", "add_info: Nova linha inserida na BD");
+        }
+        else if(result.equals("get_info_1") | result.equals("get_info_2") | result.equals("get_info_3"))
         {
             historicoListView.setAdapter(listDataAdapter);
-        }
-        else if(result.equals("add_info_1") | result.equals("add_info_2") | result.equals("add_info_3"))
-        {
-            Toast.makeText(ctx, "Novo registo inserido na tabela da " + table, Toast.LENGTH_SHORT).show();
         }
         else if(result.equals("last_info_1") | result.equals("last_info_2") | result.equals("last_info_3"))
         {
@@ -433,15 +493,16 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
                         BackgroundOnlineDbTask backgroundOnlineDbTask = new BackgroundOnlineDbTask(ctx);
                         backgroundOnlineDbTask.execute("update_info_1", temp, lum, humSolo, humAr, pluv, data);
                     }
-                    /*if(table.equals("zona2")) {
-                        BackgroundDbTask backgroundDbTask = new BackgroundDbTask(ctx);
-                        backgroundDbTask.execute("add_info_2", temp, lum, humSolo, humAr, pluv, data);
+                    if(table.equals("Zona 2")) {
+                        BackgroundOnlineDbTask backgroundOnlineDbTask = new BackgroundOnlineDbTask(ctx);
+                        backgroundOnlineDbTask.execute("update_info_2", temp, lum, humSolo, humAr, pluv, data);
                     }
-                    if(table.equals("zona3")) {
-                        BackgroundDbTask backgroundDbTask = new BackgroundDbTask(ctx);
-                        backgroundDbTask.execute("add_info_3", temp, lum, humSolo, humAr, pluv, data);
-                    }*/
+                    if(table.equals("Zona 3")) {
+                        BackgroundOnlineDbTask backgroundOnlineDbTask = new BackgroundOnlineDbTask(ctx);
+                        backgroundOnlineDbTask.execute("update_info_3", temp, lum, humSolo, humAr, pluv, data);
+                    }
                 }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -449,4 +510,5 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
         }
 
     }
+
 }

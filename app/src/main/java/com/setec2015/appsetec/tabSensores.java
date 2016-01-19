@@ -284,7 +284,7 @@ public class tabSensores extends Fragment {
 
 
 
-    private void populateLastSensorValue(String temp, String lum, String humSolo, String humAr, String pluv, String data) {
+    public void populateLastSensorValue(String temp, String lum, String humSolo, String humAr, String pluv, String data) {
         txt_newTemp.setText(temp);
         txt_newLum.setText(lum);
         txt_newHumSolo.setText(humSolo);

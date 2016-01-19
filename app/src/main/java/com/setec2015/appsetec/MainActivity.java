@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.media.audiofx.BassBoost;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Looper;
 import android.provider.Settings;
@@ -52,6 +53,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 
 public class MainActivity extends AppCompatActivity implements BluetoothAdapter.LeScanCallback {
@@ -158,7 +160,15 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
             if(networkInfo != null && networkInfo.isConnected()) {
-                updateOnlineDb();
+                // Online DB - get new data from all online tables (pandlet1_values, pandlet2_values, pandlet3_values)
+                    BackgroundOnlineDbTask backgroundOnlineDbTaskA = new BackgroundOnlineDbTask(this);
+                    backgroundOnlineDbTaskA.execute("get_info_1");
+
+                    BackgroundOnlineDbTask backgroundOnlineDbTaskB = new BackgroundOnlineDbTask(this);
+                    backgroundOnlineDbTaskB.execute("get_info_2");
+
+                    BackgroundOnlineDbTask backgroundOnlineDbTaskC = new BackgroundOnlineDbTask(this);
+                    backgroundOnlineDbTaskC.execute("get_info_3");
             }
             else {
                 Intent enableInternetIntent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
@@ -167,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
         }
     }
 
-    private void updateOnlineDb() {
+    /*private void updateOnlineDb() {
         if(RUN_ONCE) {
             RUN_ONCE = false;
 
@@ -175,31 +185,37 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
                 BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
                 backgroundDbTask.execute("get_new_1");
 
-            //updateLocalDb();
+            if (backgroundDbTask != null && backgroundDbTask.getStatus() == AsyncTask.Status.FINISHED) {
+                updateLocalDb();
+            }
         }
-    }
+    }*/
 
     private void updateLocalDb() {
 
             // Local DB - delete all local tables (pandlet1_table, pandlet2_table, pandlet3_table)
-                BackgroundDbTask backgroundDbTask_A = new BackgroundDbTask(this);
-                backgroundDbTask_A.execute("delete_info_1");
+                //BackgroundDbTask backgroundDbTask_A = new BackgroundDbTask(this);
+                //backgroundDbTask_A.execute("delete_info_1");
 
-                BackgroundDbTask backgroundDbTask_B = new BackgroundDbTask(this);
+                /*BackgroundDbTask backgroundDbTask_B = new BackgroundDbTask(this);
                 backgroundDbTask_B.execute("delete_info_2");
 
                 BackgroundDbTask backgroundDbTask_C = new BackgroundDbTask(this);
-                backgroundDbTask_C.execute("delete_info_3");
+                backgroundDbTask_C.execute("delete_info_3");*/
+
 
             // Online DB - get new data from all online tables (pandlet1_values, pandlet2_values, pandlet3_values)
-                BackgroundOnlineDbTask backgroundOnlineDbTask_A = new BackgroundOnlineDbTask(this);
-                backgroundOnlineDbTask_A.execute("get_info_1");
+            BackgroundOnlineDbTask backgroundOnlineDbTask_A = new BackgroundOnlineDbTask(this);
+            backgroundOnlineDbTask_A.execute("get_info_1");
 
-                BackgroundOnlineDbTask backgroundOnlineDbTask_B = new BackgroundOnlineDbTask(this);
+
+
+
+                /*BackgroundOnlineDbTask backgroundOnlineDbTask_B = new BackgroundOnlineDbTask(this);
                 backgroundOnlineDbTask_B.execute("get_info_2");
 
                 BackgroundOnlineDbTask backgroundOnlineDbTask_C = new BackgroundOnlineDbTask(this);
-                backgroundOnlineDbTask_C.execute("get_info_3");
+                backgroundOnlineDbTask_C.execute("get_info_3");*/
     }
 
     @Override
