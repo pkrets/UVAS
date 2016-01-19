@@ -2,6 +2,9 @@ package com.setec2015.appsetec;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +23,14 @@ public class dbSaveInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_db_save_info);
+
+        try {
+            Class.forName("android.os.AsyncTask");
+            Log.i("ASYNCTASK ERROR LOGIN", "android.os.AsyncTask found.");
+        } catch (ClassNotFoundException e) {
+            Log.i("ASYNCTASK ERROR LOGIN", "Class android.os.AsyncTask not found!!!");
+            e.printStackTrace();
+        }
 
         new_temp = (EditText) findViewById(R.id.new_temp);
         new_lum = (EditText) findViewById(R.id.new_lum);

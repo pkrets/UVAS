@@ -8,6 +8,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.Settings;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -39,6 +42,16 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+            try {
+                Class.forName("android.os.AsyncTask");
+                Log.i("ASYNCTASK ERROR LOGIN", "android.os.AsyncTask found.");
+            } catch (ClassNotFoundException e) {
+                Log.i("ASYNCTASK ERROR LOGIN", "Class android.os.AsyncTask not found!!!");
+                e.printStackTrace();
+            }
+
+
         mToolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -62,16 +75,14 @@ public class LoginActivity extends AppCompatActivity {
         email = edt_email.getText().toString();
         password = edt_password.getText().toString();
 
-        Log.i("LOGIN BUTTON", email);
-
         // Check if internet connection is available
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if(networkInfo != null && networkInfo.isConnected()) {
             if(!email.matches("") && !password.matches(""))
             {
-                BackgroundOnlineDbTask backgroundOnlineDbTask = new BackgroundOnlineDbTask(this);
-                backgroundOnlineDbTask.execute("login", email, password);
+                BackgroundOnlineDbTask2 backgroundOnlineDbTask2 = new BackgroundOnlineDbTask2(this);
+                backgroundOnlineDbTask2.execute("login", email, password);
             }
             else if(email.matches("") && password.matches(""))
             {

@@ -40,8 +40,6 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, Void, String> {
 
     Activity activity;
 
-    ListDataAdapter listDataAdapter;
-
     String JSON_STRING;
     String json_string;
     JSONObject jsonObject;
@@ -51,7 +49,6 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, Void, String> {
     String welcome;
     String table;
 
-    //AlertDialog alertDialog;
 
     BackgroundOnlineDbTask(Context ctx) {
         this.ctx = ctx;
@@ -61,14 +58,13 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        //alertDialog = new AlertDialog.Builder(ctx.getApplicationContext()).create();
-        //alertDialog.setTitle("Login Information");
     }
 
     @Override
     protected String doInBackground(String... params) {
 
-        String login_url = "http://androidsetec.netau.net/login.php";
+        Log.i("ASYNC TASK", "doInBackground running.");
+
         String addInfo_pandlet1_url = "http://androidsetec.netau.net/write_pandlet1.php";
         String addInfo_pandlet2_url = "http://androidsetec.netau.net/write_pandlet2.php";
         String addInfo_pandlet3_url = "http://androidsetec.netau.net/write_pandlet3.php";
@@ -81,66 +77,9 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, Void, String> {
 
         String method = params[0];
 
-/*  --------- LOGIN --------- */
-        if (method.equals("login"))
-        {
-            String email = params[1];
-            String password = params[2];
-
-            try {
-                URL url = new URL(login_url);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setDoOutput(true);
-                httpURLConnection.setDoInput(true);
-
-                OutputStream OS = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(OS, "UTF-8"));
-
-                String data = URLEncoder.encode("email", "UTF-8") +  "=" + URLEncoder.encode(email, "UTF-8") + "&" +
-                        URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
-
-                bufferedWriter.write(data);
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                OS.close();
-
-                // Get response from the server
-                InputStream IS = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(IS, "iso-8859-1"));
-
-                String response = "";
-                String line = "";
-                while ((line = bufferedReader.readLine()) != null) {
-                    response += line;
-                }
-                bufferedReader.close();
-                IS.close();
-
-                // Terminate connection
-                httpURLConnection.disconnect();
-
-                Log.d("LOGIN", "response = " + response);
-
-                if(response.equals("Login Falhou!")) {
-                    LoginSuccess = false;
-                }
-                else {
-                    LoginSuccess = true;
-                    welcome = response;
-                }
-
-                return "Iniciar Sessão Online";
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
 
 /*  --------- HISTORICO 1 --------- */
-        else if (method.equals("add_info_1"))
+        if (method.equals("add_info_1"))
         {
             String temp = params[1];
             String lum = params[2];
@@ -433,38 +372,7 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String result) {
 
-        if(result.equals("Iniciar Sessão Online"))
-        {
-            if(LoginSuccess) {
-                new android.app.AlertDialog.Builder(this.ctx)
-                        .setTitle("Sessão Online")
-                        .setIcon(R.mipmap.ic_login)
-                        .setMessage(Html.fromHtml("<b>" + welcome + "</b>" +
-                                "<br><br>Os registos do Histórico serão atualizados com os registos da sua Base de Dados online."))
-                        .setCancelable(false)
-                        .setNegativeButton("Ok", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                Intent intent = new Intent();
-                                intent.setClass(ctx, MainActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // is there other way ?
-                                ctx.startActivity(intent);
-                            }
-                        })
-                        .show();
-
-                SharedPreferences prefs = ctx.getSharedPreferences("LoginStatus", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putBoolean("isLogged", true);
-                editor.commit();
-
-                    Boolean log = prefs.getBoolean("isLogged", false);
-                    Log.i("LOGGED STATUS 2", String.valueOf(log));
-            }
-            else if (!LoginSuccess){
-                Toast.makeText(ctx, "Iniciar sessão online falhou!\n\nOs campos 'E-mail' e/ou 'Password' estão incorretos...", Toast.LENGTH_LONG).show();
-            }
-        }
-        else if(result.equals("Nova linha inserida na BD Online!"))
+        if(result.equals("Nova linha inserida na BD Online!"))
         {
             Toast.makeText(ctx, result, Toast.LENGTH_SHORT).show();
         }
@@ -502,11 +410,11 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, Void, String> {
                             BackgroundDbTask backgroundDbTask = new BackgroundDbTask(ctx);
                             backgroundDbTask.execute("add_info_1", temp, lum, humSolo, humAr, pluv, data);
                         }
-                        else if(table.equals("zona2")) {
+                        if(table.equals("zona2")) {
                             BackgroundDbTask backgroundDbTask = new BackgroundDbTask(ctx);
                             backgroundDbTask.execute("add_info_2", temp, lum, humSolo, humAr, pluv, data);
                         }
-                        else if(table.equals("zona3")) {
+                        if(table.equals("zona3")) {
                             BackgroundDbTask backgroundDbTask = new BackgroundDbTask(ctx);
                             backgroundDbTask.execute("add_info_3", temp, lum, humSolo, humAr, pluv, data);
                         }

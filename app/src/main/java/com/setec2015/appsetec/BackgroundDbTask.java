@@ -8,8 +8,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by Krets on 11/12/2015.
@@ -31,6 +36,9 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
     ListDataAdapter listDataAdapter;
 
     ListView historicoListView;
+
+    String json_string;
+    JSONArray jsonArray;
 
     BackgroundDbTask(Context ctx)
     {
@@ -70,7 +78,7 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
             editor.putBoolean("newValueHist1", true);
             editor.commit();
 
-            return "One Row Inserted (BackgroundTask) in table: " + DbDataContract.DataEntry_1.TABLE_NAME;
+            return "add_info_1";
         }
 
         else if(method.equals("get_info_1"))
@@ -113,21 +121,27 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
             Cursor cursor = dbOperations.getInfo1(db);
             table = "Zona 1";
 
-            if(cursor.moveToLast())
-            {
-                do {
-                    newId = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.ID));
-                    newTemp = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.TEMP));
-                    newLum = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.LUM));
-                    newHumSolo = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.HUM_SOLO));
-                    newHumAr = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.HUM_AR));
-                    newPluv = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.PLUV));
-                    newData = cursor.getString(cursor.getColumnIndex(DbDataContract.DataEntry_1.DATA));
-
-                } while (cursor.moveToPrevious()); // get all rows
+            JSONArray resultSet = new JSONArray();
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                int totalColumn = cursor.getColumnCount();
+                JSONObject rowObject = new JSONObject();
+                for (int i = 0; i < totalColumn; i++) {
+                    if (cursor.getColumnName(i) != null) {
+                        try {
+                            rowObject.put(cursor.getColumnName(i),
+                                    cursor.getString(i));
+                        } catch (Exception e) {
+                            Log.d("JSON ERROR", e.getMessage());
+                        }
+                    }
+                }
+                resultSet.put(rowObject);
+                cursor.moveToNext();
             }
+            cursor.close();
 
-            return "get_new_1";
+            return resultSet.toString();
         }
 
         else if(method.equals("last_info_1"))
@@ -179,7 +193,7 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
             editor.putBoolean("newValueHist2", true);
             editor.commit();
 
-            return "One Row Inserted (BackgroundTask) in table: " + DbDataContract.DataEntry_2.TABLE_NAME;
+            return "add_info_2";
         }
 
         else if(method.equals("get_info_2"))
@@ -265,7 +279,7 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
             editor.putBoolean("newValueHist3", true);
             editor.commit();
 
-            return "One Row Inserted (BackgroundTask) in table: " + DbDataContract.DataEntry_3.TABLE_NAME;
+            return "add_info_3";
         }
 
         else if(method.equals("get_info_3"))
@@ -347,9 +361,9 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
         {
             historicoListView.setAdapter(listDataAdapter);
         }
-        else if(result.equals("get_new_1"))
+        else if(result.equals("add_info_1") | result.equals("add_info_2") | result.equals("add_info_3"))
         {
-            Toast.makeText(ctx, result, Toast.LENGTH_SHORT).show();
+            Toast.makeText(ctx, "Novo registo inserido na tabela da " + table, Toast.LENGTH_SHORT).show();
         }
         else if(result.equals("last_info_1") | result.equals("last_info_2") | result.equals("last_info_3"))
         {
@@ -393,7 +407,45 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
         }
         else
         {
-            Toast.makeText(ctx, result, Toast.LENGTH_SHORT).show();
+            json_string = result;
+
+            try {
+                jsonArray = new JSONArray(json_string);
+                String temp, lum, humSolo, humAr, pluv, data;
+                Log.i("JSON ARRAY", jsonArray.toString());
+
+                int count = 0;
+                    Log.i("LENGTH OF JSON ARRAY", String.valueOf(jsonArray.length()));
+
+                while(count < jsonArray.length())
+                {
+                    JSONObject JO = jsonArray.getJSONObject(count); // return the JSON object on the first index (row)
+                        temp = JO.getString("temp");
+                        lum = JO.getString("lum");
+                        humSolo = JO.getString("hum_solo");
+                        humAr = JO.getString("hum_ar");
+                        pluv = JO.getString("pluv");
+                        data = JO.getString("data");
+                    count++;
+
+                    // Local DB - write all data received from Online DB in its correspondent table in Local BD
+                    if(table.equals("Zona 1")) {
+                        BackgroundOnlineDbTask backgroundOnlineDbTask = new BackgroundOnlineDbTask(ctx);
+                        backgroundOnlineDbTask.execute("update_info_1", temp, lum, humSolo, humAr, pluv, data);
+                    }
+                    /*if(table.equals("zona2")) {
+                        BackgroundDbTask backgroundDbTask = new BackgroundDbTask(ctx);
+                        backgroundDbTask.execute("add_info_2", temp, lum, humSolo, humAr, pluv, data);
+                    }
+                    if(table.equals("zona3")) {
+                        BackgroundDbTask backgroundDbTask = new BackgroundDbTask(ctx);
+                        backgroundDbTask.execute("add_info_3", temp, lum, humSolo, humAr, pluv, data);
+                    }*/
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         }
 
     }

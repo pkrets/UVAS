@@ -10,6 +10,8 @@ import android.content.SharedPreferences;
 import android.media.audiofx.BassBoost;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
+import android.os.Looper;
 import android.provider.Settings;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -99,6 +101,15 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
         setContentView(R.layout.activity_main);
         setProgressBarIndeterminate(true);
 
+        try {
+            Class.forName("android.os.AsyncTask");
+            Log.i("ASYNCTASK ERROR LOGIN", "android.os.AsyncTask found.");
+        } catch (ClassNotFoundException e) {
+            Log.i("ASYNCTASK ERROR LOGIN", "Class android.os.AsyncTask not found!!!");
+            e.printStackTrace();
+        }
+
+
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
 
         mToolbar = (Toolbar) findViewById(R.id.app_bar);
@@ -139,6 +150,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
          */
         if(log)
         {
+            Log.i("USER LOGGED", String.valueOf(log));
             /*
              * We first need to enforce that an Internet connection is existent, and ask the
              * user to enable one if they have not done so.
@@ -146,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
             if(networkInfo != null && networkInfo.isConnected()) {
-                //updateOnlineDb();
+                updateOnlineDb();
             }
             else {
                 Intent enableInternetIntent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
