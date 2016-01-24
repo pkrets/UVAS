@@ -1,6 +1,7 @@
 package com.setec2015.appsetec;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -39,15 +40,19 @@ public class BackgroundOnlineDbTask2 extends AsyncTask<String, Void, String> {
     String welcome;
     String table;
 
+    ProgressDialog progress;
 
     BackgroundOnlineDbTask2(Context ctx) {
         this.ctx = ctx;
         activity = (Activity) ctx;
+        this.progress = new ProgressDialog(ctx);
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        this.progress.setMessage("A verificar credenciais de acesso ...");
+        this.progress.show();
     }
 
     @Override
@@ -170,6 +175,10 @@ public class BackgroundOnlineDbTask2 extends AsyncTask<String, Void, String> {
                 Toast.makeText(ctx, "Iniciar sessão online falhou!\n\nOs campos 'E-mail' e/ou 'Password' estão incorretos...", Toast.LENGTH_LONG).show();
             }
         }
+
+
+        if (progress != null && progress.isShowing())
+            progress.dismiss();
     }
 
 }

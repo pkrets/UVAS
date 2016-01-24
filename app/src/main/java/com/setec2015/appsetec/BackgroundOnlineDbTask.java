@@ -48,19 +48,19 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, Void, String> {
 
     String table;
 
-    //ProgressDialog progress;
+    ProgressDialog progress;
 
     BackgroundOnlineDbTask(Context ctx) {
         this.ctx = ctx;
         activity = (Activity) ctx;
-        //this.progress = new ProgressDialog(ctx);
+        this.progress = new ProgressDialog(ctx);
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        //this.progress.setMessage("Sincronizar: BD Online ...");
-        //this.progress.show();
+        this.progress.setMessage("Aguarde um momento ...");
+        this.progress.show();
     }
 
     @Override
@@ -530,13 +530,13 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, Void, String> {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
         }
 
 
 
-            /*if (progress != null && progress.isShowing())
-                progress.dismiss();*/
+        if (progress != null && progress.isShowing())
+            progress.dismiss();
+
 
 
     }

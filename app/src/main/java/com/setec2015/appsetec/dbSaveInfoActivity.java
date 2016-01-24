@@ -7,9 +7,13 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class dbSaveInfoActivity extends AppCompatActivity {
 
@@ -51,9 +55,14 @@ public class dbSaveInfoActivity extends AppCompatActivity {
             pluv = new_pluv.getText().toString();
             data = new_data.getText().toString();
 
+            // Convert Unix Timestamp to Date
+                long ts = Long.valueOf(data)*1000; // it needs to be in milliseconds
+                Date df = new java.util.Date(ts);
+                String Data = new SimpleDateFormat("dd/MM/yyyy, HH:mm").format(df);
+
             // Write in Local DB
                 BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
-                backgroundDbTask.execute("add_info_1", temp, lum, humSolo, humAr, pluv, data);
+                backgroundDbTask.execute("add_info_1", temp, lum, humSolo, humAr, pluv, Data);
 
             // ALERTAS
             SharedPreferences prefs = getSharedPreferences("DataSettingsState", Context.MODE_PRIVATE);
@@ -62,12 +71,22 @@ public class dbSaveInfoActivity extends AppCompatActivity {
                 boxLum = prefs.getBoolean("boxLum", false);
                 boxHum = prefs.getBoolean("boxHum", false);
                 boxPluv = prefs.getBoolean("boxPluv", false);
+                //boxOutros = prefs.getBoolean("boxOutros", false);
+                //boxPraga1 = prefs.getBoolean("boxPraga1", false);
+                //boxPraga2 = prefs.getBoolean("boxPraga2", false);
+                //boxPraga3 = prefs.getBoolean("boxPraga3", false);
+                //boxPraga4 = prefs.getBoolean("boxPraga4", false);
                     if(alertasOn) {
                         alertaDbTask = "add_alerta_1";
                         if(boxTemp) { alertaTemperatura(); }
                         if(boxLum) { alertaLuminosidade(); }
                         if(boxHum) { alertaHumidadeSolo(); alertaHumidadeAr(); }
                         if(boxPluv) { alertaPluviosidade(); }
+                        //if(boxOutros) { alertaOutros(); }
+                        //if(boxPraga1) { alertaPraga1(); }
+                        //if(boxPraga2) { alertaPraga2(); }
+                        //if(boxPraga3) { alertaPraga3(); }
+                        //if(boxPraga4) { alertaPraga4(); }
                     }
         }
 
@@ -81,9 +100,14 @@ public class dbSaveInfoActivity extends AppCompatActivity {
             pluv = new_pluv.getText().toString();
             data = new_data.getText().toString();
 
+            // Convert Unix Timestamp to Date
+                long ts = Long.valueOf(data)*1000; // it needs to be in milliseconds
+                Date df = new java.util.Date(ts);
+                String Data = new SimpleDateFormat("dd/MM/yyyy, HH:mm").format(df);
+
             // Write in Local DB
                 BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
-                backgroundDbTask.execute("add_info_2", temp, lum, humSolo, humAr, pluv, data);
+                backgroundDbTask.execute("add_info_2", temp, lum, humSolo, humAr, pluv, Data);
 
             // ALERTAS
             SharedPreferences prefs = getSharedPreferences("DataSettingsState", Context.MODE_PRIVATE);
@@ -92,12 +116,22 @@ public class dbSaveInfoActivity extends AppCompatActivity {
                 boxLum = prefs.getBoolean("boxLum", false);
                 boxHum = prefs.getBoolean("boxHum", false);
                 boxPluv = prefs.getBoolean("boxPluv", false);
+                //boxOutros = prefs.getBoolean("boxOutros", false);
+                //boxPraga1 = prefs.getBoolean("boxPraga1", false);
+                //boxPraga2 = prefs.getBoolean("boxPraga2", false);
+                //boxPraga3 = prefs.getBoolean("boxPraga3", false);
+                //boxPraga4 = prefs.getBoolean("boxPraga4", false);
                     if(alertasOn) {
                         alertaDbTask = "add_alerta_2";
                         if(boxTemp) { alertaTemperatura(); }
                         if(boxLum) { alertaLuminosidade(); }
                         if(boxHum) { alertaHumidadeSolo(); alertaHumidadeAr(); }
                         if(boxPluv) { alertaPluviosidade(); }
+                        //if(boxOutros) { alertaOutros(); }
+                        //if(boxPraga1) { alertaPraga1(); }
+                        //if(boxPraga2) { alertaPraga2(); }
+                        //if(boxPraga3) { alertaPraga3(); }
+                        //if(boxPraga4) { alertaPraga4(); }
                     }
         }
 
@@ -111,9 +145,14 @@ public class dbSaveInfoActivity extends AppCompatActivity {
             pluv = new_pluv.getText().toString();
             data = new_data.getText().toString();
 
+            // Convert Unix Timestamp to Date
+                long ts = Long.valueOf(data)*1000; // it needs to be in milliseconds
+                Date df = new java.util.Date(ts);
+                String Data = new SimpleDateFormat("dd/MM/yyyy, HH:mm").format(df);
+
             // Write in Local DB
                 BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
-                backgroundDbTask.execute("add_info_3", temp, lum, humSolo, humAr, pluv, data);
+                backgroundDbTask.execute("add_info_3", temp, lum, humSolo, humAr, pluv, Data);
 
             // ALERTAS
             SharedPreferences prefs = getSharedPreferences("DataSettingsState", Context.MODE_PRIVATE);
@@ -122,12 +161,22 @@ public class dbSaveInfoActivity extends AppCompatActivity {
                 boxLum = prefs.getBoolean("boxLum", false);
                 boxHum = prefs.getBoolean("boxHum", false);
                 boxPluv = prefs.getBoolean("boxPluv", false);
+                //boxOutros = prefs.getBoolean("boxOutros", false);
+                //boxPraga1 = prefs.getBoolean("boxPraga1", false);
+                //boxPraga2 = prefs.getBoolean("boxPraga2", false);
+                //boxPraga3 = prefs.getBoolean("boxPraga3", false);
+                //boxPraga4 = prefs.getBoolean("boxPraga4", false);
                     if(alertasOn) {
                         alertaDbTask = "add_alerta_3";
                         if(boxTemp) { alertaTemperatura(); }
                         if(boxLum) { alertaLuminosidade(); }
                         if(boxHum) { alertaHumidadeSolo(); alertaHumidadeAr(); }
                         if(boxPluv) { alertaPluviosidade(); }
+                        //if(boxOutros) { alertaOutros(); }
+                        //if(boxPraga1) { alertaPraga1(); }
+                        //if(boxPraga2) { alertaPraga2(); }
+                        //if(boxPraga3) { alertaPraga3(); }
+                        //if(boxPraga4) { alertaPraga4(); }
                     }
         }
 
@@ -173,8 +222,8 @@ public class dbSaveInfoActivity extends AppCompatActivity {
 
         if(TMP != 0.0) {
             String type = "Temperatura";
-            String alert1 = "Ultrapassou o valor mínimo desejado: " + minTemp;
-            String alert2 = "Ultrapassou o valor máximo desejado: " + maxTemp;
+            String alert1 = "Valor recebido é inferior ao valor mínimo desejado:  " +minTemp+ " ºC";
+            String alert2 = "Valor recebido é superior ao valor máximo desejado:  " +maxTemp+ " ºC";
             String value = temp + " ºC";
             String date = data;
 
@@ -206,8 +255,8 @@ public class dbSaveInfoActivity extends AppCompatActivity {
 
         if(LUM != 0.0) {
             String type = "Luminosidade";
-            String alert1 = "Ultrapassou o valor mínimo desejado: " + minLum;
-            String alert2 = "Ultrapassou o valor máximo desejado: " + maxLum;
+            String alert1 = "Valor recebido é inferior ao valor mínimo desejado:  " +minLum+ " lux";
+            String alert2 = "Valor recebido é superior ao valor máximo desejado:  " +maxLum+ " lux";
             String value = lum + " lux";
             String date = data;
 
@@ -237,8 +286,8 @@ public class dbSaveInfoActivity extends AppCompatActivity {
 
         if(HSOLO != 0.0) {
             String type = "Humidade (solo)";
-            String alert1 = "Ultrapassou o valor mínimo desejado: " + minHumSolo;
-            String alert2 = "Ultrapassou o valor máximo desejado: " + maxHumSolo;
+            String alert1 = "Valor recebido é inferior ao valor mínimo desejado:  " +minHumSolo+ " %";
+            String alert2 = "Valor recebido é superior ao valor máximo desejado:  " +maxHumSolo+ " %";
             String value = humSolo + " %";
             String date = data;
 
@@ -268,8 +317,8 @@ public class dbSaveInfoActivity extends AppCompatActivity {
 
         if(HAR != 0.0) {
             String type = "Humidade (ar)";
-            String alert1 = "Ultrapassou o valor mínimo desejado: " + minHumAr;
-            String alert2 = "Ultrapassou o valor máximo desejado: " + maxHumAr;
+            String alert1 = "Valor recebido é inferior ao valor mínimo desejado:  " +minHumAr+ " %";
+            String alert2 = "Valor recebido é superior ao valor máximo desejado:  " +maxHumAr+ " %";
             String value = humAr + " %";
             String date = data;
 
@@ -299,8 +348,8 @@ public class dbSaveInfoActivity extends AppCompatActivity {
 
         if(PLUV != 0.0) {
             String type = "Pluviosidade";
-            String alert1 = "Ultrapassou o valor mínimo desejado: " + minPluv;
-            String alert2 = "Ultrapassou o valor máximo desejado: " + maxPluv;
+            String alert1 = "Valor recebido é inferior ao valor mínimo desejado:  " +minPluv+ " mm^3/h";
+            String alert2 = "Valor recebido é superior ao valor máximo desejado:  " +maxPluv+ " mm^3/h";
             String value = pluv + " mm^3/h";
             String date = data;
 
@@ -313,4 +362,97 @@ public class dbSaveInfoActivity extends AppCompatActivity {
             }
         }
     }
+
+    private void alertaOutros() {
+
+    }
+
+    private void alertaPraga1() {
+        double TEMP, HUM_A, LUM, PLUV;
+        if((temp != null && !temp.isEmpty()) || (humAr != null && !humAr.isEmpty())
+                || (lum != null && !lum.isEmpty()) || (pluv != null && !pluv.isEmpty())) {
+            TEMP = Double.parseDouble(temp); HUM_A = Double.parseDouble(humAr);
+            LUM = Double.parseDouble(lum); PLUV = Double.parseDouble(pluv);
+        }else {
+            TEMP = 0.0; HUM_A = 0.0; LUM = 0.0; PLUV = 0.0;
+        }
+
+        // Conditions favorable for Praga 1 (Míldio)
+            if(TEMP > 10.0 || HUM_A > 95.0 || LUM == 0.0 || PLUV > 0.0)        // LUM ?? PLUV ??
+            {
+                String type = "Doença";
+                String alert = "Foram reunidas as condições necessárias para a existência de 'Míldio' nesta zona.";
+                String value = "n/a";
+                String date = data;
+
+                    BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2(this);
+                    backgroundDbTask2.execute(alertaDbTask, type, alert, value, date);
+            }
+    }
+
+    private void alertaPraga2() {
+        double TEMP, HUM_A, PLUV;
+        if((temp != null && !temp.isEmpty()) || (humAr != null && !humAr.isEmpty())
+                || (pluv != null && !pluv.isEmpty())) {
+            TEMP = Double.parseDouble(temp); HUM_A = Double.parseDouble(humAr); PLUV = Double.parseDouble(pluv);
+        }else {
+            TEMP = 0.0; HUM_A = 0.0; PLUV = 0.0;
+        }
+
+        // Conditions favorable for Praga 2 (Oídio da Videira)
+        if(TEMP >= 24.0 || TEMP <= 26.0 || HUM_A > 90.0 || PLUV != 0.0)                 // PLUV ??
+            {
+                String type = "Doença";
+                String alert = "Foram reunidas as condições necessárias para a existência de 'Oídio da Videira' nesta zona.";
+                String value = "n/a";
+                String date = data;
+
+                    BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2(this);
+                    backgroundDbTask2.execute(alertaDbTask, type, alert, value, date);
+            }
+    }
+
+    private void alertaPraga3() {
+        double TEMP, HUM_A;
+        if((temp != null && !temp.isEmpty()) || (humAr != null && !humAr.isEmpty())) {
+            TEMP = Double.parseDouble(temp); HUM_A = Double.parseDouble(humAr);
+        }else {
+            TEMP = 0.0; HUM_A = 0.0;
+        }
+
+        // Conditions favorable for Praga 2 (Oídio da Videira)
+        if(TEMP >= 15.0 || TEMP <= 25.0 || HUM_A > 95.0)                 // PLUV ??
+        {
+            String type = "Doença";
+            String alert = "Foram reunidas as condições necessárias para a existência de 'Podridão Cinzenta' nesta zona.";
+            String value = "n/a";
+            String date = data;
+
+            BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2(this);
+            backgroundDbTask2.execute(alertaDbTask, type, alert, value, date);
+        }
+    }
+
+    private void alertaPraga4() {
+        double TEMP, HUM_S, PLUV;
+        if((temp != null && !temp.isEmpty()) || (humSolo != null && !humSolo.isEmpty())
+                || (pluv != null && !pluv.isEmpty())) {
+            TEMP = Double.parseDouble(temp); HUM_S = Double.parseDouble(humSolo); PLUV = Double.parseDouble(pluv);
+        }else {
+            TEMP = 0.0; HUM_S = 0.0; PLUV = 0.0;
+        }
+
+        // Conditions favorable for Praga 2 (Oídio da Videira)
+        if(TEMP < 37.0 || HUM_S > 95.0 || PLUV > 0.0)                               // PLUV ??
+        {
+            String type = "Doença";
+            String alert = "Foram reunidas as condições necessárias para a existência de 'Escoriose da Videira' nesta zona.";
+            String value = "n/a";
+            String date = data;
+
+            BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2(this);
+            backgroundDbTask2.execute(alertaDbTask, type, alert, value, date);
+        }
+    }
+
 }

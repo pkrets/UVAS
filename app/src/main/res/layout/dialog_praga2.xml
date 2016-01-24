@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="match_parent"
+        android:layout_width="550dp"
         android:layout_height="45dp"
         android:layout_weight="1"
         android:background="#C5E1A5">
@@ -16,7 +16,8 @@
             android:layout_height="match_parent"
             android:id="@+id/txtPragaNome2"
             android:text="NOME"
-            android:textSize="16sp"
+            android:textSize="18sp"
+            android:textStyle="bold"
             android:gravity="center"
             android:textColor="#33691E"
             android:paddingLeft="10dp"
@@ -26,23 +27,10 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="Cancelar"
-            android:id="@+id/btnConfigPraga2_cancel"
-            android:layout_weight="2"
-            android:textSize="12sp"
-            android:background="#9CCC65"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp" />
-
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
             android:text="OK"
             android:id="@+id/btnConfigPraga2_ok"
             android:layout_weight="2"
-            android:textSize="13sp"
+            android:textSize="16sp"
             android:background="#9CCC65"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
@@ -61,7 +49,7 @@
         android:layout_height="0dp"
         android:id="@+id/txtPragaDescricao2"
         android:text="DESCRIÇÃO"
-        android:textSize="13sp"
+        android:textSize="15sp"
         android:gravity="center_vertical|fill"
         android:layout_weight="7"
         android:layout_marginTop="5dp"
@@ -69,270 +57,6 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:textColor="#424242" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#37474F"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"/>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Temperatura"
-            android:textSize="14sp"
-            android:textColor="#37474F"
-            android:layout_weight="6"
-            android:gravity="center_vertical" />
-
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:inputType="number"
-            android:ems="10"
-            android:id="@+id/edt_minTempPraga2"
-            android:hint="mín"
-            android:layout_weight="1.5"
-            android:textSize="14sp"
-            android:gravity="bottom|center_horizontal" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="a"
-            android:textSize="14sp"
-            android:textColor="#37474F"
-            android:gravity="center_vertical" />
-
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:inputType="number"
-            android:ems="10"
-            android:id="@+id/edt_maxTempPraga2"
-            android:hint="máx"
-            android:layout_weight="1.5"
-            android:textSize="14sp"
-            android:gravity="bottom|center_horizontal" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="(ºC)"
-            android:textSize="14sp"
-            android:textColor="#37474F"
-            android:gravity="center_vertical|center_horizontal"
-            android:layout_weight="1.5"/>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#BDBDBD"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"/>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Humidade do ar"
-            android:textSize="14sp"
-            android:textColor="#37474F"
-            android:layout_weight="6"
-            android:gravity="center_vertical" />
-
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:inputType="number"
-            android:ems="10"
-            android:id="@+id/edt_minHumArPraga2"
-            android:hint="mín"
-            android:layout_weight="1.5"
-            android:textSize="14sp"
-            android:gravity="bottom|center_horizontal" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="a"
-            android:textSize="14sp"
-            android:textColor="#37474F"
-            android:gravity="center_vertical" />
-
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:inputType="number"
-            android:ems="10"
-            android:id="@+id/edt_maxHumArPraga2"
-            android:hint="máx"
-            android:layout_weight="1.5"
-            android:textSize="14sp"
-            android:gravity="bottom|center_horizontal"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="(%)"
-            android:textSize="14sp"
-            android:textColor="#37474F"
-            android:gravity="center_vertical|center_horizontal"
-            android:layout_weight="1.5"/>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#BDBDBD"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"/>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Humidade do ar"
-            android:textSize="14sp"
-            android:textColor="#37474F"
-            android:layout_weight="6"
-            android:gravity="center_vertical" />
-
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:inputType="number"
-            android:ems="10"
-            android:id="@+id/edt_minHumSoloPraga2"
-            android:hint="mín"
-            android:layout_weight="1.5"
-            android:textSize="14sp"
-            android:gravity="bottom|center_horizontal" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="a"
-            android:textSize="14sp"
-            android:textColor="#37474F"
-            android:gravity="center_vertical" />
-
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:inputType="number"
-            android:ems="10"
-            android:id="@+id/edt_maxHumSoloPraga2"
-            android:hint="máx"
-            android:layout_weight="1.5"
-            android:textSize="14sp"
-            android:gravity="bottom|center_horizontal"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="(%)"
-            android:textSize="14sp"
-            android:textColor="#37474F"
-            android:gravity="center_vertical|center_horizontal"
-            android:layout_weight="1.5"/>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#BDBDBD"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"/>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Pluviosidade"
-            android:textSize="14sp"
-            android:textColor="#37474F"
-            android:layout_weight="6"
-            android:gravity="center_vertical" />
-
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:inputType="number"
-            android:ems="10"
-            android:id="@+id/edt_minPluvPraga2"
-            android:hint="mín"
-            android:layout_weight="1.5"
-            android:textSize="14sp"
-            android:gravity="bottom|center_horizontal" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="a"
-            android:textSize="14sp"
-            android:textColor="#37474F"
-            android:gravity="center_vertical" />
-
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:inputType="number"
-            android:ems="10"
-            android:id="@+id/edt_maxPluvPraga2"
-            android:hint="máx"
-            android:layout_weight="1.5"
-            android:textSize="14sp"
-            android:gravity="bottom|center_horizontal"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="(mm^3/h)"
-            android:textSize="14sp"
-            android:textColor="#37474F"
-            android:gravity="center_vertical|center_horizontal"
-            android:layout_weight="1.5"/>
-    </LinearLayout>
 
 
 </LinearLayout>

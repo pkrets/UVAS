@@ -23,6 +23,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -111,13 +112,12 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             e.printStackTrace();
         }
 
-
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
 
         mToolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.mipmap.ic_action);
+        getSupportActionBar().setIcon(R.mipmap.app_logo);
 
         mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
         mTabLayout.setTabsFromPagerAdapter(mAdapter);
@@ -150,9 +150,9 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
         /*
          * When user is LOGGED, the Local DB is deleted and updated with the Online DB
          */
-        if(log)
+        if(log && RUN_ONCE)
         {
-            Log.i("USER LOGGED", String.valueOf(log));
+            RUN_ONCE = false;
             /*
              * We first need to enforce that an Internet connection is existent, and ask the
              * user to enable one if they have not done so.
@@ -175,47 +175,6 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
                 startActivity(enableInternetIntent);
             }
         }
-    }
-
-    /*private void updateOnlineDb() {
-        if(RUN_ONCE) {
-            RUN_ONCE = false;
-
-            // Local DB - get all rows from all tables (pandlet1_table, pandlet2_table, pandlet3_table)
-                BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
-                backgroundDbTask.execute("get_new_1");
-
-            if (backgroundDbTask != null && backgroundDbTask.getStatus() == AsyncTask.Status.FINISHED) {
-                updateLocalDb();
-            }
-        }
-    }*/
-
-    private void updateLocalDb() {
-
-            // Local DB - delete all local tables (pandlet1_table, pandlet2_table, pandlet3_table)
-                //BackgroundDbTask backgroundDbTask_A = new BackgroundDbTask(this);
-                //backgroundDbTask_A.execute("delete_info_1");
-
-                /*BackgroundDbTask backgroundDbTask_B = new BackgroundDbTask(this);
-                backgroundDbTask_B.execute("delete_info_2");
-
-                BackgroundDbTask backgroundDbTask_C = new BackgroundDbTask(this);
-                backgroundDbTask_C.execute("delete_info_3");*/
-
-
-            // Online DB - get new data from all online tables (pandlet1_values, pandlet2_values, pandlet3_values)
-            BackgroundOnlineDbTask backgroundOnlineDbTask_A = new BackgroundOnlineDbTask(this);
-            backgroundOnlineDbTask_A.execute("get_info_1");
-
-
-
-
-                /*BackgroundOnlineDbTask backgroundOnlineDbTask_B = new BackgroundOnlineDbTask(this);
-                backgroundOnlineDbTask_B.execute("get_info_2");
-
-                BackgroundOnlineDbTask backgroundOnlineDbTask_C = new BackgroundOnlineDbTask(this);
-                backgroundOnlineDbTask_C.execute("get_info_3");*/
     }
 
     @Override
@@ -291,8 +250,6 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             return null;
         }
 
-
-
     }
 
 
@@ -302,11 +259,6 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        //Add any device elements we've discovered to the overflow menu
-        /*for (int i=0; i < mDevices.size(); i++) {
-            BluetoothDevice device = mDevices.valueAt(i);
-            menu.add(0, mDevices.keyAt(i), 0, device.getName());
-        }*/
         return true;
     }
 
@@ -323,7 +275,6 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
                     //Bluetooth is disabled
                     Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                     startActivity(enableBtIntent);
-                    //finish();
                 }
                 mDevices.clear();
                 startScan(); // look for BLE devices
@@ -409,11 +360,12 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
         else {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Escolha o dispositivo BLE desejado:");
+            builder.setIcon(R.mipmap.ic_ble);
 
             ListView deviceList = new ListView(this);
             for (int i=0; i < mDevices.size(); i++) {
                 BluetoothDevice device = mDevices.valueAt(i);
-                String deviceFound = "\t\t\t\t\t" + device.getName();
+                String deviceFound = "\t\t\t\t * " + device.getName();
                 ArrayAdapter<String> deviceAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new String[] {deviceFound});
                 deviceList.setAdapter(deviceAdapter);
             }
@@ -881,7 +833,6 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
                 backgroundDbTask.execute("add_info_1", mTemperature, mLuminosidade, mHumSolo, mHumAr, mPressão, data);
             }
         }
-
 
 }
 

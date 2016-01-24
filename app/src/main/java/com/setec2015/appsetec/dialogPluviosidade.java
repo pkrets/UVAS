@@ -24,8 +24,6 @@ public class dialogPluviosidade extends DialogFragment implements View.OnClickLi
     String minPluviosidade, minPluviosidade_saved, maxPluviosidade, maxPluviosidade_saved;
 
 
-    private static boolean RUN_ONCE = true;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_pluviosidade, null);
@@ -35,7 +33,7 @@ public class dialogPluviosidade extends DialogFragment implements View.OnClickLi
         txtNomePluv.setText("Pluviosidade");
 
         txtDescricaoPluv = (TextView) view.findViewById(R.id.txtDescricaoPluv);
-        txtDescricaoPluv.setText("Preencha os seguintes campos com o intervalo de valores de Puminosidade (mm^3/h) que considera ideais. Se alguns dos sensores registar uma leitura de Pluviosidade com valores inferiores ao 'mínimo' ou superiores ao 'máximo' estipulado, será emitido um Alerta.");
+        txtDescricaoPluv.setText("Preencha os seguintes campos com o intervalo de valores de Pluviosidade (mm^3/h) que considera ideais. Se alguns dos sensores registar uma leitura de Pluviosidade com valores inferiores ao 'mínimo' ou superiores ao 'máximo' estipulado, será emitido um Alerta.");
 
         btnConfigPluv_ok = (Button) view.findViewById(R.id.btnConfigPluv_ok);
         btnConfigPluv_ok.setOnClickListener(this);
@@ -57,23 +55,7 @@ public class dialogPluviosidade extends DialogFragment implements View.OnClickLi
 
 
 
-        runOnce();
         return view;
-    }
-
-
-    /* >>>>> FOR NOW <<<<<
-    If the Dialog is running for the first time (i.e. the App was opened and not closed),
-    all the values stored in the AlertDialogs are deleted or set to default values.
-    >> Still have to figure out how to delete the SharedPreferences file when the App is closed.*/
-    private void runOnce() {
-        if(RUN_ONCE) {
-            RUN_ONCE = false;
-
-            edt_minPluviosidade.setText(null);
-            edt_maxPluviosidade.setText(null);
-            Toast.makeText(getActivity(), "Dialog is running for the first time!", Toast.LENGTH_SHORT).show();
-        }
     }
 
 

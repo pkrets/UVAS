@@ -24,8 +24,6 @@ public class dialogTemperatura extends DialogFragment implements View.OnClickLis
     String minTemperatura, minTemperatura_saved, maxTemperatura, maxTemperatura_saved;
 
 
-    private static boolean RUN_ONCE = true;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_temperatura, null);
@@ -54,28 +52,11 @@ public class dialogTemperatura extends DialogFragment implements View.OnClickLis
 
             edt_maxTemperatura = (EditText) view.findViewById(R.id.edt_maxTemperatura);
                 edt_maxTemperatura.setText(maxTemperatura_saved);
-                Toast.makeText(getActivity(), "Value retrieved = " + maxTemperatura_saved, Toast.LENGTH_SHORT).show();
 
 
-
-        runOnce();
         return view;
     }
 
-
-    /* >>>>> FOR NOW <<<<<
-    If the Dialog is running for the first time (i.e. the App was opened and not closed),
-    all the values stored in the AlertDialogs are deleted or set to default values.
-    >> Still have to figure out how to delete the SharedPreferences file when the App is closed.*/
-        private void runOnce() {
-            if(RUN_ONCE) {
-                RUN_ONCE = false;
-
-                edt_minTemperatura.setText(null);
-                edt_maxTemperatura.setText(null);
-                Toast.makeText(getActivity(), "Dialog is running for the first time!", Toast.LENGTH_SHORT).show();
-            }
-        }
 
 
     @Override
@@ -91,12 +72,10 @@ public class dialogTemperatura extends DialogFragment implements View.OnClickLis
             editor.putString("maxTemperatura", maxTemperatura);
             editor.commit();
 
-            Toast.makeText(getActivity(), "OK was clicked with value = " + maxTemperatura, Toast.LENGTH_SHORT).show();
             dismiss();
         }
         else
         {
-            Toast.makeText(getActivity(), "CANCELAR was clicked", Toast.LENGTH_SHORT).show();
             dismiss();
         }
     }

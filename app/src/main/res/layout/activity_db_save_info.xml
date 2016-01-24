@@ -27,7 +27,8 @@
             android:id="@+id/new_temp"
             android:layout_gravity="center_horizontal"
             android:hint="1. Temperatura"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:inputType="numberDecimal"/>
 
         <EditText
             android:layout_width="0dp"
@@ -35,7 +36,8 @@
             android:id="@+id/new_lum"
             android:layout_gravity="center_horizontal"
             android:hint="2. Luminosidade"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:inputType="numberDecimal" />
     </LinearLayout>
 
     <LinearLayout
@@ -50,7 +52,8 @@
             android:id="@+id/new_humSolo"
             android:layout_gravity="center_horizontal"
             android:hint="3. Humidade do solo"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:inputType="numberDecimal" />
 
         <EditText
             android:layout_width="0dp"
@@ -58,7 +61,8 @@
             android:id="@+id/new_humAr"
             android:layout_gravity="center_horizontal"
             android:hint="4. Humidade do ar"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:inputType="numberDecimal" />
     </LinearLayout>
 
     <LinearLayout
@@ -73,7 +77,8 @@
             android:id="@+id/new_pluv"
             android:layout_gravity="center_horizontal"
             android:hint="5. Pluviosidade"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:inputType="numberDecimal" />
 
         <EditText
             android:layout_width="0dp"
@@ -81,7 +86,8 @@
             android:id="@+id/new_data"
             android:layout_gravity="center_horizontal"
             android:hint="6. Data"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:inputType="number" />
     </LinearLayout>
 
     <LinearLayout

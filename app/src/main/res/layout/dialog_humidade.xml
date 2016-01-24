@@ -16,7 +16,8 @@
             android:layout_height="match_parent"
             android:id="@+id/txtNomeHum"
             android:text="NOME"
-            android:textSize="16sp"
+            android:textSize="18sp"
+            android:textStyle="bold"
             android:gravity="center"
             android:textColor="#33691E"
             android:paddingLeft="10dp"
@@ -29,7 +30,7 @@
             android:text="Cancelar"
             android:id="@+id/btnConfigHum_cancel"
             android:layout_weight="2"
-            android:textSize="12sp"
+            android:textSize="15sp"
             android:background="#9CCC65"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
@@ -42,7 +43,7 @@
             android:text="OK"
             android:id="@+id/btnConfigHum_ok"
             android:layout_weight="2"
-            android:textSize="13sp"
+            android:textSize="16sp"
             android:background="#9CCC65"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
@@ -61,7 +62,7 @@
         android:layout_height="0dp"
         android:id="@+id/txtDescricaoHum"
         android:text="DESCRIÇÃO"
-        android:textSize="13sp"
+        android:textSize="15sp"
         android:gravity="center_vertical|fill"
         android:layout_weight="7"
         android:layout_marginTop="5dp"
@@ -89,7 +90,7 @@
             android:layout_height="40dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Humidade do solo"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textColor="#37474F"
             android:layout_weight="6"
             android:gravity="center_vertical" />
@@ -97,12 +98,12 @@
         <EditText
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:ems="10"
             android:id="@+id/edt_minHumidadeSolo"
             android:hint="mín"
             android:layout_weight="1.5"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:gravity="bottom|center_horizontal" />
 
         <TextView
@@ -110,19 +111,19 @@
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="a"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textColor="#37474F"
             android:gravity="center_vertical" />
 
         <EditText
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:ems="10"
             android:id="@+id/edt_maxHumidadeSolo"
             android:hint="máx"
             android:layout_weight="1.5"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:gravity="bottom|center_horizontal"/>
 
         <TextView
@@ -130,7 +131,7 @@
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="(%)"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textColor="#37474F"
             android:gravity="center_vertical|center_horizontal"
             android:layout_weight="1.5" />
@@ -156,7 +157,7 @@
             android:layout_height="40dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Humidade do ar"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textColor="#37474F"
             android:layout_weight="6"
             android:gravity="center_vertical"/>
@@ -164,12 +165,12 @@
         <EditText
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:ems="10"
             android:id="@+id/edt_minHumidadeAr"
             android:hint="mín"
             android:layout_weight="1.5"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:gravity="bottom|center_horizontal" />
 
         <TextView
@@ -177,19 +178,19 @@
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="a"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textColor="#37474F"
             android:gravity="center_vertical" />
 
         <EditText
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:ems="10"
             android:id="@+id/edt_maxHumidadeAr"
             android:hint="máx"
             android:layout_weight="1.5"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:gravity="bottom|center_horizontal"/>
 
         <TextView
@@ -197,7 +198,7 @@
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="(%)"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textColor="#37474F"
             android:gravity="center_vertical|center_horizontal"
             android:layout_weight="1.5" />
