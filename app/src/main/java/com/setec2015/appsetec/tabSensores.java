@@ -159,18 +159,9 @@ public class tabSensores extends Fragment {
                 map.addMarker(new MarkerOptions().position(zona1Location).title("Zona 1"));
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(zona1Location, zoomLevel));
 
-                BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
-                backgroundDbTask.execute("last_info_1");
-
-                // Get values from SharedPreferences
-                    SharedPreferences prefs = getActivity().getSharedPreferences("DataLastValues", Context.MODE_PRIVATE);
-                        lastTemp = prefs.getString("lastTemp1", "- -");
-                        lastLum = prefs.getString("lastLum1", "- -");
-                        lastHumSolo = prefs.getString("lastHumSolo1", "- -");
-                        lastHumAr = prefs.getString("lastHumAr1", "- -");
-                        lastPluv = prefs.getString("lastPluv1", "- -");
-                        lastData = prefs.getString("lastData1", "- -");
-                    populateLastSensorValue(lastTemp, lastLum, lastHumSolo, lastHumAr, lastPluv, lastData);
+                // Get last info (row) from the Local DB
+                    BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
+                    backgroundDbTask.execute("last_info_1");
 
                 // Remove warning icon of new Alert
                     btnZona1.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
@@ -198,18 +189,9 @@ public class tabSensores extends Fragment {
                 map.addMarker(new MarkerOptions().position(zona2Location).title("Zona 2"));
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(zona2Location, zoomLevel));
 
-                BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
-                backgroundDbTask.execute("last_info_2");
-
-                // Get values from SharedPreferences
-                    SharedPreferences prefs = getActivity().getSharedPreferences("DataLastValues", Context.MODE_PRIVATE);
-                        lastTemp = prefs.getString("lastTemp2", "- -");
-                        lastLum = prefs.getString("lastLum2", "- -");
-                        lastHumSolo = prefs.getString("lastHumSolo2", "- -");
-                        lastHumAr = prefs.getString("lastHumAr2", "- -");
-                        lastPluv = prefs.getString("lastPluv2", "- -");
-                        lastData = prefs.getString("lastData2", "- -");
-                    populateLastSensorValue(lastTemp, lastLum, lastHumSolo, lastHumAr, lastPluv, lastData);
+                // Get last info (row) from the Local DB
+                    BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
+                    backgroundDbTask.execute("last_info_2");
 
                 // Remove warning icon of new Alert
                     btnZona2.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
@@ -237,18 +219,9 @@ public class tabSensores extends Fragment {
                 map.addMarker(new MarkerOptions().position(zona3Location).title("Zona 3"));
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(zona3Location, zoomLevel));
 
-                BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
-                backgroundDbTask.execute("last_info_3");
-
-                // Get values from SharedPreferences
-                    SharedPreferences prefs = getActivity().getSharedPreferences("DataLastValues", Context.MODE_PRIVATE);
-                        lastTemp = prefs.getString("lastTemp3", "- -");
-                        lastLum = prefs.getString("lastLum3", "- -");
-                        lastHumSolo = prefs.getString("lastHumSolo3", "- -");
-                        lastHumAr = prefs.getString("lastHumAr3", "- -");
-                        lastPluv = prefs.getString("lastPluv3", "- -");
-                        lastData = prefs.getString("lastData3", "- -");
-                    populateLastSensorValue(lastTemp, lastLum, lastHumSolo, lastHumAr, lastPluv, lastData);
+                // Get last info (row) from the Local DB
+                    BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
+                    backgroundDbTask.execute("last_info_3");
 
                 // Remove warning icon of new Alert
                     btnZona3.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);

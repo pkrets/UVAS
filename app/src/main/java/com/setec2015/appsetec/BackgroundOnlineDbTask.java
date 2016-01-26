@@ -500,7 +500,7 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, Void, String> {
                 jsonArray = jsonObject.getJSONArray("server_response");
                 String temp, lum, humSolo, humAr, pluv, data;
                 int count = 0;
-
+                    Log.i("ONLINE DB get_info_1", "JSON ARRAY:" + jsonArray);
                 while(count < jsonArray.length())
                 {
                     JSONObject JO = jsonArray.getJSONObject(count); // return the JSON object on the first index (row)

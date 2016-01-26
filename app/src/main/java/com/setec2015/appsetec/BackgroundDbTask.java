@@ -10,7 +10,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -25,8 +27,6 @@ import java.util.Date;
  */
 public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
 
-    String newId, newTemp, newLum, newHumSolo, newHumAr, newPluv, newData;
-
     String lastTemp1, lastLum1, lastHumSolo1, lastHumAr1, lastPluv1, lastData1;
     String lastTemp2, lastLum2, lastHumSolo2, lastHumAr2, lastPluv2, lastData2;
     String lastTemp3, lastLum3, lastHumSolo3, lastHumAr3, lastPluv3, lastData3;
@@ -38,8 +38,9 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
     Activity activity;
 
     ListDataAdapter listDataAdapter;
-
     ListView historicoListView;
+
+    TextView newTemp, newLum, newHumSolo, newHumAr, newPluv, newData;
 
     String json_string;
     JSONArray jsonArray;
@@ -421,7 +422,6 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
 
         if(result.equals("add_info_1") | result.equals("add_info_2") | result.equals("add_info_3"))
         {
-            //Toast.makeText(ctx, "Novo registo inserido na tabela da " + table, Toast.LENGTH_SHORT).show();
             Log.i("LOCAL DB", "add_info: Nova linha inserida na BD");
         }
         else if(result.equals("get_info_1") | result.equals("get_info_2") | result.equals("get_info_3"))
@@ -431,37 +431,46 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
         else if(result.equals("last_info_1") | result.equals("last_info_2") | result.equals("last_info_3"))
         {
             if (table.equals("Zona 1")) {
-                SharedPreferences prefs = ctx.getSharedPreferences("DataLastValues", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("lastTemp1", lastTemp1);
-                editor.putString("lastLum1", lastLum1);
-                editor.putString("lastHumSolo1", lastHumSolo1);
-                editor.putString("lastHumAr1", lastHumAr1);
-                editor.putString("lastPluv1", lastPluv1);
-                editor.putString("lastData1", lastData1);
-                editor.commit();
+                newTemp = (TextView) activity.findViewById(R.id.txt_newTemp);
+                    newTemp.setText(lastTemp1);
+                newLum = (TextView) activity.findViewById(R.id.txt_newLum);
+                    newLum.setText(lastLum1);
+                newHumSolo = (TextView) activity.findViewById(R.id.txt_newHumSolo);
+                    newHumSolo.setText(lastHumSolo1);
+                newHumAr = (TextView) activity.findViewById(R.id.txt_newHumAr);
+                    newHumAr.setText(lastHumAr1);
+                newPluv = (TextView) activity.findViewById(R.id.txt_newPluv);
+                    newPluv.setText(lastPluv1);
+                newData = (TextView) activity.findViewById(R.id.txt_newData);
+                    newData.setText(lastData1);
             }
             else if (table.equals("Zona 2")) {
-                SharedPreferences prefs = ctx.getSharedPreferences("DataLastValues", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("lastTemp2", lastTemp2);
-                editor.putString("lastLum2", lastLum2);
-                editor.putString("lastHumSolo2", lastHumSolo2);
-                editor.putString("lastHumAr2", lastHumAr2);
-                editor.putString("lastPluv2", lastPluv2);
-                editor.putString("lastData2", lastData2);
-                editor.commit();
+                newTemp = (TextView) activity.findViewById(R.id.txt_newTemp);
+                    newTemp.setText(lastTemp2);
+                newLum = (TextView) activity.findViewById(R.id.txt_newLum);
+                    newLum.setText(lastLum2);
+                newHumSolo = (TextView) activity.findViewById(R.id.txt_newHumSolo);
+                    newHumSolo.setText(lastHumSolo2);
+                newHumAr = (TextView) activity.findViewById(R.id.txt_newHumAr);
+                    newHumAr.setText(lastHumAr2);
+                newPluv = (TextView) activity.findViewById(R.id.txt_newPluv);
+                    newPluv.setText(lastPluv2);
+                newData = (TextView) activity.findViewById(R.id.txt_newData);
+                    newData.setText(lastData2);
             }
             else if (table.equals("Zona 3")) {
-                SharedPreferences prefs = ctx.getSharedPreferences("DataLastValues", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("lastTemp3", lastTemp3);
-                editor.putString("lastLum3", lastLum3);
-                editor.putString("lastHumSolo3", lastHumSolo3);
-                editor.putString("lastHumAr3", lastHumAr3);
-                editor.putString("lastPluv3", lastPluv3);
-                editor.putString("lastData3", lastData3);
-                editor.commit();
+                newTemp = (TextView) activity.findViewById(R.id.txt_newTemp);
+                    newTemp.setText(lastTemp3);
+                newLum = (TextView) activity.findViewById(R.id.txt_newLum);
+                    newLum.setText(lastLum3);
+                newHumSolo = (TextView) activity.findViewById(R.id.txt_newHumSolo);
+                    newHumSolo.setText(lastHumSolo3);
+                newHumAr = (TextView) activity.findViewById(R.id.txt_newHumAr);
+                    newHumAr.setText(lastHumAr3);
+                newPluv = (TextView) activity.findViewById(R.id.txt_newPluv);
+                    newPluv.setText(lastPluv3);
+                newData = (TextView) activity.findViewById(R.id.txt_newData);
+                    newData.setText(lastData3);
             }
         }
         else if(result.equals("delete_info_1") | result.equals("delete_info_2") | result.equals("delete_info_3"))
