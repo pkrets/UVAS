@@ -53,6 +53,9 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -66,6 +69,10 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
     private ViewPager mPager;
     private MyPagerAdapter mAdapter;
 
+    private ArrayList<String> recData = new ArrayList<String>();
+    private int nbytes=0;
+    private int fileSize = -1;
+
     private static final String TAG = "BluetoothGattActivity";
 
     private static final String DEVICE_NAME_1 = "UVA-1";
@@ -73,20 +80,11 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
     private static final String DEVICE_NAME_3 = "UVA-3";
 
         private static final UUID SERVICE = UUID.fromString("00001120-2222-2111-1aad-22faa544a3dd");
-        private static final UUID TEMP_READ = UUID.fromString("00001133-2222-2111-1aad-22faa544a3dd");
-        private static final UUID TEMP_WRITE = UUID.fromString("00001134-2222-2111-1aad-22faa544a3dd");
 
-        private static final UUID PRESSAO_READ = UUID.fromString("00001135-2222-2111-1aad-22faa544a3dd");
-        private static final UUID PRESSAO_WRITE = UUID.fromString("00001136-2222-2111-1aad-22faa544a3dd");
+        private static final UUID ALL_READ = UUID.fromString("00001143-2222-2111-1aad-22faa544a3dd");
+        private static final UUID ALL_WRITE = UUID.fromString("00001144-2222-2111-1aad-22faa544a3dd");
 
-        private static final UUID HUM_READ = UUID.fromString("00001137-2222-2111-1aad-22faa544a3dd");
-        private static final UUID HUM_WRITE = UUID.fromString("00001138-2222-2111-1aad-22faa544a3dd");
-
-        private static final UUID LUM_READ = UUID.fromString("00001139-2222-2111-1aad-22faa544a3dd");
-        private static final UUID LUM_WRITE = UUID.fromString("00001140-2222-2111-1aad-22faa544a3dd");
-
-        private static final UUID HSOLO_READ = UUID.fromString("00001141-2222-2111-1aad-22faa544a3dd");
-        private static final UUID HSOLO_WRITE = UUID.fromString("00001142-2222-2111-1aad-22faa544a3dd");
+        private static final UUID GPS_READ = UUID.fromString("00001145-2222-2111-1aad-22faa544a3dd");
 
         // UUID for the BTLE client characteristic which is necessary for notifications.
         public static UUID CLIENT_UUID = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
@@ -95,6 +93,8 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
         private SparseArray<BluetoothDevice> mDevices;
 
         private BluetoothGatt mConnectedGatt;
+
+        BluetoothDevice connectDevice;
 
         private String mTemperature, mPressão, mHumAr, mLuminosidade, mHumSolo;
 
@@ -106,6 +106,13 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
         setContentView(R.layout.activity_main);
         setProgressBarIndeterminate(true);
 
+     /*   SharedPreferences prefs2 = getSharedPreferences("GPS", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor2 = prefs2.edit();
+        editor2.putBoolean("isConfigured_2", false);
+        editor2.putString("GpsLat2", "0");
+        editor2.putString("GpsLng2", "0");
+        editor2.commit();
+*/
         try {
             Class.forName("android.os.AsyncTask");
             Log.i("ASYNCTASK ERROR LOGIN", "android.os.AsyncTask found.");
@@ -298,6 +305,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
                         .setCancelable(false)
                         .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+                                finish();
                                 System.exit(0);
                             }
                         })
@@ -317,6 +325,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
                 .setCancelable(false)
                 .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        finish();
                         System.exit(0);
                     }
                 })
@@ -382,6 +391,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
                     int i = position;
                     //Obtain the discovered device to connect with
                     BluetoothDevice device = mDevices.valueAt(i);
+                    connectDevice = device;
                         Log.i(TAG, "Connecting to " + device.getName());
                     /*
                      * Make a connection with the device using the special LE-specific
@@ -393,6 +403,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
                         mHandler.sendMessage(Message.obtain(null, MSG_PROGRESS, "A estabelecer ligação com " + device.getName() + "..."));
                         dialog.dismiss();
                      }
+
 
                 }
 
@@ -414,12 +425,12 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             //Update the overflow menu
             invalidateOptionsMenu();
         }
-        else if (DEVICE_NAME_2.equals(device.getName())) {
+        if (DEVICE_NAME_2.equals(device.getName())) {
             mDevices.put(device.hashCode(), device);
             //Update the overflow menu
             invalidateOptionsMenu();
         }
-        else if (DEVICE_NAME_3.equals(device.getName())) {
+        if (DEVICE_NAME_3.equals(device.getName())) {
             mDevices.put(device.hashCode(), device);
             //Update the overflow menu
             invalidateOptionsMenu();
@@ -449,34 +460,10 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             BluetoothGattCharacteristic characteristic;
             switch (mState) {
                 case 0:
-                    Log.d(TAG, "Enabling Temperature");
+                    Log.d(TAG, "Sending SD values");
                     characteristic = gatt.getService(SERVICE)
-                            .getCharacteristic(TEMP_WRITE);
-                    characteristic.setValue(new byte[] {(byte) 0xE1});
-                    break;
-                case 1:
-                    Log.d(TAG, "Enabling Pressure");
-                    characteristic = gatt.getService(SERVICE)
-                            .getCharacteristic(PRESSAO_WRITE);
-                    characteristic.setValue(new byte[] {(byte) 0xE1});
-                    break;
-                case 2:
-                    Log.d(TAG, "Enabling Humidity");
-                    characteristic = gatt.getService(SERVICE)
-                            .getCharacteristic(HUM_WRITE);
-                    characteristic.setValue(new byte[] {(byte) 0xE1});
-                    break;
-                case 3:
-                    Log.d(TAG, "Enabling Luminosity");
-                    characteristic = gatt.getService(SERVICE)
-                            .getCharacteristic(LUM_WRITE);
-                    characteristic.setValue(new byte[] {(byte) 0xE1});
-                    break;
-                case 4:
-                    Log.d(TAG, "Enabling Moisture");
-                    characteristic = gatt.getService(SERVICE)
-                            .getCharacteristic(HSOLO_WRITE);
-                    characteristic.setValue(new byte[] {(byte) 0xE1});
+                            .getCharacteristic(ALL_WRITE);
+                    characteristic.setValue(new byte[]{(byte) 0xE1});
                     break;
                 default:
                     mHandler.sendEmptyMessage(MSG_DISMISS);
@@ -491,32 +478,41 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
          * Read the data characteristic's value for each sensor explicitly
          */
         private void readNextSensor(BluetoothGatt gatt) {
-            BluetoothGattCharacteristic characteristic;
+            BluetoothGattCharacteristic characteristic = null;
             switch (mState) {
                 case 0:
-                    Log.d(TAG, "Reading Temperature");
-                    characteristic = gatt.getService(SERVICE)
-                            .getCharacteristic(TEMP_READ);
+                    if (DEVICE_NAME_1.equals(connectDevice.getName())) {
+                        SharedPreferences prefs = getSharedPreferences("GPS", Context.MODE_PRIVATE);
+                        boolean GpsConfig = prefs.getBoolean("isConfigured_1", false);
+                            Log.i("GPS CONFIGURED 1", String.valueOf(GpsConfig));
+                        if(!GpsConfig) {
+                            characteristic = gatt.getService(SERVICE)
+                                    .getCharacteristic(GPS_READ);
+                        }
+                    }
+                    else if(DEVICE_NAME_2.equals(connectDevice.getName())) {
+                        SharedPreferences prefs = getSharedPreferences("GPS", Context.MODE_PRIVATE);
+                        boolean GpsConfig = prefs.getBoolean("isConfigured_2", false);
+                            Log.i("GPS CONFIGURED 2", String.valueOf(GpsConfig));
+                        //if(!GpsConfig) {
+                            characteristic = gatt.getService(SERVICE)
+                                    .getCharacteristic(GPS_READ);
+                        //}
+                    }
+                    else if(DEVICE_NAME_3.equals(connectDevice.getName())) {
+                        SharedPreferences prefs = getSharedPreferences("GPS", Context.MODE_PRIVATE);
+                        boolean GpsConfig = prefs.getBoolean("isConfigured_3", false);
+                            Log.i("GPS CONFIGURED 3", String.valueOf(GpsConfig));
+                        if(!GpsConfig) {
+                            characteristic = gatt.getService(SERVICE)
+                                    .getCharacteristic(GPS_READ);
+                        }
+                    }
                     break;
                 case 1:
-                    Log.d(TAG, "Reading Pressure");
+                    Log.d(TAG, "Reading SD");
                     characteristic = gatt.getService(SERVICE)
-                            .getCharacteristic(PRESSAO_READ);
-                    break;
-                case 2:
-                    Log.d(TAG, "Reading Humidity");
-                    characteristic = gatt.getService(SERVICE)
-                            .getCharacteristic(HUM_READ);
-                    break;
-                case 3:
-                    Log.d(TAG, "Reading Luminosity");
-                    characteristic = gatt.getService(SERVICE)
-                            .getCharacteristic(LUM_READ);
-                    break;
-                case 4:
-                    Log.d(TAG, "Reading Moisture");
-                    characteristic = gatt.getService(SERVICE)
-                            .getCharacteristic(HSOLO_READ);
+                            .getCharacteristic(ALL_READ);
                     break;
                 default:
                     mHandler.sendEmptyMessage(MSG_DISMISS);
@@ -536,29 +532,14 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             BluetoothGattCharacteristic characteristic;
             switch (mState) {
                 case 0:
-                    Log.d(TAG, "Set notify temperature cal");
+                    Log.d(TAG, "Set notify GPS cal");
                     characteristic = gatt.getService(SERVICE)
-                            .getCharacteristic(TEMP_READ);
+                            .getCharacteristic(GPS_READ);
                     break;
                 case 1:
-                    Log.d(TAG, "Set notify Pressure cal");
+                    Log.d(TAG, "Set notify SD cal");
                     characteristic = gatt.getService(SERVICE)
-                            .getCharacteristic(PRESSAO_READ);
-                    break;
-                case 2:
-                    Log.d(TAG, "Set notify Humidity cal");
-                    characteristic = gatt.getService(SERVICE)
-                            .getCharacteristic(HUM_READ);
-                    break;
-                case 3:
-                    Log.d(TAG, "Set notify Luminosity cal");
-                    characteristic = gatt.getService(SERVICE)
-                            .getCharacteristic(LUM_READ);
-                    break;
-                case 4:
-                    Log.d(TAG, "Set notify Moisture cal");
-                    characteristic = gatt.getService(SERVICE)
-                            .getCharacteristic(HSOLO_READ);
+                            .getCharacteristic(ALL_READ);
                     break;
                 default:
                     mHandler.sendEmptyMessage(MSG_DISMISS);
@@ -613,22 +594,12 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
         @Override
         public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
             //For each read, pass the data up to the UI thread to update the display
-            if (TEMP_READ.equals(characteristic.getUuid())) {
-                mHandler.sendMessage(Message.obtain(null, MSG_TEMP, characteristic));
+            if (GPS_READ.equals(characteristic.getUuid())) {
+                mHandler.sendMessage(Message.obtain(null, MSG_GPS, characteristic));
             }
-            if (PRESSAO_READ.equals(characteristic.getUuid())) {
-                mHandler.sendMessage(Message.obtain(null, MSG_PR, characteristic));
+            if (ALL_READ.equals(characteristic.getUuid())) {
+                mHandler.sendMessage(Message.obtain(null, MSG_ALL, characteristic));
             }
-            if (HUM_READ.equals(characteristic.getUuid())) {
-                mHandler.sendMessage(Message.obtain(null, MSG_HUM, characteristic));
-            }
-            if (LUM_READ.equals(characteristic.getUuid())) {
-                mHandler.sendMessage(Message.obtain(null, MSG_LUM, characteristic));
-            }
-            if (HSOLO_READ.equals(characteristic.getUuid())) {
-                mHandler.sendMessage(Message.obtain(null, MSG_HSOLO, characteristic));
-            }
-
 
             //After reading the initial value, next we enable notifications
             setNotifyNextSensor(gatt);
@@ -647,20 +618,11 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
              * value changes will be posted here.  Similar to read, we hand these up to the
              * UI thread to update the display.
              */
-            if (TEMP_READ.equals(characteristic.getUuid())) {
-                mHandler.sendMessage(Message.obtain(null, MSG_TEMP, characteristic));
+            if (GPS_READ.equals(characteristic.getUuid())) {
+                mHandler.sendMessage(Message.obtain(null, MSG_GPS, characteristic));
             }
-            if (PRESSAO_READ.equals(characteristic.getUuid())) {
-                mHandler.sendMessage(Message.obtain(null, MSG_PR, characteristic));
-            }
-            if (HUM_READ.equals(characteristic.getUuid())) {
-                mHandler.sendMessage(Message.obtain(null, MSG_HUM, characteristic));
-            }
-            if (LUM_READ.equals(characteristic.getUuid())) {
-                mHandler.sendMessage(Message.obtain(null, MSG_LUM, characteristic));
-            }
-            if (HSOLO_READ.equals(characteristic.getUuid())) {
-                mHandler.sendMessage(Message.obtain(null, MSG_HSOLO, characteristic));
+            if (ALL_READ.equals(characteristic.getUuid())) {
+                mHandler.sendMessage(Message.obtain(null, MSG_ALL, characteristic));
             }
         }
 
@@ -695,11 +657,8 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
     /*
      * We have a Handler to process event results on the main thread
      */
-    private static final int MSG_TEMP = 101;
-    private static final int MSG_PR = 102;
-    private static final int MSG_HUM = 103;
-    private static final int MSG_LUM = 104;
-    private static final int MSG_HSOLO = 105;
+    private static final int MSG_ALL = 101;
+    private static final int MSG_GPS = 102;
 
     private static final int MSG_PROGRESS = 201;
     private static final int MSG_DISMISS = 202;
@@ -709,45 +668,21 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
         public void handleMessage(Message msg) {
             BluetoothGattCharacteristic characteristic;
             switch (msg.what) {
-                case MSG_TEMP:
+                case MSG_ALL:
                     characteristic = (BluetoothGattCharacteristic) msg.obj;
                     if (characteristic.getValue() == null) {
-                        Log.w(TAG, "Error obtaining temperature value");
+                        Log.w(TAG, "Error obtaining SD values");
                         return;
                     }
-                    updateTempValues(characteristic);
+                    updateSDValues(characteristic);
                     break;
-                case MSG_PR:
+                case MSG_GPS:
                     characteristic = (BluetoothGattCharacteristic) msg.obj;
                     if (characteristic.getValue() == null) {
-                        Log.w(TAG, "Error obtaining pressure value");
+                        Log.w(TAG, "Error obtaining GPS values");
                         return;
                     }
-                    updatePresValues(characteristic);
-                    break;
-                case MSG_HUM:
-                    characteristic = (BluetoothGattCharacteristic) msg.obj;
-                    if (characteristic.getValue() == null) {
-                        Log.w(TAG, "Error obtaining humidity value");
-                        return;
-                    }
-                    updateHumValues(characteristic);
-                    break;
-                case MSG_LUM:
-                    characteristic = (BluetoothGattCharacteristic) msg.obj;
-                    if (characteristic.getValue() == null) {
-                        Log.w(TAG, "Error obtaining luminosity value");
-                        return;
-                    }
-                    updateLumValues(characteristic);
-                    break;
-                case MSG_HSOLO:
-                    characteristic = (BluetoothGattCharacteristic) msg.obj;
-                    if (characteristic.getValue() == null) {
-                        Log.w(TAG, "Error obtaining moisture value");
-                        return;
-                    }
-                    updateHumSoloValues(characteristic);
+                    updateGPSValues(characteristic);
                     break;
                 case MSG_PROGRESS:
                     mProgress.setMessage((String) msg.obj);
@@ -759,57 +694,167 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
                     mProgress.hide();
                     break;
                 case MSG_CLEAR:
-                    mTemperature = "null";
-                    mPressão = "null";
-                    mHumAr = "null";
-                    mLuminosidade = "null";
-                    mHumSolo = "null";
                     break;
             }
-            //populateHistoricoDb();
         }
     };
 
 
-    /* Methods to extract sensor data and update the sensors' last known value */
 
-        private void updateTempValues(BluetoothGattCharacteristic characteristic) {
-            double temp = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT32, 0);
-            mTemperature = String.valueOf((String.format("%.2f", temp / 100)));
-                Log.i(TAG, "Temp Caract: " + mTemperature);
-                //Toast.makeText(this, "Temp Caract: " + mTemperature, Toast.LENGTH_LONG).show();
+
+    private void updateSDValues(BluetoothGattCharacteristic characteristic) {
+
+        byte[] tmp = new byte[20];
+
+        tmp = characteristic.getValue();
+        String aux = new String(tmp);
+        Log.i(TAG, "SD Caract: " + aux);
+
+        if (nbytes == 20){
+            fileSize = Integer.parseInt(aux);
+            Log.i(TAG, "file size: " + fileSize);
+        }
+        else if(nbytes < fileSize)
+            recData.add(aux);
+
+        nbytes += tmp.length;
+
+        Log.i(TAG, "nbytes: " + nbytes);
+
+        if(nbytes >= fileSize)
+            readSD();
+
+        Log.i(TAG, "recData size: " + recData.size());
+    }
+
+    // GET GPS (LAT, LNG) FROM SD CARD
+    private void updateGPSValues(BluetoothGattCharacteristic characteristic) {
+
+        byte tmp[];
+        byte lat[] = new byte[4];
+        byte lng[] = new byte[4];
+
+        tmp = characteristic.getValue();
+        lat = Arrays.copyOfRange(tmp, 0, 4);
+        lng = Arrays.copyOfRange(tmp, 4, 8);
+
+        Log.i(TAG, "GPS Caract: " + Arrays.toString(tmp));
+
+        if (DEVICE_NAME_1.equals(connectDevice.getName())) {
+            SharedPreferences prefs = getSharedPreferences("GPS", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("isConfigured_1", true);
+            editor.commit();
+
+            int Lat = bytearray2int(lat);
+            double finalLat = ((double) (int) Lat)/10000000;
+            String sLat = String.valueOf(finalLat);
+
+            int Lng = bytearray2int(lng);
+            double finalLng = ((double) (int) Lng)/10000000;
+            String sLng = String.valueOf(finalLng);
+
+            SharedPreferences prefs2 = getSharedPreferences("GPS", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor2 = prefs2.edit();
+            editor2.putString("GpsLat1", sLat);
+            editor2.putString("GpsLng1", sLng);
+            editor2.commit();
+
+                Log.i(TAG, "GPS Lat 1: " + sLat);
+                Log.i(TAG, "GPS Long 1: " + sLng);
+        }
+        else if (DEVICE_NAME_2.equals(connectDevice.getName())) {
+            SharedPreferences prefs = getSharedPreferences("GPS", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("isConfigured_2", true);
+            editor.commit();
+
+            int Lat = bytearray2int(lat);
+            double finalLat = ((double) (int) Lat)/10000000;
+            String sLat = String.valueOf(finalLat);
+
+            int Lng = bytearray2int(lng);
+            double finalLng = ((double) (int) Lng)/10000000;
+            String sLng = String.valueOf(finalLng);
+
+            SharedPreferences prefs2 = getSharedPreferences("GPS", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor2 = prefs2.edit();
+            editor2.putString("GpsLat2", sLat);
+            editor2.putString("GpsLng2", sLng);
+            editor2.commit();
+
+                Log.i(TAG, "GPS Lat 2: " + sLat);
+                Log.i(TAG, "GPS Long 2: " + sLng);
+        }
+        else if (DEVICE_NAME_3.equals(connectDevice.getName())) {
+            SharedPreferences prefs = getSharedPreferences("GPS", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("isConfigured_3", true);
+            editor.commit();
+
+            int Lat = bytearray2int(lat);
+            double finalLat = ((double) (int) Lat)/10000000;
+            String sLat = String.valueOf(finalLat);
+
+            int Lng = bytearray2int(lng);
+            double finalLng = ((double) (int) Lng)/10000000;
+            String sLng = String.valueOf(finalLng);
+
+            SharedPreferences prefs2 = getSharedPreferences("GPS", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor2 = prefs2.edit();
+            editor2.putString("GpsLat3", sLat);
+            editor2.putString("GpsLng3", sLng);
+            editor2.commit();
+
+                Log.i(TAG, "GPS Lat 3: " + sLat);
+                Log.i(TAG, "GPS Long 3: " + sLng);
+        }
+    }
+
+
+
+    private void readSD() {
+        String allData = "";
+        String[] data;
+
+
+        for (int i = 0; i < recData.size(); i++) {
+            allData += recData.get(i);
         }
 
-        private void updatePresValues(BluetoothGattCharacteristic characteristic) {
-            double pluv = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT32, 0);
-            mPressão = String.valueOf((String.format("%.2f", pluv/100)));
-                Log.i(TAG, "Press Caract: " + mPressão);
-                //Toast.makeText(this, "Press Caract: " + mPressão, Toast.LENGTH_SHORT).show();
+        data = allData.split("\n");
+
+        Log.i(TAG, "All Data " + allData);
+
+
+        for (int i = 0; i < data.length; i++) {
+            Log.i(TAG, "Data " + (i+1)  + ": " + data[i]);
         }
 
-        private void updateHumValues(BluetoothGattCharacteristic characteristic) {
-            double hum = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 0);
-            mHumAr = String.valueOf((String.format("%.2f", hum/1000)));
-                Log.i(TAG, "HumAr Caract: " + mHumAr);
-                //Toast.makeText(this, "HumAr Caract: " + mHumAr, Toast.LENGTH_SHORT).show();
-        }
+        //mandaBD(data);
 
-        private void updateLumValues(BluetoothGattCharacteristic characteristic) {
-            double lum = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT32, 0);
-            mLuminosidade = String.valueOf((String.format("%.2f", lum)));
-                Log.i(TAG, "Lum Caract: " + mLuminosidade);
-                //Toast.makeText(this, "Lum Caract: " + mLuminosidade, Toast.LENGTH_SHORT).show();
-        }
+        //meteZona1(data[i].split(",")[1] )
+        // id => data[i].getChar(0)
+    }
 
-        private void updateHumSoloValues(BluetoothGattCharacteristic characteristic) {
-            double hum = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 0);
-            mHumSolo = String.valueOf((String.format("%.2f", hum/100)));
-                Log.i(TAG, "HumSolo Caract: " + mHumSolo);
-                //Toast.makeText(this, "Hum Solo Caract: " + mHumSolo, Toast.LENGTH_SHORT).show();
-        }
+    public static int bytearray2int(byte[] b) {
+        ByteBuffer buf = ByteBuffer.wrap(b);
+        return buf.getInt();
+    }
 
 
-        // Populate DB: Historico tables (NOT USED)
+
+
+
+
+
+
+
+
+
+
+
+    // Populate DB: Historico tables (NOT USED)
         private void populateHistoricoDb()
         {
             if(mTemperature != null && mLuminosidade != null && mHumSolo != null && mHumAr != null && mPressão != null) {

@@ -334,10 +334,8 @@ public class dbSaveInfoActivity extends AppCompatActivity {
 
     private void alertaPluviosidade() {
         SharedPreferences prefs = getSharedPreferences("DataPluviosidade", Context.MODE_PRIVATE);
-            String minPluv = prefs.getString("minPluviosidade", "0");
-                double min_pluv = Double.parseDouble(minPluv);
-            String maxPluv = prefs.getString("maxPluviosidade", "0");
-                double max_pluv = Double.parseDouble(maxPluv);
+            String maxHorasPluv = prefs.getString("maxHorasPluviosidade", "0");
+                double max_horasPluv = Double.parseDouble(maxHorasPluv);
 
         double PLUV;
         if(pluv != null && !pluv.isEmpty()) {
@@ -348,17 +346,13 @@ public class dbSaveInfoActivity extends AppCompatActivity {
 
         if(PLUV != 0.0) {
             String type = "Pluviosidade";
-            String alert1 = "Valor recebido é inferior ao valor mínimo desejado:  " +minPluv+ " mm^3/h";
-            String alert2 = "Valor recebido é superior ao valor máximo desejado:  " +maxPluv+ " mm^3/h";
-            String value = pluv + " mm^3/h";
+            String alert1 = "O número de horas de ocorrência de pluviosidade foi superior ao máximo desejado:  " +maxHorasPluv+ " horas";
+            String value = pluv + " horas";
             String date = data;
 
-            if (PLUV < min_pluv) {
+            if (PLUV > max_horasPluv) {
                 BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2(this);
                 backgroundDbTask2.execute(alertaDbTask, type, alert1, value, date);
-            } else if (PLUV > max_pluv) {
-                BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2(this);
-                backgroundDbTask2.execute(alertaDbTask, type, alert2, value, date);
             }
         }
     }
@@ -378,7 +372,7 @@ public class dbSaveInfoActivity extends AppCompatActivity {
         }
 
         // Conditions favorable for Praga 1 (Míldio)
-            if(TEMP > 10.0 || HUM_A > 95.0 || LUM == 0.0 || PLUV > 0.0)        // LUM ?? PLUV ??
+            if(TEMP > 10.0 || HUM_A > 95.0 || LUM == 0.0 || PLUV > 0)        // LUM ?? PLUV ??
             {
                 String type = "Doença";
                 String alert = "Foram reunidas as condições necessárias para a existência de 'Míldio' nesta zona.";

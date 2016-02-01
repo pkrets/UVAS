@@ -344,19 +344,8 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Pluviosidade"
                     android:textSize="16sp"
-                    android:layout_weight="5"
+                    android:layout_weight="7"
                     android:layout_marginLeft="5dp"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="mm^3/h"
-                    android:textSize="12sp"
-                    android:layout_weight="2"
-                    android:gravity="bottom|right"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginBottom="3dp"/>
 
                 <TextView
                     android:layout_width="0dp"

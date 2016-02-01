@@ -20,8 +20,8 @@ public class dialogPluviosidade extends DialogFragment implements View.OnClickLi
     Button btnConfigPluv_ok, btnConfigPluv_cancel;
     TextView txtNomePluv, txtDescricaoPluv;
 
-    EditText edt_minPluviosidade, edt_maxPluviosidade;
-    String minPluviosidade, minPluviosidade_saved, maxPluviosidade, maxPluviosidade_saved;
+    EditText edt_maxHorasPluv;
+    String maxHorasPluviosidade, maxHorasPluviosidade_saved;
 
 
     @Override
@@ -33,7 +33,7 @@ public class dialogPluviosidade extends DialogFragment implements View.OnClickLi
         txtNomePluv.setText("Pluviosidade");
 
         txtDescricaoPluv = (TextView) view.findViewById(R.id.txtDescricaoPluv);
-        txtDescricaoPluv.setText("Preencha os seguintes campos com o intervalo de valores de Pluviosidade (mm^3/h) que considera ideais. Se alguns dos sensores registar uma leitura de Pluviosidade com valores inferiores ao 'mínimo' ou superiores ao 'máximo' estipulado, será emitido um Alerta.");
+        txtDescricaoPluv.setText("Preencha o seguinte campo com o número máximo de horas de chuva que considera aceitável. Se alguns dos sensores registar leituras de Pluviosidade durante um período de tempo superior ao 'máximo' estipulado, será emitido um Alerta.");
 
         btnConfigPluv_ok = (Button) view.findViewById(R.id.btnConfigPluv_ok);
         btnConfigPluv_ok.setOnClickListener(this);
@@ -44,16 +44,10 @@ public class dialogPluviosidade extends DialogFragment implements View.OnClickLi
         //
 
         SharedPreferences prefs = getActivity().getSharedPreferences("DataPluviosidade", Context.MODE_PRIVATE);
-        minPluviosidade_saved = prefs.getString("minPluviosidade", "0");
-        maxPluviosidade_saved = prefs.getString("maxPluviosidade", "0");
+        maxHorasPluviosidade_saved = prefs.getString("maxHorasPluviosidade", "0");
 
-            edt_minPluviosidade = (EditText) view.findViewById(R.id.edt_minPluviosidade);
-                edt_minPluviosidade.setText(minPluviosidade_saved);
-
-            edt_maxPluviosidade = (EditText) view.findViewById(R.id.edt_maxPluviosidade);
-                edt_maxPluviosidade.setText(maxPluviosidade_saved);
-
-
+            edt_maxHorasPluv = (EditText) view.findViewById(R.id.edt_maxHorasPluv);
+                edt_maxHorasPluv.setText(maxHorasPluviosidade_saved);
 
         return view;
     }
@@ -64,13 +58,11 @@ public class dialogPluviosidade extends DialogFragment implements View.OnClickLi
     public void onClick(View view) {
         if(view.getId() == R.id.btnConfigPluv_ok) {
 
-            minPluviosidade = edt_minPluviosidade.getText().toString();
-            maxPluviosidade = edt_maxPluviosidade.getText().toString();
+            maxHorasPluviosidade = edt_maxHorasPluv.getText().toString();
 
             SharedPreferences prefs = getActivity().getSharedPreferences("DataPluviosidade", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putString("minPluviosidade", minPluviosidade);
-            editor.putString("maxPluviosidade", maxPluviosidade);
+            editor.putString("maxHorasPluviosidade", maxHorasPluviosidade);
             editor.commit();
 
             dismiss();

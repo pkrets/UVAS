@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -155,9 +156,16 @@ public class tabSensores extends Fragment {
                     btnZona2.setText(zona2);
                     btnZona3.setText(zona3);
 
-                LatLng zona1Location = new LatLng(13.687140112679154, 100.53925868803263);
-                map.addMarker(new MarkerOptions().position(zona1Location).title("Zona 1"));
-                map.animateCamera(CameraUpdateFactory.newLatLngZoom(zona1Location, zoomLevel));
+                // Add marker for "ZONA 1" in the map, according with the GPS coordinates received
+                SharedPreferences prefs = getActivity().getSharedPreferences("GPS", Context.MODE_PRIVATE);
+                    String GpsLat = prefs.getString("GpsLat1", "0");
+                        double gpsLat = Double.parseDouble(GpsLat);
+                    String GpsLng = prefs.getString("GpsLng1", "0");
+                        double gpsLng = Double.parseDouble(GpsLng);
+
+                    LatLng zona1Location = new LatLng(gpsLat, gpsLng);
+                    map.addMarker(new MarkerOptions().position(zona1Location).title("Zona 1"));
+                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(zona1Location, zoomLevel));
 
                 // Get last info (row) from the Local DB
                     BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
@@ -185,9 +193,19 @@ public class tabSensores extends Fragment {
                     btnZona1.setText(zona1);
                     btnZona3.setText(zona3);
 
-                LatLng zona2Location = new LatLng(13.682140112679154, 100.53525868803263);
-                map.addMarker(new MarkerOptions().position(zona2Location).title("Zona 2"));
-                map.animateCamera(CameraUpdateFactory.newLatLngZoom(zona2Location, zoomLevel));
+                // Add marker for "ZONA 2" in the map, according with the GPS coordinates received
+                SharedPreferences prefs = getActivity().getSharedPreferences("GPS", Context.MODE_PRIVATE);
+                    String GpsLat = prefs.getString("GpsLat2", null);
+                        double gpsLat = Double.valueOf(GpsLat);
+                            Log.i("SENSORES 2", String.valueOf(gpsLat));
+                    String GpsLng = prefs.getString("GpsLng2", null);
+                        double gpsLng = Double.parseDouble(GpsLng);
+                            Log.i("SENSORES 2", String.valueOf(gpsLng));
+
+
+                LatLng zona2Location = new LatLng(gpsLat, gpsLng);
+                    map.addMarker(new MarkerOptions().position(zona2Location).title("Zona 2"));
+                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(zona2Location, zoomLevel));
 
                 // Get last info (row) from the Local DB
                     BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
@@ -215,9 +233,16 @@ public class tabSensores extends Fragment {
                     btnZona2.setText(zona2);
                     btnZona1.setText(zona1);
 
-                LatLng zona3Location = new LatLng(13.685140112679154, 100.53125868803263);
-                map.addMarker(new MarkerOptions().position(zona3Location).title("Zona 3"));
-                map.animateCamera(CameraUpdateFactory.newLatLngZoom(zona3Location, zoomLevel));
+                // Add marker for "ZONA 3" in the map, according with the GPS coordinates received
+                SharedPreferences prefs = getActivity().getSharedPreferences("GPS", Context.MODE_PRIVATE);
+                    String GpsLat = prefs.getString("GpsLat3", "0");
+                        double gpsLat = Double.parseDouble(GpsLat);
+                    String GpsLng = prefs.getString("GpsLng3", "0");
+                        double gpsLng = Double.parseDouble(GpsLng);
+
+                    LatLng zona3Location = new LatLng(gpsLat, gpsLng);
+                    map.addMarker(new MarkerOptions().position(zona3Location).title("Zona 3"));
+                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(zona3Location, zoomLevel));
 
                 // Get last info (row) from the Local DB
                     BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());

@@ -100,27 +100,7 @@
             android:layout_height="match_parent"
             android:inputType="numberDecimal"
             android:ems="10"
-            android:id="@+id/edt_minPluviosidade"
-            android:hint="mín"
-            android:layout_weight="1.5"
-            android:textSize="16sp"
-            android:gravity="bottom|center_horizontal" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="a"
-            android:textSize="16sp"
-            android:textColor="#37474F"
-            android:gravity="center_vertical" />
-
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:inputType="numberDecimal"
-            android:ems="10"
-            android:id="@+id/edt_maxPluviosidade"
+            android:id="@+id/edt_maxHorasPluv"
             android:hint="máx"
             android:layout_weight="1.5"
             android:textSize="16sp"
@@ -130,7 +110,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="(mm^3/h)"
+            android:text="(horas)"
             android:textSize="16sp"
             android:textColor="#37474F"
             android:gravity="center_vertical|center_horizontal"
