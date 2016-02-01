@@ -186,6 +186,8 @@ public class tabHistorico extends Fragment {
                                         // Update UI: GET ALL ROWS in the table from Zona 1 - "pandlet1_table"
                                         BackgroundDbTask backgroundDbTask_B = new BackgroundDbTask(getContext());
                                         backgroundDbTask_B.execute("get_info_1");
+
+                                        Toast.makeText(getContext(), "Os registos do Histórico de '" +zona1+ "' foram apagados.", Toast.LENGTH_SHORT).show();
                                     }
                                 })
                                 .setNegativeButton("Não", null)
@@ -219,6 +221,9 @@ public class tabHistorico extends Fragment {
                                         // Update UI: GET ALL ROWS in the table from Zona 2 - "pandlet2_table"
                                         BackgroundDbTask backgroundDbTask_B = new BackgroundDbTask(getContext());
                                         backgroundDbTask_B.execute("get_info_2");
+
+                                        Toast.makeText(getContext(), "Os registos do Histórico de '" +zona2+ "' foram apagados.", Toast.LENGTH_SHORT).show();
+
                                     }
                                 })
                                 .setNegativeButton("Não", null)
@@ -252,6 +257,9 @@ public class tabHistorico extends Fragment {
                                         // Update UI: GET ALL ROWS in the table from Zona 3 - "pandlet3_table"
                                         BackgroundDbTask backgroundDbTask_B = new BackgroundDbTask(getContext());
                                         backgroundDbTask_B.execute("get_info_3");
+
+                                        Toast.makeText(getContext(), "Os registos do Histórico de '" +zona3+ "' foram apagados.", Toast.LENGTH_SHORT).show();
+
                                     }
                                 })
                                 .setNegativeButton("Não", null)

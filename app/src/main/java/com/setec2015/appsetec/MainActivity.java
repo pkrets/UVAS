@@ -68,7 +68,9 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
 
     private static final String TAG = "BluetoothGattActivity";
 
-    private static final String DEVICE_NAME = "SETEC-15/16";
+    private static final String DEVICE_NAME_1 = "UVA-1";
+    private static final String DEVICE_NAME_2 = "UVA-2";
+    private static final String DEVICE_NAME_3 = "UVA-3";
 
         private static final UUID SERVICE = UUID.fromString("00001120-2222-2111-1aad-22faa544a3dd");
         private static final UUID TEMP_READ = UUID.fromString("00001133-2222-2111-1aad-22faa544a3dd");
@@ -169,6 +171,8 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
 
                     BackgroundOnlineDbTask backgroundOnlineDbTaskC = new BackgroundOnlineDbTask(this);
                     backgroundOnlineDbTaskC.execute("get_info_3");
+
+                Toast.makeText(this, "Os registos do Histórico foram atualizados!", Toast.LENGTH_LONG).show();
             }
             else {
                 Intent enableInternetIntent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
@@ -288,14 +292,13 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             // Button -- Logout
             case R.id.action_logout:
                 new android.app.AlertDialog.Builder(this)
-                        .setTitle("Terminar sessão")
+                        .setTitle("Sair de UVAS")
                         .setIcon(R.mipmap.ic_logout)
-                        .setMessage("Deseja terminar a sessão?")
+                        .setMessage("Deseja sair da aplicação?")
                         .setCancelable(false)
                         .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                startActivity(new Intent(((Dialog) dialog).getContext(), StartActivity.class));
-
+                                System.exit(0);
                             }
                         })
                         .setNegativeButton("Não", null)
@@ -308,13 +311,13 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
     @Override
     public void onBackPressed() {
         new android.app.AlertDialog.Builder(this)
-                .setTitle("Terminar sessão")
+                .setTitle("Sair de UVAS")
                 .setIcon(R.mipmap.ic_logout)
-                .setMessage("Deseja terminar a sessão?")
+                .setMessage("Deseja sair da aplicação?")
                 .setCancelable(false)
                 .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        startActivity(new Intent(((Dialog) dialog).getContext(), StartActivity.class));
+                        System.exit(0);
                     }
                 })
                 .setNegativeButton("Não", null)
@@ -406,7 +409,17 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
          * We are looking for SensorTag devices only, so validate the name
          * that each device reports before adding it to our collection
          */
-        if (DEVICE_NAME.equals(device.getName())) {
+        if (DEVICE_NAME_1.equals(device.getName())) {
+            mDevices.put(device.hashCode(), device);
+            //Update the overflow menu
+            invalidateOptionsMenu();
+        }
+        else if (DEVICE_NAME_2.equals(device.getName())) {
+            mDevices.put(device.hashCode(), device);
+            //Update the overflow menu
+            invalidateOptionsMenu();
+        }
+        else if (DEVICE_NAME_3.equals(device.getName())) {
             mDevices.put(device.hashCode(), device);
             //Update the overflow menu
             invalidateOptionsMenu();
@@ -753,7 +766,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
                     mHumSolo = "null";
                     break;
             }
-            populateHistoricoDb();
+            //populateHistoricoDb();
         }
     };
 
@@ -765,9 +778,6 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             mTemperature = String.valueOf((String.format("%.2f", temp / 100)));
                 Log.i(TAG, "Temp Caract: " + mTemperature);
                 //Toast.makeText(this, "Temp Caract: " + mTemperature, Toast.LENGTH_LONG).show();
-            getMyTempUI();
-            //alertaTemperatura();
-
         }
 
         private void updatePresValues(BluetoothGattCharacteristic characteristic) {
@@ -775,8 +785,6 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             mPressão = String.valueOf((String.format("%.2f", pluv/100)));
                 Log.i(TAG, "Press Caract: " + mPressão);
                 //Toast.makeText(this, "Press Caract: " + mPressão, Toast.LENGTH_SHORT).show();
-
-            getMyPres();
         }
 
         private void updateHumValues(BluetoothGattCharacteristic characteristic) {
@@ -784,8 +792,6 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             mHumAr = String.valueOf((String.format("%.2f", hum/1000)));
                 Log.i(TAG, "HumAr Caract: " + mHumAr);
                 //Toast.makeText(this, "HumAr Caract: " + mHumAr, Toast.LENGTH_SHORT).show();
-
-            getMyHumAr();
         }
 
         private void updateLumValues(BluetoothGattCharacteristic characteristic) {
@@ -793,8 +799,6 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             mLuminosidade = String.valueOf((String.format("%.2f", lum)));
                 Log.i(TAG, "Lum Caract: " + mLuminosidade);
                 //Toast.makeText(this, "Lum Caract: " + mLuminosidade, Toast.LENGTH_SHORT).show();
-
-            getMyLum();
         }
 
         private void updateHumSoloValues(BluetoothGattCharacteristic characteristic) {
@@ -802,28 +806,10 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             mHumSolo = String.valueOf((String.format("%.2f", hum/100)));
                 Log.i(TAG, "HumSolo Caract: " + mHumSolo);
                 //Toast.makeText(this, "Hum Solo Caract: " + mHumSolo, Toast.LENGTH_SHORT).show();
-
-            getMyHumSolo();
         }
 
-        // Send data to display in tab Sensores (currently not used)
-        public String getMyTempUI() {
-            return mTemperature;
-        }
-        public String getMyPres() {
-            return mPressão;
-        }
-        public String getMyHumAr() {
-            return mHumAr;
-        }
-        public String getMyLum() {
-            return mLuminosidade;
-        }
-        public String getMyHumSolo() {
-            return mHumSolo;
-        }
 
-        // Populate DB: Historico tables
+        // Populate DB: Historico tables (NOT USED)
         private void populateHistoricoDb()
         {
             if(mTemperature != null && mLuminosidade != null && mHumSolo != null && mHumAr != null && mPressão != null) {

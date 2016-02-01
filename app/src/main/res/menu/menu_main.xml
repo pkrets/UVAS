@@ -18,7 +18,7 @@
 
     <item
         android:id="@+id/action_logout"
-        android:title="@string/action_logout"
+        android:title="Fechar aplicação"
         android:icon="@mipmap/ic_logout"
         android:showAsAction="never|withText"/>
 

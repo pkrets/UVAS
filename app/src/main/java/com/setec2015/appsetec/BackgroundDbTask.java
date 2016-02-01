@@ -309,7 +309,7 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
 
             SharedPreferences prefs = ctx.getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean("newValueSensor3", true);
+            editor.putBoolean("newValueSensor", true);
             editor.putBoolean("newValueHist3", true);
             editor.commit();
 
@@ -475,7 +475,7 @@ public class BackgroundDbTask extends AsyncTask<String, ListData, String> {
         }
         else if(result.equals("delete_info_1") | result.equals("delete_info_2") | result.equals("delete_info_3"))
         {
-            Toast.makeText(ctx, "Os registos do Histórico de '" +table+ "' foram apagados.", Toast.LENGTH_SHORT).show();
+            Log.i("LOCAL DB", "Os registos do Histórico de '" +table+ "' foram apagados.");
         }
         else
         {
