@@ -54,8 +54,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.nio.ByteBuffer;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -64,10 +66,15 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
 
     private static boolean RUN_ONCE = true;
 
+    ProgressDialog progressBle;
+
+
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
     private ViewPager mPager;
     private MyPagerAdapter mAdapter;
+
+    private static int flag = 0;
 
     private ArrayList<String> recData = new ArrayList<String>();
     private int nbytes=0;
@@ -377,7 +384,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             ListView deviceList = new ListView(this);
             for (int i=0; i < mDevices.size(); i++) {
                 BluetoothDevice device = mDevices.valueAt(i);
-                String deviceFound = "\t\t\t\t * " + device.getName();
+                String deviceFound = "\t\t\t\t - " + device.getName();
                 ArrayAdapter<String> deviceAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new String[] {deviceFound});
                 deviceList.setAdapter(deviceAdapter);
             }
@@ -403,8 +410,6 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
                         mHandler.sendMessage(Message.obtain(null, MSG_PROGRESS, "A estabelecer ligação com " + device.getName() + "..."));
                         dialog.dismiss();
                      }
-
-
                 }
 
             });
@@ -481,14 +486,19 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             BluetoothGattCharacteristic characteristic = null;
             switch (mState) {
                 case 0:
+                    Log.d(TAG, "Reading SD");
+                    characteristic = gatt.getService(SERVICE)
+                            .getCharacteristic(ALL_READ);
+                    break;
+                case 1:
                     if (DEVICE_NAME_1.equals(connectDevice.getName())) {
                         SharedPreferences prefs = getSharedPreferences("GPS", Context.MODE_PRIVATE);
                         boolean GpsConfig = prefs.getBoolean("isConfigured_1", false);
                             Log.i("GPS CONFIGURED 1", String.valueOf(GpsConfig));
-                        if(!GpsConfig) {
+                        //if(!GpsConfig) {
                             characteristic = gatt.getService(SERVICE)
                                     .getCharacteristic(GPS_READ);
-                        }
+                        //}
                     }
                     else if(DEVICE_NAME_2.equals(connectDevice.getName())) {
                         SharedPreferences prefs = getSharedPreferences("GPS", Context.MODE_PRIVATE);
@@ -503,16 +513,11 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
                         SharedPreferences prefs = getSharedPreferences("GPS", Context.MODE_PRIVATE);
                         boolean GpsConfig = prefs.getBoolean("isConfigured_3", false);
                             Log.i("GPS CONFIGURED 3", String.valueOf(GpsConfig));
-                        if(!GpsConfig) {
+                        //if(!GpsConfig) {
                             characteristic = gatt.getService(SERVICE)
                                     .getCharacteristic(GPS_READ);
-                        }
+                        //}
                     }
-                    break;
-                case 1:
-                    Log.d(TAG, "Reading SD");
-                    characteristic = gatt.getService(SERVICE)
-                            .getCharacteristic(ALL_READ);
                     break;
                 default:
                     mHandler.sendEmptyMessage(MSG_DISMISS);
@@ -532,14 +537,14 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             BluetoothGattCharacteristic characteristic;
             switch (mState) {
                 case 0:
-                    Log.d(TAG, "Set notify GPS cal");
-                    characteristic = gatt.getService(SERVICE)
-                            .getCharacteristic(GPS_READ);
-                    break;
-                case 1:
                     Log.d(TAG, "Set notify SD cal");
                     characteristic = gatt.getService(SERVICE)
                             .getCharacteristic(ALL_READ);
+                    break;
+                case 1:
+                    Log.d(TAG, "Set notify GPS cal");
+                    characteristic = gatt.getService(SERVICE)
+                            .getCharacteristic(GPS_READ);
                     break;
                 default:
                     mHandler.sendEmptyMessage(MSG_DISMISS);
@@ -699,35 +704,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
         }
     };
 
-
-
-
-    private void updateSDValues(BluetoothGattCharacteristic characteristic) {
-
-        byte[] tmp = new byte[20];
-
-        tmp = characteristic.getValue();
-        String aux = new String(tmp);
-        Log.i(TAG, "SD Caract: " + aux);
-
-        if (nbytes == 20){
-            fileSize = Integer.parseInt(aux);
-            Log.i(TAG, "file size: " + fileSize);
-        }
-        else if(nbytes < fileSize)
-            recData.add(aux);
-
-        nbytes += tmp.length;
-
-        Log.i(TAG, "nbytes: " + nbytes);
-
-        if(nbytes >= fileSize)
-            readSD();
-
-        Log.i(TAG, "recData size: " + recData.size());
-    }
-
-    // GET GPS (LAT, LNG) FROM SD CARD
+    // Get GPS (Lat, Lng) from SD Card
     private void updateGPSValues(BluetoothGattCharacteristic characteristic) {
 
         byte tmp[];
@@ -760,8 +737,8 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             editor2.putString("GpsLng1", sLng);
             editor2.commit();
 
-                Log.i(TAG, "GPS Lat 1: " + sLat);
-                Log.i(TAG, "GPS Long 1: " + sLng);
+            Log.i(TAG, "GPS Lat 1: " + sLat);
+            Log.i(TAG, "GPS Long 1: " + sLng);
         }
         else if (DEVICE_NAME_2.equals(connectDevice.getName())) {
             SharedPreferences prefs = getSharedPreferences("GPS", Context.MODE_PRIVATE);
@@ -783,8 +760,8 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             editor2.putString("GpsLng2", sLng);
             editor2.commit();
 
-                Log.i(TAG, "GPS Lat 2: " + sLat);
-                Log.i(TAG, "GPS Long 2: " + sLng);
+            Log.i(TAG, "GPS Lat 2: " + sLat);
+            Log.i(TAG, "GPS Long 2: " + sLng);
         }
         else if (DEVICE_NAME_3.equals(connectDevice.getName())) {
             SharedPreferences prefs = getSharedPreferences("GPS", Context.MODE_PRIVATE);
@@ -806,64 +783,126 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             editor2.putString("GpsLng3", sLng);
             editor2.commit();
 
-                Log.i(TAG, "GPS Lat 3: " + sLat);
-                Log.i(TAG, "GPS Long 3: " + sLng);
+            Log.i(TAG, "GPS Lat 3: " + sLat);
+            Log.i(TAG, "GPS Long 3: " + sLng);
         }
     }
 
 
+    private void updateSDValues(BluetoothGattCharacteristic characteristic) {
+
+        //progressBle = new ProgressDialog(this);
+        //progressBle.setMessage("Por favor aguarde, a receber dados ...");
+        //progressBle.show();
+
+        byte[] tmp = new byte[20];
+        String aux = "";
+        tmp = characteristic.getValue();
+
+        if(nbytes+20 > fileSize && flag > 1 ) {
+            if(nbytes < fileSize) {
+                int dif = nbytes + 20 - fileSize;
+                byte[] tmp2 = new byte[20 - dif];
+                for(int i=0; i < (20-dif); i++){
+                    tmp2[i] = tmp[i];
+                }
+                aux = new String(tmp2);
+            }
+        }
+        else{
+            aux = new String(tmp);
+        }
+        //Log.i(TAG, "SD Caract: " + aux);
+        if (nbytes == 0 && flag > 0){
+            fileSize = Integer.parseInt(aux);
+            Log.i(TAG, "file size: " + fileSize);
+        }
+        else if(nbytes < fileSize)
+            recData.add(aux);
+        if(flag > 0)
+            nbytes += aux.length();
+        //Log.i(TAG, "nbytes: " + nbytes);
+        if(nbytes >= fileSize && flag != 0)
+            readSD();
+        flag++;
+    }
 
     private void readSD() {
         String allData = "";
         String[] data;
 
-
         for (int i = 0; i < recData.size(); i++) {
             allData += recData.get(i);
         }
 
+        allData = allData.substring(1);
         data = allData.split("\n");
 
-        Log.i(TAG, "All Data " + allData);
-
+        //Log.i(TAG, "All Data " + allData);
 
         for (int i = 0; i < data.length; i++) {
-            Log.i(TAG, "Data " + (i+1)  + ": " + data[i]);
+            Log.i(TAG, "Data " + (i + 1) + ": " + data[i]);
+
+            String id = data[i].split(",")[0];
+            Log.i("SD CARD", "ID = " +id);
+
+            int t = (Integer.parseInt(data[i].split(",")[2])) / 100;
+            String temp = String.valueOf(t);
+            Log.i("SD CARD", "Temp = " +temp);
+
+            int l = (Integer.parseInt(data[i].split(",")[3]));
+            String lum = String.valueOf(l);
+            Log.i("SD CARD", "Lum = " +lum);
+
+            int hS = ((Integer.parseInt(data[i].split(",")[5])) / 4096) * 100;
+            String humS = String.valueOf(hS);
+            Log.i("SD CARD", "Hum Solo = " +humS);
+
+            int hA = ((Integer.parseInt(data[i].split(",")[4])) / 4096) * 100;
+            String humA = String.valueOf(hA);
+            Log.i("SD CARD", "Hum Ar = " +humA);
+
+            String pluvBool = data[i].split(",")[6];
+            String pluv = null;
+            if(pluvBool.matches("1")) {
+                pluv = "sim";
+            } else if(pluvBool.matches("0")) {
+                pluv = "não";
+            }
+            Log.i("SD CARD", "Pluv = " +pluv);
+
+            long ts = Long.valueOf(data[i].split(",")[1])*1000; // it needs to be in milliseconds
+            Date df = new java.util.Date(ts);
+            String time = new SimpleDateFormat("dd/MM/yyyy, HH:mm").format(df);
+            Log.i("SD CARD", "Timestamp = " +time);
+
+        // Write data retrieved from SD into Local BD
+            if(id.matches("1")) {
+                BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
+                backgroundDbTask.execute("add_info_1", temp, lum, humS, humA, pluv, time);
+            }
+            else if(id.matches("2")) {
+                BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
+                backgroundDbTask.execute("add_info_2", temp, lum, humS, humA, pluv, time);
+            }
+            else if(id.matches("3")) {
+                BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
+                backgroundDbTask.execute("add_info_3", temp, lum, humS, humA, pluv, time);
+            }
+
+
         }
 
-        //mandaBD(data);
-
-        //meteZona1(data[i].split(",")[1] )
-        // id => data[i].getChar(0)
+        //progressBle.dismiss();
     }
 
+
+    // Byte array --> integer
     public static int bytearray2int(byte[] b) {
         ByteBuffer buf = ByteBuffer.wrap(b);
         return buf.getInt();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-    // Populate DB: Historico tables (NOT USED)
-        private void populateHistoricoDb()
-        {
-            if(mTemperature != null && mLuminosidade != null && mHumSolo != null && mHumAr != null && mPressão != null) {
-                String data = "12-12-2015, 18h34m";     // Manually inserted for now
-
-                BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
-                backgroundDbTask.execute("add_info_1", mTemperature, mLuminosidade, mHumSolo, mHumAr, mPressão, data);
-            }
-        }
 
 }
 

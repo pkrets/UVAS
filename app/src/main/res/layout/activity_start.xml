@@ -50,7 +50,8 @@
         android:textSize="10sp"
         android:text="BD Historico"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:visibility="invisible" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -61,7 +62,8 @@
         android:textSize="10sp"
         android:text="BD Alertas"
         android:layout_above="@+id/btnBDhistorico"
-        android:layout_alignStart="@+id/btnBDhistorico" />
+        android:layout_alignStart="@+id/btnBDhistorico"
+        android:visibility="invisible"/>
 
     <TextView
         android:layout_width="wrap_content"
