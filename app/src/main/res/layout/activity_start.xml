@@ -50,8 +50,7 @@
         android:textSize="10sp"
         android:text="BD Historico"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:visibility="invisible" />
+        android:layout_alignParentEnd="true"/>
 
     <Button
         style="?android:attr/buttonStyleSmall"

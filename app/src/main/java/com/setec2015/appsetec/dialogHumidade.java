@@ -64,7 +64,6 @@ public class dialogHumidade extends DialogFragment implements View.OnClickListen
             edt_maxHumidadeSolo = (EditText) view.findViewById(R.id.edt_maxHumidadeSolo);
                 edt_maxHumidadeSolo.setText(maxHumidadeSolo_saved);
 
-
         return view;
     }
 

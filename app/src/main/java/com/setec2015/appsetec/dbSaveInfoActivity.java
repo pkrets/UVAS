@@ -88,6 +88,7 @@ public class dbSaveInfoActivity extends AppCompatActivity {
                         //if(boxPraga3) { alertaPraga3(); }
                         //if(boxPraga4) { alertaPraga4(); }
                     }
+
         }
 
     // Add the manually inserted row to the table from Zona 2 - "pandlet2_table"

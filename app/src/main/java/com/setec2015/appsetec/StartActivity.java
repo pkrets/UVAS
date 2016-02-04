@@ -20,6 +20,10 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
+        if (getIntent().getBooleanExtra("EXIT", false)) {
+            onDestroy();
+        }
+
         btnEntrar = (Button) findViewById(R.id.btnEntrar);
         btnEntrar.setOnClickListener(this);
 
@@ -43,8 +47,10 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
-    public void onBackPressed() {
-        //super.onBackPressed();
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
+        System.exit(0);
     }
 
     @Override

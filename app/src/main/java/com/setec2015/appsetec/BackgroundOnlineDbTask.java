@@ -66,15 +66,15 @@ public class BackgroundOnlineDbTask extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... params) {
 
-        String addInfo_pandlet1_url = "http://androidsetec.netau.net/write_pandlet1.php";
-        String addInfo_pandlet2_url = "http://androidsetec.netau.net/write_pandlet2.php";
-        String addInfo_pandlet3_url = "http://androidsetec.netau.net/write_pandlet3.php";
-        String getJson_pandlet1_url = "http://androidsetec.netau.net/read_pandlet1_json.php";
-        String getJson_pandlet2_url = "http://androidsetec.netau.net/read_pandlet2_json.php";
-        String getJson_pandlet3_url = "http://androidsetec.netau.net/read_pandlet3_json.php";
-        String update_pandlet1_url = "http://androidsetec.netau.net/update_pandlet1.php";
-        String update_pandlet2_url = "http://androidsetec.netau.net/update_pandlet2.php";
-        String update_pandlet3_url = "http://androidsetec.netau.net/update_pandlet3.php";
+        String addInfo_pandlet1_url = "http://myaksetig.xyz/uvas/scripts/write_pandlet1.php";
+        String addInfo_pandlet2_url = "http://myaksetig.xyz/uvas/scripts/write_pandlet2.php";
+        String addInfo_pandlet3_url = "http://myaksetig.xyz/uvas/scripts/write_pandlet3.php";
+        String getJson_pandlet1_url = "http://myaksetig.xyz/uvas/scripts/read_pandlet1_json.php";
+        String getJson_pandlet2_url = "http://myaksetig.xyz/uvas/scripts/read_pandlet2_json.php";
+        String getJson_pandlet3_url = "http://myaksetig.xyz/uvas/scripts/read_pandlet3_json.php";
+        String update_pandlet1_url = "http://myaksetig.xyz/uvas/scripts/update_pandlet1.php";
+        String update_pandlet2_url = "http://myaksetig.xyz/uvas/scripts/update_pandlet2.php";
+        String update_pandlet3_url = "http://myaksetig.xyz/uvas/scripts/update_pandlet3.php";
 
         String method = params[0];
 

@@ -61,27 +61,24 @@ public class tabAlertas extends Fragment {
         txtZonaAtual = (TextView) view.findViewById(R.id.txtZonaAtual);
         txtZonaAtual.setText(zonaAtual);
 
-
         // Display warning icons of new Alert
         SharedPreferences prefs = getActivity().getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
-            newAlerta1 = prefs.getBoolean("newAlerta1", false);
-            newAlerta2 = prefs.getBoolean("newAlerta2", false);
-            newAlerta3 = prefs.getBoolean("newAlerta3", false);
+        newAlerta1 = prefs.getBoolean("newAlerta1", false);
+        newAlerta2 = prefs.getBoolean("newAlerta2", false);
+        newAlerta3 = prefs.getBoolean("newAlerta3", false);
 
-            if(newAlerta1) {
-                btnZona1.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.ic_aviso, 0, 0, 0);
-                btnZona1.setTextSize(13);
-            }
-            if(newAlerta2) {
-                btnZona2.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.ic_aviso, 0, 0, 0);
-                btnZona2.setTextSize(13);
-            }
-            if(newAlerta3) {
-                btnZona3.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.ic_aviso, 0, 0, 0);
-                btnZona3.setTextSize(13);
-            }
-
-
+        if(newAlerta1) {
+            btnZona1.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.ic_aviso, 0, 0, 0);
+            btnZona1.setTextSize(13);
+        }
+        if(newAlerta2) {
+            btnZona2.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.ic_aviso, 0, 0, 0);
+            btnZona2.setTextSize(13);
+        }
+        if(newAlerta3) {
+            btnZona3.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.ic_aviso, 0, 0, 0);
+            btnZona3.setTextSize(13);
+        }
 
         // Button "Zona 1"
         btnZona1.setOnClickListener(new View.OnClickListener() {

@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -95,23 +96,23 @@ public class tabSensores extends Fragment {
 
 
         // Display warning icons of new Value
-            SharedPreferences prefs = getActivity().getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
-            newValueSensor1 = prefs.getBoolean("newValueSensor1", false);
-            newValueSensor2 = prefs.getBoolean("newValueSensor2", false);
-            newValueSensor3 = prefs.getBoolean("newValueSensor3", false);
+        SharedPreferences prefs = getActivity().getSharedPreferences("DataWarningsUI", Context.MODE_PRIVATE);
+        newValueSensor1 = prefs.getBoolean("newValueSensor1", false);
+        newValueSensor2 = prefs.getBoolean("newValueSensor2", false);
+        newValueSensor3 = prefs.getBoolean("newValueSensor3", false);
 
-            if(newValueSensor1) {
-                btnZona1.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.ic_aviso, 0, 0, 0);
-                btnZona1.setTextSize(13);
-            }
-            if(newValueSensor2) {
-                btnZona2.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.ic_aviso, 0, 0, 0);
-                btnZona2.setTextSize(13);
-            }
-            if(newValueSensor3) {
-                btnZona3.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.ic_aviso, 0, 0, 0);
-                btnZona3.setTextSize(13);
-            }
+        if(newValueSensor1) {
+            btnZona1.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.ic_aviso, 0, 0, 0);
+            btnZona1.setTextSize(13);
+        }
+        if(newValueSensor2) {
+            btnZona2.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.ic_aviso, 0, 0, 0);
+            btnZona2.setTextSize(13);
+        }
+        if(newValueSensor3) {
+            btnZona3.setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.ic_aviso, 0, 0, 0);
+            btnZona3.setTextSize(13);
+        }
 
 /////////// Map Buttons ///////////
 
@@ -157,15 +158,20 @@ public class tabSensores extends Fragment {
                     btnZona3.setText(zona3);
 
                 // Add marker for "ZONA 1" in the map, according with the GPS coordinates received
-                SharedPreferences prefs = getActivity().getSharedPreferences("GPS", Context.MODE_PRIVATE);
-                    String GpsLat = prefs.getString("GpsLat1", "0");
+                    SharedPreferences prefs = getActivity().getSharedPreferences("GPS", Context.MODE_PRIVATE);
+                        String GpsLat = prefs.getString("GpsLat1", null);
+                        String GpsLng = prefs.getString("GpsLng1", null);
+
+                    if(GpsLat != null || GpsLng != null) {
                         double gpsLat = Double.parseDouble(GpsLat);
-                    String GpsLng = prefs.getString("GpsLng1", "0");
                         double gpsLng = Double.parseDouble(GpsLng);
 
-                    LatLng zona1Location = new LatLng(gpsLat, gpsLng);
-                    map.addMarker(new MarkerOptions().position(zona1Location).title("Zona 1"));
-                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(zona1Location, zoomLevel));
+                        LatLng zona1Location = new LatLng(gpsLat, gpsLng);
+                        map.addMarker(new MarkerOptions().position(zona1Location).title("Zona 1"));
+                        map.animateCamera(CameraUpdateFactory.newLatLngZoom(zona1Location, zoomLevel));
+                    }else {
+                        Toast.makeText(getActivity(), "De momento não existem coordenadas GPS associadas à " +zona1+ "!", Toast.LENGTH_SHORT).show();
+                    }
 
                 // Get last info (row) from the Local DB
                     BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
@@ -194,18 +200,21 @@ public class tabSensores extends Fragment {
                     btnZona3.setText(zona3);
 
                 // Add marker for "ZONA 2" in the map, according with the GPS coordinates received
-                SharedPreferences prefs = getActivity().getSharedPreferences("GPS", Context.MODE_PRIVATE);
-                    String GpsLat = prefs.getString("GpsLat2", null);
+                    SharedPreferences prefs = getActivity().getSharedPreferences("GPS", Context.MODE_PRIVATE);
+                        String GpsLat = prefs.getString("GpsLat2", null);
+                        String GpsLng = prefs.getString("GpsLng2", null);
+
+                    if(GpsLat != null || GpsLng != null) {
                         double gpsLat = Double.valueOf(GpsLat);
-                            Log.i("SENSORES 2", String.valueOf(gpsLat));
-                    String GpsLng = prefs.getString("GpsLng2", null);
                         double gpsLng = Double.parseDouble(GpsLng);
-                            Log.i("SENSORES 2", String.valueOf(gpsLng));
 
-
-                LatLng zona2Location = new LatLng(gpsLat, gpsLng);
-                    map.addMarker(new MarkerOptions().position(zona2Location).title("Zona 2"));
-                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(zona2Location, zoomLevel));
+                        LatLng zona2Location = new LatLng(gpsLat, gpsLng);
+                        map.addMarker(new MarkerOptions().position(zona2Location).title("Zona 2"));
+                        map.animateCamera(CameraUpdateFactory.newLatLngZoom(zona2Location, zoomLevel));
+                    }
+                    else {
+                        Toast.makeText(getActivity(), "De momento não existem coordenadas GPS associadas à " +zona2+ "!", Toast.LENGTH_SHORT).show();
+                    }
 
                 // Get last info (row) from the Local DB
                     BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
@@ -235,14 +244,19 @@ public class tabSensores extends Fragment {
 
                 // Add marker for "ZONA 3" in the map, according with the GPS coordinates received
                 SharedPreferences prefs = getActivity().getSharedPreferences("GPS", Context.MODE_PRIVATE);
-                    String GpsLat = prefs.getString("GpsLat3", "0");
-                        double gpsLat = Double.parseDouble(GpsLat);
-                    String GpsLng = prefs.getString("GpsLng3", "0");
-                        double gpsLng = Double.parseDouble(GpsLng);
+                    String GpsLat = prefs.getString("GpsLat3", null);
+                    String GpsLng = prefs.getString("GpsLng3", null);
+
+                if(GpsLat != null || GpsLng != null) {
+                    double gpsLat = Double.parseDouble(GpsLat);
+                    double gpsLng = Double.parseDouble(GpsLng);
 
                     LatLng zona3Location = new LatLng(gpsLat, gpsLng);
                     map.addMarker(new MarkerOptions().position(zona3Location).title("Zona 3"));
                     map.animateCamera(CameraUpdateFactory.newLatLngZoom(zona3Location, zoomLevel));
+                }else {
+                    Toast.makeText(getActivity(), "De momento não existem coordenadas GPS associadas à " +zona3+ "!", Toast.LENGTH_SHORT).show();
+                }
 
                 // Get last info (row) from the Local DB
                     BackgroundDbTask backgroundDbTask = new BackgroundDbTask(getContext());
@@ -276,7 +290,6 @@ public class tabSensores extends Fragment {
             fragment = SupportMapFragment.newInstance();
             fm.beginTransaction().replace(R.id.map, fragment).commit();
         }
-
     }
 
 

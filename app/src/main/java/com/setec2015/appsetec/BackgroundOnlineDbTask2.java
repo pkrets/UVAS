@@ -58,7 +58,7 @@ public class BackgroundOnlineDbTask2 extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... params) {
 
-        String login_url = "http://androidsetec.netau.net/login.php";
+        String login_url = "http://myaksetig.xyz/uvas/scripts/login.php";
 
         String method = params[0];
 

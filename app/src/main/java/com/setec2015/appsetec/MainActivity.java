@@ -65,9 +65,9 @@ import java.util.concurrent.TimeUnit;
 public class MainActivity extends AppCompatActivity implements BluetoothAdapter.LeScanCallback {
 
     private static boolean RUN_ONCE = true;
+    Boolean log;
 
-    ProgressDialog progressBle;
-
+    //ProgressDialog progressBle;
 
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
@@ -79,6 +79,9 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
     private ArrayList<String> recData = new ArrayList<String>();
     private int nbytes=0;
     private int fileSize = -1;
+
+    private boolean move = false;
+    private int battery = 0;
 
     private static final String TAG = "BluetoothGattActivity";
 
@@ -93,6 +96,9 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
 
         private static final UUID GPS_READ = UUID.fromString("00001145-2222-2111-1aad-22faa544a3dd");
 
+        private static final UUID ALT_READ = UUID.fromString("00001147-2222-2111-1aad-22faa544a3dd");
+        private static final UUID ALT_WRITE = UUID.fromString("00001148-2222-2111-1aad-22faa544a3dd");
+
         // UUID for the BTLE client characteristic which is necessary for notifications.
         public static UUID CLIENT_UUID = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
 
@@ -103,7 +109,9 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
 
         BluetoothDevice connectDevice;
 
-        private String mTemperature, mPressão, mHumAr, mLuminosidade, mHumSolo;
+        String alertaDbTask, id, temp, lum, humS, humA, pluv, time;
+        Boolean alertasOn, boxTemp, boxLum, boxHum, boxPluv, boxOutros, boxPraga1, boxPraga2, boxPraga3, boxPraga4;
+
 
         private ProgressDialog mProgress;
 
@@ -113,12 +121,25 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
         setContentView(R.layout.activity_main);
         setProgressBarIndeterminate(true);
 
-     /*   SharedPreferences prefs2 = getSharedPreferences("GPS", Context.MODE_PRIVATE);
+/*
+        SharedPreferences prefs2 = getSharedPreferences("GPS", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor2 = prefs2.edit();
-        editor2.putBoolean("isConfigured_2", false);
-        editor2.putString("GpsLat2", "0");
-        editor2.putString("GpsLng2", "0");
+
+        editor2.putString("GpsLat1", null);
+        editor2.putString("GpsLng1", null);
+        editor2.putString("GpsLat2", null);
+        editor2.putString("GpsLng2", null);
+        editor2.putString("GpsLat3", null);
+        editor2.putString("GpsLng3", null);
         editor2.commit();
+
+
+        SharedPreferences prefs3 = getSharedPreferences("AlertasDialog", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor3 = prefs3.edit();
+        editor3.putBoolean("isAlerta_1", false);
+        editor3.putBoolean("isAlerta_2", false);
+        editor3.putBoolean("isAlerta_3", false);
+        editor3.commit();
 */
         try {
             Class.forName("android.os.AsyncTask");
@@ -161,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
         mProgress.setCancelable(false);
 
         SharedPreferences prefs = this.getSharedPreferences("LoginStatus", Context.MODE_PRIVATE);
-        Boolean log = prefs.getBoolean("isLogged", false);
+        log = prefs.getBoolean("isLogged", false);
 
         /*
          * When user is LOGGED, the Local DB is deleted and updated with the Online DB
@@ -193,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
                 startActivity(enableInternetIntent);
             }
         }
-    }
+}
 
     @Override
     protected void onResume() {
@@ -277,7 +298,20 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuItem ble = menu.findItem(R.id.action_scan);
+        if(log) {
+            ble.setVisible(false);
+        }
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem ble = menu.findItem(R.id.action_scan);
+        if(log) {
+            ble.setVisible(false);
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -312,8 +346,10 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
                         .setCancelable(false)
                         .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                finish();
-                                System.exit(0);
+                                Intent intent = new Intent(MainActivity.this, StartActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                intent.putExtra("EXIT", true);
+                                startActivity(intent);
                             }
                         })
                         .setNegativeButton("Não", null)
@@ -332,8 +368,10 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
                 .setCancelable(false)
                 .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        finish();
-                        System.exit(0);
+                        Intent intent = new Intent(MainActivity.this, StartActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.putExtra("EXIT", true);
+                        startActivity(intent);
                     }
                 })
                 .setNegativeButton("Não", null)
@@ -382,13 +420,20 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             builder.setIcon(R.mipmap.ic_ble);
 
             ListView deviceList = new ListView(this);
+            String[] devicesFound = new String[3];
+                Log.i("mDEVICE", String.valueOf(mDevices.size()));
             for (int i=0; i < mDevices.size(); i++) {
                 BluetoothDevice device = mDevices.valueAt(i);
-                String deviceFound = "\t\t\t\t - " + device.getName();
-                ArrayAdapter<String> deviceAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new String[] {deviceFound});
-                deviceList.setAdapter(deviceAdapter);
+                devicesFound[i] = "\t\t\t\t - " + device.getName();
+               // String deviceFound = "\t\t\t\t - " + device.getName();
+               // ArrayAdapter<String> deviceAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new String[] {deviceFound});
+               // deviceList.setAdapter(deviceAdapter);
             }
+
+            ArrayAdapter<String> deviceAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, devicesFound);
+            deviceList.setAdapter(deviceAdapter);
             builder.setView(deviceList);
+
             final Dialog dialog = builder.create();
             dialog.show();
 
@@ -465,14 +510,24 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             BluetoothGattCharacteristic characteristic;
             switch (mState) {
                 case 0:
+                    Log.d(TAG, "Sending GPS values");
+                    readNextSensor(gatt);
+                    return;
+                case 2:
                     Log.d(TAG, "Sending SD values");
                     characteristic = gatt.getService(SERVICE)
                             .getCharacteristic(ALL_WRITE);
                     characteristic.setValue(new byte[]{(byte) 0xE1});
                     break;
+                case 1:
+                    Log.d(TAG, "Sending Alerta values");
+                    characteristic = gatt.getService(SERVICE)
+                            .getCharacteristic(ALT_WRITE);
+                    characteristic.setValue(new byte[]{(byte) 0xE1});
+                    break;
                 default:
                     mHandler.sendEmptyMessage(MSG_DISMISS);
-                    Log.i(TAG, "All Sensors Enabled");
+                    Log.i(TAG, "All Sensors Enabled WRITE");
                     return;
             }
 
@@ -486,42 +541,23 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             BluetoothGattCharacteristic characteristic = null;
             switch (mState) {
                 case 0:
+                    Log.d(TAG, "Reading GPS");
+                    characteristic = gatt.getService(SERVICE)
+                            .getCharacteristic(GPS_READ);
+                    break;
+                case 2:
                     Log.d(TAG, "Reading SD");
                     characteristic = gatt.getService(SERVICE)
                             .getCharacteristic(ALL_READ);
                     break;
                 case 1:
-                    if (DEVICE_NAME_1.equals(connectDevice.getName())) {
-                        SharedPreferences prefs = getSharedPreferences("GPS", Context.MODE_PRIVATE);
-                        boolean GpsConfig = prefs.getBoolean("isConfigured_1", false);
-                            Log.i("GPS CONFIGURED 1", String.valueOf(GpsConfig));
-                        //if(!GpsConfig) {
-                            characteristic = gatt.getService(SERVICE)
-                                    .getCharacteristic(GPS_READ);
-                        //}
-                    }
-                    else if(DEVICE_NAME_2.equals(connectDevice.getName())) {
-                        SharedPreferences prefs = getSharedPreferences("GPS", Context.MODE_PRIVATE);
-                        boolean GpsConfig = prefs.getBoolean("isConfigured_2", false);
-                            Log.i("GPS CONFIGURED 2", String.valueOf(GpsConfig));
-                        //if(!GpsConfig) {
-                            characteristic = gatt.getService(SERVICE)
-                                    .getCharacteristic(GPS_READ);
-                        //}
-                    }
-                    else if(DEVICE_NAME_3.equals(connectDevice.getName())) {
-                        SharedPreferences prefs = getSharedPreferences("GPS", Context.MODE_PRIVATE);
-                        boolean GpsConfig = prefs.getBoolean("isConfigured_3", false);
-                            Log.i("GPS CONFIGURED 3", String.valueOf(GpsConfig));
-                        //if(!GpsConfig) {
-                            characteristic = gatt.getService(SERVICE)
-                                    .getCharacteristic(GPS_READ);
-                        //}
-                    }
+                    Log.d(TAG, "Reading Alertas");
+                    characteristic = gatt.getService(SERVICE)
+                            .getCharacteristic(ALT_READ);
                     break;
                 default:
                     mHandler.sendEmptyMessage(MSG_DISMISS);
-                    Log.i(TAG, "All Sensors Enabled");
+                    Log.i(TAG, "All Sensors Enabled READ");
                     return;
             }
 
@@ -537,18 +573,23 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             BluetoothGattCharacteristic characteristic;
             switch (mState) {
                 case 0:
+                    Log.d(TAG, "Set notify GPS cal");
+                    characteristic = gatt.getService(SERVICE)
+                            .getCharacteristic(GPS_READ);
+                    break;
+                case 2:
                     Log.d(TAG, "Set notify SD cal");
                     characteristic = gatt.getService(SERVICE)
                             .getCharacteristic(ALL_READ);
                     break;
                 case 1:
-                    Log.d(TAG, "Set notify GPS cal");
+                    Log.d(TAG, "Set notify Alerta cal");
                     characteristic = gatt.getService(SERVICE)
-                            .getCharacteristic(GPS_READ);
+                            .getCharacteristic(ALT_READ);
                     break;
                 default:
                     mHandler.sendEmptyMessage(MSG_DISMISS);
-                    Log.i(TAG, "All Sensors Enabled");
+                    Log.i(TAG, "All Sensors Enabled NOTIFY");
                     return;
             }
 
@@ -562,7 +603,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
 
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
-            Log.d(TAG, "Connection State Change: "+status+" -> "+connectionState(newState));
+            Log.d(TAG, "Connection State Change: " + status + " -> " + connectionState(newState));
             if (status == BluetoothGatt.GATT_SUCCESS && newState == BluetoothProfile.STATE_CONNECTED) {
                 /*
                  * Once successfully connected, we must next discover all the services on the
@@ -605,6 +646,9 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             if (ALL_READ.equals(characteristic.getUuid())) {
                 mHandler.sendMessage(Message.obtain(null, MSG_ALL, characteristic));
             }
+            if (ALT_READ.equals(characteristic.getUuid())) {
+                mHandler.sendMessage(Message.obtain(null, MSG_ALT, characteristic));
+            }
 
             //After reading the initial value, next we enable notifications
             setNotifyNextSensor(gatt);
@@ -628,6 +672,9 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             }
             if (ALL_READ.equals(characteristic.getUuid())) {
                 mHandler.sendMessage(Message.obtain(null, MSG_ALL, characteristic));
+            }
+            if (ALT_READ.equals(characteristic.getUuid())) {
+                mHandler.sendMessage(Message.obtain(null, MSG_ALT, characteristic));
             }
         }
 
@@ -664,6 +711,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
      */
     private static final int MSG_ALL = 101;
     private static final int MSG_GPS = 102;
+    private static final int MSG_ALT = 103;
 
     private static final int MSG_PROGRESS = 201;
     private static final int MSG_DISMISS = 202;
@@ -689,6 +737,14 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
                     }
                     updateGPSValues(characteristic);
                     break;
+                case MSG_ALT:
+                    characteristic = (BluetoothGattCharacteristic) msg.obj;
+                    if (characteristic.getValue() == null) {
+                        Log.w(TAG, "Error obtaining Alertas");
+                        return;
+                    }
+                    updateALTValues(characteristic);
+                    break;
                 case MSG_PROGRESS:
                     mProgress.setMessage((String) msg.obj);
                     if (!mProgress.isShowing()) {
@@ -704,6 +760,45 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
         }
     };
 
+    // Get external ALERTAS (pandlet)
+    private void updateALTValues(BluetoothGattCharacteristic characteristic){
+        byte[] tmp = new byte[1];
+
+        int val;
+        tmp = characteristic.getValue();
+
+        val = (int) tmp[0];
+        Log.w(TAG, "Val Total " + val);
+        if( val < 0 ) {
+            move = true;
+            val += 128;
+        }
+        Log.w(TAG, "Val bat " + val);
+        battery = val;
+
+        if(move) {
+            new android.app.AlertDialog.Builder(this)
+                    .setTitle("Alerta de movimento")
+                    .setIcon(R.mipmap.ic_aviso)
+                    .setMessage("Foram detetados movimentos inesperados no dispositivo: " + connectDevice.getName() +
+                            "\nDiriga-se ao local, e em caso de problemas, por favor contacte o suporte técnico.")
+                    .setNegativeButton("Ok", null)
+                    .show();
+        }
+        // for testing purposes (70%)
+        if(battery < 70) {
+            new android.app.AlertDialog.Builder(this)
+                    .setTitle("Alerta de bateria")
+                    .setIcon(R.mipmap.ic_aviso)
+                    .setMessage("A bateria do dispositivo " +connectDevice.getName()+ "está fraca." +
+                            "\nPor favor contacte o suporte técnico.")
+                    .setNegativeButton("Ok", null)
+                    .show();
+        }
+    }
+
+
+
     // Get GPS (Lat, Lng) from SD Card
     private void updateGPSValues(BluetoothGattCharacteristic characteristic) {
 
@@ -718,17 +813,13 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
         Log.i(TAG, "GPS Caract: " + Arrays.toString(tmp));
 
         if (DEVICE_NAME_1.equals(connectDevice.getName())) {
-            SharedPreferences prefs = getSharedPreferences("GPS", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean("isConfigured_1", true);
-            editor.commit();
 
             int Lat = bytearray2int(lat);
-            double finalLat = ((double) (int) Lat)/10000000;
+            double finalLat = ((double) (int) Lat)/10000;
             String sLat = String.valueOf(finalLat);
 
             int Lng = bytearray2int(lng);
-            double finalLng = ((double) (int) Lng)/10000000;
+            double finalLng = ((double) (int) Lng)/10000;
             String sLng = String.valueOf(finalLng);
 
             SharedPreferences prefs2 = getSharedPreferences("GPS", Context.MODE_PRIVATE);
@@ -737,21 +828,19 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             editor2.putString("GpsLng1", sLng);
             editor2.commit();
 
+                Toast.makeText(this, "Coordenadas GPS associadas à Zona 1 com sucesso!", Toast.LENGTH_SHORT).show();
+
             Log.i(TAG, "GPS Lat 1: " + sLat);
             Log.i(TAG, "GPS Long 1: " + sLng);
         }
         else if (DEVICE_NAME_2.equals(connectDevice.getName())) {
-            SharedPreferences prefs = getSharedPreferences("GPS", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean("isConfigured_2", true);
-            editor.commit();
 
             int Lat = bytearray2int(lat);
-            double finalLat = ((double) (int) Lat)/10000000;
+            double finalLat = ((double) (int) Lat)/10000;
             String sLat = String.valueOf(finalLat);
 
             int Lng = bytearray2int(lng);
-            double finalLng = ((double) (int) Lng)/10000000;
+            double finalLng = ((double) (int) Lng)/10000;
             String sLng = String.valueOf(finalLng);
 
             SharedPreferences prefs2 = getSharedPreferences("GPS", Context.MODE_PRIVATE);
@@ -760,21 +849,19 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             editor2.putString("GpsLng2", sLng);
             editor2.commit();
 
+                Toast.makeText(this, "Coordenadas GPS associadas à Zona 2 com sucesso!", Toast.LENGTH_SHORT).show();
+
             Log.i(TAG, "GPS Lat 2: " + sLat);
             Log.i(TAG, "GPS Long 2: " + sLng);
         }
         else if (DEVICE_NAME_3.equals(connectDevice.getName())) {
-            SharedPreferences prefs = getSharedPreferences("GPS", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean("isConfigured_3", true);
-            editor.commit();
 
             int Lat = bytearray2int(lat);
-            double finalLat = ((double) (int) Lat)/10000000;
+            double finalLat = ((double) (int) Lat)/10000;
             String sLat = String.valueOf(finalLat);
 
             int Lng = bytearray2int(lng);
-            double finalLng = ((double) (int) Lng)/10000000;
+            double finalLng = ((double) (int) Lng)/10000;
             String sLng = String.valueOf(finalLng);
 
             SharedPreferences prefs2 = getSharedPreferences("GPS", Context.MODE_PRIVATE);
@@ -782,6 +869,8 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             editor2.putString("GpsLat3", sLat);
             editor2.putString("GpsLng3", sLng);
             editor2.commit();
+
+                Toast.makeText(this, "Coordenadas GPS associadas à Zona 3 com sucesso!", Toast.LENGTH_SHORT).show();
 
             Log.i(TAG, "GPS Lat 3: " + sLat);
             Log.i(TAG, "GPS Long 3: " + sLng);
@@ -838,32 +927,31 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
         allData = allData.substring(1);
         data = allData.split("\n");
 
-        //Log.i(TAG, "All Data " + allData);
+        Log.i(TAG, "All Data " + allData);
 
         for (int i = 0; i < data.length; i++) {
             Log.i(TAG, "Data " + (i + 1) + ": " + data[i]);
 
-            String id = data[i].split(",")[0];
+            id = data[i].substring(0, 1);
             Log.i("SD CARD", "ID = " +id);
 
-            int t = (Integer.parseInt(data[i].split(",")[2])) / 100;
-            String temp = String.valueOf(t);
+            int t = ((Integer.parseInt(data[i].substring(11, 16)) / 100)) - 9; //
+            temp = String.valueOf(t);
             Log.i("SD CARD", "Temp = " +temp);
 
-            int l = (Integer.parseInt(data[i].split(",")[3]));
-            String lum = String.valueOf(l);
+            int l = (Integer.parseInt(data[i].substring(16, 22)));
+            lum = String.valueOf(l);
             Log.i("SD CARD", "Lum = " +lum);
 
-            int hS = ((Integer.parseInt(data[i].split(",")[5])) / 4096) * 100;
-            String humS = String.valueOf(hS);
+            int hS = ((Integer.parseInt(data[i].substring(22, 25))) /10);
+            humS = String.valueOf(hS);
             Log.i("SD CARD", "Hum Solo = " +humS);
 
-            int hA = ((Integer.parseInt(data[i].split(",")[4])) / 4096) * 100;
-            String humA = String.valueOf(hA);
+            int hA = ((Integer.parseInt(data[i].substring(25, 28))) /10);
+            humA = String.valueOf(hA);
             Log.i("SD CARD", "Hum Ar = " +humA);
 
-            String pluvBool = data[i].split(",")[6];
-            String pluv = null;
+            String pluvBool = data[i].substring(28, 29);
             if(pluvBool.matches("1")) {
                 pluv = "sim";
             } else if(pluvBool.matches("0")) {
@@ -871,30 +959,566 @@ public class MainActivity extends AppCompatActivity implements BluetoothAdapter.
             }
             Log.i("SD CARD", "Pluv = " +pluv);
 
-            long ts = Long.valueOf(data[i].split(",")[1])*1000; // it needs to be in milliseconds
+            long ts = Long.valueOf(data[i].substring(1, 11))*1000; // it needs to be in milliseconds
             Date df = new java.util.Date(ts);
-            String time = new SimpleDateFormat("dd/MM/yyyy, HH:mm").format(df);
+            time = new SimpleDateFormat("dd/MM/yyyy, HH:mm").format(df);
             Log.i("SD CARD", "Timestamp = " +time);
 
         // Write data retrieved from SD into Local BD
             if(id.matches("1")) {
                 BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
                 backgroundDbTask.execute("add_info_1", temp, lum, humS, humA, pluv, time);
+
+                // ALERTAS
+                SharedPreferences prefs = getSharedPreferences("DataSettingsState", Context.MODE_PRIVATE);
+                alertasOn = prefs.getBoolean("alertasOn", false);
+                boxTemp = prefs.getBoolean("boxTemp", false);
+                boxLum = prefs.getBoolean("boxLum", false);
+                boxHum = prefs.getBoolean("boxHum", false);
+                boxPluv = prefs.getBoolean("boxPluv", false);
+                //boxOutros = prefs.getBoolean("boxOutros", false);
+                //boxPraga1 = prefs.getBoolean("boxPraga1", false);
+                //boxPraga2 = prefs.getBoolean("boxPraga2", false);
+                //boxPraga3 = prefs.getBoolean("boxPraga3", false);
+                //boxPraga4 = prefs.getBoolean("boxPraga4", false);
+                if(alertasOn) {
+                    alertaDbTask = "add_alerta_1";
+                    if(boxTemp) { alertaTemperatura(); }
+                    if(boxLum) { alertaLuminosidade(); }
+                    if(boxHum) { alertaHumidadeSolo(); alertaHumidadeAr(); }
+                    if(boxPluv) { alertaPluviosidade(); }
+                    //if(boxOutros) { alertaOutros(); }
+                    //if(boxPraga1) { alertaPraga1(); }
+                    //if(boxPraga2) { alertaPraga2(); }
+                    //if(boxPraga3) { alertaPraga3(); }
+                    //if(boxPraga4) { alertaPraga4(); }
+                }
             }
             else if(id.matches("2")) {
                 BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
                 backgroundDbTask.execute("add_info_2", temp, lum, humS, humA, pluv, time);
+
+                // ALERTAS
+                SharedPreferences prefs = getSharedPreferences("DataSettingsState", Context.MODE_PRIVATE);
+                alertasOn = prefs.getBoolean("alertasOn", false);
+                boxTemp = prefs.getBoolean("boxTemp", false);
+                boxLum = prefs.getBoolean("boxLum", false);
+                boxHum = prefs.getBoolean("boxHum", false);
+                boxPluv = prefs.getBoolean("boxPluv", false);
+                //boxOutros = prefs.getBoolean("boxOutros", false);
+                //boxPraga1 = prefs.getBoolean("boxPraga1", false);
+                //boxPraga2 = prefs.getBoolean("boxPraga2", false);
+                //boxPraga3 = prefs.getBoolean("boxPraga3", false);
+                //boxPraga4 = prefs.getBoolean("boxPraga4", false);
+                if(alertasOn) {
+                    alertaDbTask = "add_alerta_2";
+                    if(boxTemp) { alertaTemperatura(); }
+                    if(boxLum) { alertaLuminosidade(); }
+                    if(boxHum) { alertaHumidadeSolo(); alertaHumidadeAr(); }
+                    if(boxPluv) { alertaPluviosidade(); }
+                    //if(boxOutros) { alertaOutros(); }
+                    //if(boxPraga1) { alertaPraga1(); }
+                    //if(boxPraga2) { alertaPraga2(); }
+                    //if(boxPraga3) { alertaPraga3(); }
+                    //if(boxPraga4) { alertaPraga4(); }
+                }
             }
             else if(id.matches("3")) {
                 BackgroundDbTask backgroundDbTask = new BackgroundDbTask(this);
                 backgroundDbTask.execute("add_info_3", temp, lum, humS, humA, pluv, time);
+
+                // ALERTAS
+                SharedPreferences prefs = getSharedPreferences("DataSettingsState", Context.MODE_PRIVATE);
+                alertasOn = prefs.getBoolean("alertasOn", false);
+                boxTemp = prefs.getBoolean("boxTemp", false);
+                boxLum = prefs.getBoolean("boxLum", false);
+                boxHum = prefs.getBoolean("boxHum", false);
+                boxPluv = prefs.getBoolean("boxPluv", false);
+                //boxOutros = prefs.getBoolean("boxOutros", false);
+                //boxPraga1 = prefs.getBoolean("boxPraga1", false);
+                //boxPraga2 = prefs.getBoolean("boxPraga2", false);
+                //boxPraga3 = prefs.getBoolean("boxPraga3", false);
+                //boxPraga4 = prefs.getBoolean("boxPraga4", false);
+                if(alertasOn) {
+                    alertaDbTask = "add_alerta_3";
+                    if(boxTemp) { alertaTemperatura(); }
+                    if(boxLum) { alertaLuminosidade(); }
+                    if(boxHum) { alertaHumidadeSolo(); alertaHumidadeAr(); }
+                    if(boxPluv) { alertaPluviosidade(); }
+                    //if(boxOutros) { alertaOutros(); }
+                    //if(boxPraga1) { alertaPraga1(); }
+                    //if(boxPraga2) { alertaPraga2(); }
+                    //if(boxPraga3) { alertaPraga3(); }
+                    //if(boxPraga4) { alertaPraga4(); }
+                }
             }
-
-
         }
 
         //progressBle.dismiss();
+
+        SharedPreferences prefs = getSharedPreferences("AlertasDialog", Context.MODE_PRIVATE);
+        Boolean alerta1 = prefs.getBoolean("isAlerta_1", false);
+        Boolean alerta2 = prefs.getBoolean("isAlerta_2", false);
+        Boolean alerta3 = prefs.getBoolean("isAlerta_3", false);
+
+        String zonaAlerta = "";
+
+        if(alerta1){
+            zonaAlerta += "\n\t\t Zona 1";
+        }
+        if(alerta2){
+            zonaAlerta += "\n\t\t Zona 2";
+        }
+        if(alerta3){
+            zonaAlerta += "\n\t\t Zona 3";
+        }
+
+        if(alerta1 || alerta2 || alerta3) {
+            new android.app.AlertDialog.Builder(this)
+                    .setTitle("Alerta")
+                    .setIcon(R.mipmap.ic_aviso)
+                    .setMessage("Foram emitidos alertas na(s) Zona(s): " + zonaAlerta)
+                    .setNegativeButton("Ok", null)
+                    .show();
+        }
+
+        SharedPreferences prefs3 = getSharedPreferences("AlertasDialog", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor3 = prefs3.edit();
+        editor3.putBoolean("isAlerta_1", false);
+        editor3.putBoolean("isAlerta_2", false);
+        editor3.putBoolean("isAlerta_3", false);
+        editor3.commit();
     }
+
+
+    ////////////////   ALERTAS   ////////////////
+
+    private void alertaTemperatura() {
+        SharedPreferences prefs = getSharedPreferences("DataTemperatura", Context.MODE_PRIVATE);
+        String minTemp = prefs.getString("minTemperatura", "0");
+        double min_temp = Double.parseDouble(minTemp);
+        String maxTemp = prefs.getString("maxTemperatura", "0");
+        double max_temp = Double.parseDouble(maxTemp);
+
+        double TMP;
+        if(temp != null && !temp.isEmpty()) {
+            TMP = Double.parseDouble(temp);
+        }else {
+            TMP = 0.0;
+        }
+
+        if(TMP != 0.0) {
+            String type = "Temperatura";
+            String alert1 = "Valor recebido é inferior ao valor mínimo desejado:  " +minTemp+ " ºC";
+            String alert2 = "Valor recebido é superior ao valor máximo desejado:  " +maxTemp+ " ºC";
+            String value = temp + " ºC";
+            String date = time;
+
+            if (TMP < min_temp) {
+                BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2(this);
+                backgroundDbTask2.execute(alertaDbTask, type, alert1, value, date);
+
+                SharedPreferences prefs2 = getSharedPreferences("AlertasDialog", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor2 = prefs2.edit();
+
+                if(id.matches("1")) {
+                    editor2.putBoolean("isAlerta_1", true);
+                    editor2.commit();
+                } else if(id.matches("2")) {
+                    editor2.putBoolean("isAlerta_2", true);
+                    editor2.commit();
+                } else if(id.matches("3")) {
+                    editor2.putBoolean("isAlerta_3", true);
+                    editor2.commit();
+                }
+            }
+            else if (TMP > max_temp) {
+                BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2(this);
+                backgroundDbTask2.execute(alertaDbTask, type, alert2, value, date);
+
+                SharedPreferences prefs2 = getSharedPreferences("AlertasDialog", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor2 = prefs2.edit();
+
+                if(id.matches("1")) {
+                    editor2.putBoolean("isAlerta_1", true);
+                    editor2.commit();
+                } else if(id.matches("2")) {
+                    editor2.putBoolean("isAlerta_2", true);
+                    editor2.commit();
+                } else if(id.matches("3")) {
+                    editor2.putBoolean("isAlerta_3", true);
+                    editor2.commit();
+                }
+            }
+        }
+    }
+
+    private void alertaLuminosidade() {
+        SharedPreferences prefs = getSharedPreferences("DataLuminosidade", Context.MODE_PRIVATE);
+        String minLum = prefs.getString("minLuminosidade", "0");
+        double min_lum = Double.parseDouble(minLum);
+        String maxLum = prefs.getString("maxLuminosidade", "0");
+        double max_lum = Double.parseDouble(maxLum);
+
+        double LUM;
+        if(lum != null && !lum.isEmpty()) {
+            LUM = Double.parseDouble(lum);
+        }else {
+            LUM = 0.0;
+        }
+
+        if(LUM != 0.0) {
+            String type = "Luminosidade";
+            String alert1 = "Valor recebido é inferior ao valor mínimo desejado:  " +minLum+ " lux";
+            String alert2 = "Valor recebido é superior ao valor máximo desejado:  " +maxLum+ " lux";
+            String value = lum + " lux";
+            String date = time;
+
+            if (LUM < min_lum) {
+                BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2(this);
+                backgroundDbTask2.execute(alertaDbTask, type, alert1, value, date);
+
+                SharedPreferences prefs2 = getSharedPreferences("AlertasDialog", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor2 = prefs2.edit();
+
+                if(id.matches("1")) {
+                    editor2.putBoolean("isAlerta_1", true);
+                    editor2.commit();
+                } else if(id.matches("2")) {
+                    editor2.putBoolean("isAlerta_2", true);
+                    editor2.commit();
+                } else if(id.matches("3")) {
+                    editor2.putBoolean("isAlerta_3", true);
+                    editor2.commit();
+                }
+            } else if (LUM > max_lum) {
+                BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2(this);
+                backgroundDbTask2.execute(alertaDbTask, type, alert2, value, date);
+
+                SharedPreferences prefs2 = getSharedPreferences("AlertasDialog", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor2 = prefs2.edit();
+
+                if(id.matches("1")) {
+                    editor2.putBoolean("isAlerta_1", true);
+                    editor2.commit();
+                } else if(id.matches("2")) {
+                    editor2.putBoolean("isAlerta_2", true);
+                    editor2.commit();
+                } else if(id.matches("3")) {
+                    editor2.putBoolean("isAlerta_3", true);
+                    editor2.commit();
+                }
+            }
+        }
+    }
+
+    private void alertaHumidadeSolo() {
+        SharedPreferences prefs = getSharedPreferences("DataHumidade", Context.MODE_PRIVATE);
+        String minHumSolo = prefs.getString("minHumidadeSolo", "0");
+        double min_humSolo = Double.parseDouble(minHumSolo);
+        String maxHumSolo = prefs.getString("maxHumidadeSolo", "0");
+        double max_humSolo = Double.parseDouble(maxHumSolo);
+
+        double HSOLO;
+        if(humS != null && !humS.isEmpty()) {
+            HSOLO = Double.parseDouble(humS);
+        }else {
+            HSOLO = 0.0;
+        }
+
+        if(HSOLO != 0.0) {
+            String type = "Humidade (solo)";
+            String alert1 = "Valor recebido é inferior ao valor mínimo desejado:  " +minHumSolo+ " %";
+            String alert2 = "Valor recebido é superior ao valor máximo desejado:  " +maxHumSolo+ " %";
+            String value = humS + " %";
+            String date = time;
+
+            if (HSOLO < min_humSolo) {
+                BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2(this);
+                backgroundDbTask2.execute(alertaDbTask, type, alert1, value, date);
+
+                SharedPreferences prefs2 = getSharedPreferences("AlertasDialog", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor2 = prefs2.edit();
+
+                if(id.matches("1")) {
+                    editor2.putBoolean("isAlerta_1", true);
+                    editor2.commit();
+                } else if(id.matches("2")) {
+                    editor2.putBoolean("isAlerta_2", true);
+                    editor2.commit();
+                } else if(id.matches("3")) {
+                    editor2.putBoolean("isAlerta_3", true);
+                    editor2.commit();
+                }
+            } else if (HSOLO > max_humSolo) {
+                BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2(this);
+                backgroundDbTask2.execute(alertaDbTask, type, alert2, value, date);
+
+                SharedPreferences prefs2 = getSharedPreferences("AlertasDialog", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor2 = prefs2.edit();
+
+                if(id.matches("1")) {
+                    editor2.putBoolean("isAlerta_1", true);
+                    editor2.commit();
+                } else if(id.matches("2")) {
+                    editor2.putBoolean("isAlerta_2", true);
+                    editor2.commit();
+                } else if(id.matches("3")) {
+                    editor2.putBoolean("isAlerta_3", true);
+                    editor2.commit();
+                }
+            }
+        }
+    }
+
+    private void alertaHumidadeAr() {
+        SharedPreferences prefs = getSharedPreferences("DataHumidade", Context.MODE_PRIVATE);
+        String minHumAr = prefs.getString("minHumidadeAr", "0");
+        double min_humAr = Double.parseDouble(minHumAr);
+        String maxHumAr = prefs.getString("maxHumidadeAr", "0");
+        double max_humAr = Double.parseDouble(maxHumAr);
+
+        double HAR;
+        if(humA != null && !humA.isEmpty()) {
+            HAR = Double.parseDouble(humA);
+        }else {
+            HAR = 0.0;
+        }
+
+        if(HAR != 0.0) {
+            String type = "Humidade (ar)";
+            String alert1 = "Valor recebido é inferior ao valor mínimo desejado:  " +minHumAr+ " %";
+            String alert2 = "Valor recebido é superior ao valor máximo desejado:  " +maxHumAr+ " %";
+            String value = humA + " %";
+            String date = time;
+
+            if (HAR < min_humAr) {
+                BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2(this);
+                backgroundDbTask2.execute(alertaDbTask, type, alert1, value, date);
+
+                SharedPreferences prefs2 = getSharedPreferences("AlertasDialog", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor2 = prefs2.edit();
+
+                if(id.matches("1")) {
+                    editor2.putBoolean("isAlerta_1", true);
+                    editor2.commit();
+                } else if(id.matches("2")) {
+                    editor2.putBoolean("isAlerta_2", true);
+                    editor2.commit();
+                } else if(id.matches("3")) {
+                    editor2.putBoolean("isAlerta_3", true);
+                    editor2.commit();
+                }
+            } else if (HAR > max_humAr) {
+                BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2(this);
+                backgroundDbTask2.execute(alertaDbTask, type, alert2, value, date);
+
+                SharedPreferences prefs2 = getSharedPreferences("AlertasDialog", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor2 = prefs2.edit();
+
+                if(id.matches("1")) {
+                    editor2.putBoolean("isAlerta_1", true);
+                    editor2.commit();
+                } else if(id.matches("2")) {
+                    editor2.putBoolean("isAlerta_2", true);
+                    editor2.commit();
+                } else if(id.matches("3")) {
+                    editor2.putBoolean("isAlerta_3", true);
+                    editor2.commit();
+                }
+            }
+        }
+    }
+
+    private void alertaPluviosidade() {
+        SharedPreferences prefs = getSharedPreferences("DataPluviosidade", Context.MODE_PRIVATE);
+        String maxHorasPluv = prefs.getString("maxHorasPluviosidade", "0");
+        double max_horasPluv = Double.parseDouble(maxHorasPluv);
+
+        double PLUV;
+        if(pluv != null && !pluv.isEmpty()) {
+            PLUV = Double.parseDouble(pluv);
+        }else {
+            PLUV = 0.0;
+        }
+
+        if(PLUV != 0.0) {
+            String type = "Pluviosidade";
+            String alert1 = "O número de horas de ocorrência de pluviosidade foi superior ao máximo desejado:  " +maxHorasPluv+ " horas";
+            String value = pluv + " horas";
+            String date = time;
+
+            if (PLUV > max_horasPluv) {
+                BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2(this);
+                backgroundDbTask2.execute(alertaDbTask, type, alert1, value, date);
+
+                SharedPreferences prefs2 = getSharedPreferences("AlertasDialog", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor2 = prefs2.edit();
+
+                if(id.matches("1")) {
+                    editor2.putBoolean("isAlerta_1", true);
+                    editor2.commit();
+                } else if(id.matches("2")) {
+                    editor2.putBoolean("isAlerta_2", true);
+                    editor2.commit();
+                } else if(id.matches("3")) {
+                    editor2.putBoolean("isAlerta_3", true);
+                    editor2.commit();
+                }
+            }
+        }
+    }
+
+    private void alertaOutros() {
+
+    }
+
+    private void alertaPraga1() {
+        double TEMP, HUM_A, LUM, PLUV;
+        if((temp != null && !temp.isEmpty()) || (humA != null && !humA.isEmpty())
+                || (lum != null && !lum.isEmpty()) || (pluv != null && !pluv.isEmpty())) {
+            TEMP = Double.parseDouble(temp); HUM_A = Double.parseDouble(humA);
+            LUM = Double.parseDouble(lum); PLUV = Double.parseDouble(pluv);
+        }else {
+            TEMP = 0.0; HUM_A = 0.0; LUM = 0.0; PLUV = 0.0;
+        }
+
+        // Conditions favorable for Praga 1 (Míldio)
+        if(TEMP > 10.0 && HUM_A > 95.0 && LUM == 0.0 && PLUV > 0)        // LUM ?? PLUV ??
+        {
+            String type = "Doença";
+            String alert = "Foram reunidas as condições necessárias para a existência de 'Míldio' nesta zona.";
+            String value = "n/a";
+            String date = time;
+
+            BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2(this);
+            backgroundDbTask2.execute(alertaDbTask, type, alert, value, date);
+
+            SharedPreferences prefs2 = getSharedPreferences("AlertasDialog", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor2 = prefs2.edit();
+
+            if(id.matches("1")) {
+                editor2.putBoolean("isAlerta_1", true);
+                editor2.commit();
+            } else if(id.matches("2")) {
+                editor2.putBoolean("isAlerta_2", true);
+                editor2.commit();
+            } else if(id.matches("3")) {
+                editor2.putBoolean("isAlerta_3", true);
+                editor2.commit();
+            }
+        }
+    }
+
+    private void alertaPraga2() {
+        double TEMP, HUM_A, PLUV;
+        if((temp != null && !temp.isEmpty()) || (humA != null && !humA.isEmpty())
+                || (pluv != null && !pluv.isEmpty())) {
+            TEMP = Double.parseDouble(temp); HUM_A = Double.parseDouble(humA); PLUV = Double.parseDouble(pluv);
+        }else {
+            TEMP = 0.0; HUM_A = 0.0; PLUV = 0.0;
+        }
+
+        // Conditions favorable for Praga 2 (Oídio da Videira)
+        if(TEMP >= 24.0 && TEMP <= 26.0 && HUM_A > 90.0 && PLUV != 0.0)                 // PLUV ??
+        {
+            String type = "Doença";
+            String alert = "Foram reunidas as condições necessárias para a existência de 'Oídio da Videira' nesta zona.";
+            String value = "n/a";
+            String date = time;
+
+            BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2(this);
+            backgroundDbTask2.execute(alertaDbTask, type, alert, value, date);
+
+            SharedPreferences prefs2 = getSharedPreferences("AlertasDialog", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor2 = prefs2.edit();
+
+            if(id.matches("1")) {
+                editor2.putBoolean("isAlerta_1", true);
+                editor2.commit();
+            } else if(id.matches("2")) {
+                editor2.putBoolean("isAlerta_2", true);
+                editor2.commit();
+            } else if(id.matches("3")) {
+                editor2.putBoolean("isAlerta_3", true);
+                editor2.commit();
+            }
+
+        }
+    }
+
+    private void alertaPraga3() {
+        double TEMP, HUM_A;
+        if((temp != null && !temp.isEmpty()) || (humA != null && !humA.isEmpty())) {
+            TEMP = Double.parseDouble(temp); HUM_A = Double.parseDouble(humA);
+        }else {
+            TEMP = 0.0; HUM_A = 0.0;
+        }
+
+        // Conditions favorable for Praga 2 (Oídio da Videira)
+        if(TEMP >= 15.0 && TEMP <= 25.0 && HUM_A > 95.0)                 // PLUV ??
+        {
+            String type = "Doença";
+            String alert = "Foram reunidas as condições necessárias para a existência de 'Podridão Cinzenta' nesta zona.";
+            String value = "n/a";
+            String date = time;
+
+            BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2(this);
+            backgroundDbTask2.execute(alertaDbTask, type, alert, value, date);
+
+            SharedPreferences prefs2 = getSharedPreferences("AlertasDialog", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor2 = prefs2.edit();
+
+            if(id.matches("1")) {
+                editor2.putBoolean("isAlerta_1", true);
+                editor2.commit();
+            } else if(id.matches("2")) {
+                editor2.putBoolean("isAlerta_2", true);
+                editor2.commit();
+            } else if(id.matches("3")) {
+                editor2.putBoolean("isAlerta_3", true);
+                editor2.commit();
+            }
+        }
+    }
+
+    private void alertaPraga4() {
+        double TEMP, HUM_S, PLUV;
+        if((temp != null && !temp.isEmpty()) || (humS != null && !humS.isEmpty())
+                || (pluv != null && !pluv.isEmpty())) {
+            TEMP = Double.parseDouble(temp); HUM_S = Double.parseDouble(humS); PLUV = Double.parseDouble(pluv);
+        }else {
+            TEMP = 0.0; HUM_S = 0.0; PLUV = 0.0;
+        }
+
+        // Conditions favorable for Praga 2 (Oídio da Videira)
+        if(TEMP < 37.0 && HUM_S > 95.0 && PLUV > 0.0)                               // PLUV ??
+        {
+            String type = "Doença";
+            String alert = "Foram reunidas as condições necessárias para a existência de 'Escoriose da Videira' nesta zona.";
+            String value = "n/a";
+            String date = time;
+
+            BackgroundDbTask2 backgroundDbTask2 = new BackgroundDbTask2(this);
+            backgroundDbTask2.execute(alertaDbTask, type, alert, value, date);
+
+            SharedPreferences prefs2 = getSharedPreferences("AlertasDialog", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor2 = prefs2.edit();
+
+            if(id.matches("1")) {
+                editor2.putBoolean("isAlerta_1", true);
+                editor2.commit();
+            } else if(id.matches("2")) {
+                editor2.putBoolean("isAlerta_2", true);
+                editor2.commit();
+            } else if(id.matches("3")) {
+                editor2.putBoolean("isAlerta_3", true);
+                editor2.commit();
+            }
+        }
+    }
+
+
 
 
     // Byte array --> integer
